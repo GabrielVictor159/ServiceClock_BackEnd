@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "ServiceClock_BackEnd": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7042"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "httpPort": 31768,
+      "useSSL": false
+    }
+  }
+}
