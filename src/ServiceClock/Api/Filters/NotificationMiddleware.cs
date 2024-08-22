@@ -17,7 +17,7 @@ public class NotificationMiddleware
         _notifications = notifications;
     }
 
-    public async Task<IActionResult> InvokeAsync(HttpRequest req, ILogger log, HttpRequestValidator httpRequestValidator, Func<Task<IActionResult>> next)
+    public async Task<IActionResult> InvokeAsync(HttpRequest req, HttpRequestValidator httpRequestValidator, Func<Task<IActionResult>> next)
     {
         var validateHttp = await httpRequestValidator.Validate(req);
         if (!validateHttp.Item1)
