@@ -36,7 +36,7 @@ namespace ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany
             this.useCase = useCase;
         }
 
-        [FunctionName("CreateCompany")]
+        [FunctionName("Company")]
         [OpenApiOperation(operationId: "CreateCompany", tags: new[] { "Company" })]
         [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(CreateCompanyRequest), Description = "Request body containing company information.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(CreateCompanyResponse), Description = "The OK response with the created company details.")]
@@ -44,7 +44,6 @@ namespace ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {
-            var teste = "";
             return await Execute(req,async (CreateCompanyRequest request) =>
             {
                 if (request != null)

@@ -44,7 +44,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Api\UseCases\Company\GetCompany\" />
+    <Folder Include="Api\UseCases\Company\GetCompanyById\" />
     <Folder Include="Api\UseCases\Company\PatchCompany\" />
     <Folder Include="Application\UseCases\CreateCompany\Handlers\" />
   </ItemGroup>

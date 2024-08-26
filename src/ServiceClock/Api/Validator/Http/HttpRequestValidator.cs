@@ -11,9 +11,10 @@ public class HttpRequestValidator
     private readonly List<IHttpRequestValidator> validators = new List<IHttpRequestValidator>();
     public List<Claim> Claims = new();
 
-    public void AddValidator(IHttpRequestValidator validator)
+    public HttpRequestValidator AddValidator(IHttpRequestValidator validator)
     {
         validators.Add(validator);
+        return this;
     }
 
     public async Task<(bool, IActionResult?)> Validate(HttpRequest request)

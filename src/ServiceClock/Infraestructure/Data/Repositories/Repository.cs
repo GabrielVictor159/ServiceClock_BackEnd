@@ -54,6 +54,16 @@ public class Repository<T> : IRepository<T> where T : class
         using var context = new Context();
         return context.Set<T>().Where(predicate).ToList();
     }
+    public IEnumerable<T> Find(Expression<Func<T, bool>> predicate, int pageNumber, int pageSize)
+    {
+        using var context = new Context();
+
+        return context.Set<T>()
+            .Where(predicate)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+    }
 
     public T? FindSingle(Expression<Func<T, bool>> predicate)
     {

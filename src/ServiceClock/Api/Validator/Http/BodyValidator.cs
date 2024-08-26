@@ -22,11 +22,14 @@ public class BodyValidator<T> : IHttpRequestValidator
             };
 
             var requestBodyObject = JsonConvert.DeserializeObject<T>(requestBody, serializerSettings);
-
             var validationResults = new List<ValidationResult>();
             var validationContext = new ValidationContext(requestBodyObject);
-            var isValid = System.ComponentModel.DataAnnotations.Validator.TryValidateObject(requestBodyObject, validationContext, validationResults);
-
+            var isValid = System.ComponentModel.DataAnnotations.Validator.TryValidateObject(
+                   requestBodyObject,
+                   validationContext,
+                   validationResults,
+                   validateAllProperties: true
+               );
             if (!isValid)
             {
                 return (false, new BadRequestObjectResult(validationResults), new());
