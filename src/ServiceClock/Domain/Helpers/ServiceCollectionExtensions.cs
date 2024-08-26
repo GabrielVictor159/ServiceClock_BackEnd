@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ServiceClock_BackEnd.Api.Modules;
 using ServiceClock_BackEnd.Infraestructure.Modules;
 
-namespace ServiceClock_BackEnd.Helpers;
+namespace ServiceClock_BackEnd.Domain.Helpers;
 
 public static class ServiceCollectionExtensions
 {
@@ -12,7 +12,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddModule(new ApiModule());
         services.AddModule(new ApplicationModule());
-        //services.AddModule(new InfraestructureModule());
+        services.AddModule(new InfraestructureModule());
     }
 
 

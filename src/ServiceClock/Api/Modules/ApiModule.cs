@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.Extensions.DependencyInjection;
 using ServiceClock_BackEnd.Api.Filters;
+using ServiceClock_BackEnd.Api.Mapper;
+using ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany;
 using ServiceClock_BackEnd.Api.Validator.Http;
 using ServiceClock_BackEnd.Domain.Modules;
 
@@ -12,6 +14,9 @@ public class ApiModule : Module
     {
         services.AddSingleton(new HttpRequestValidator());
         services.AddScoped<NotificationMiddleware>();
+        services.AddAutoMapper(typeof(MapperProfile).Assembly);
+
+        services.AddSingleton<CreateCompanyPresenter>();
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using ServiceClock_BackEnd.Domain.Helpers;
 using ServiceClock_BackEnd.Domain.Models;
 
 namespace ServiceClock_BackEnd.Infraestructure.Data.Map;
@@ -19,6 +20,13 @@ public class CompanyMap : IEntityTypeConfiguration<Company>
         builder.Property(c => c.Name)
             .IsRequired()
             .HasMaxLength(100);
+
+        builder.Property(c => c.Password)
+           .IsRequired()
+           .HasMaxLength(256)
+           .HasConversion(
+               v => v.PasswordEncryption(),
+               v => v);
 
         builder.Property(c => c.RegistrationNumber)
             .IsRequired()
@@ -50,6 +58,7 @@ public class CompanyMap : IEntityTypeConfiguration<Company>
 
         builder.Property(c => c.Email)
             .IsRequired()
+            .IsUnicode(true)
             .HasMaxLength(100);
 
         builder.Property(c => c.EstablishedDate)

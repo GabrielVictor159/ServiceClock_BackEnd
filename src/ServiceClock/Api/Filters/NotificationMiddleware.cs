@@ -10,11 +10,13 @@ namespace ServiceClock_BackEnd.Api.Filters;
 
 public class NotificationMiddleware
 {
-    private readonly INotificationService _notifications;
+    private readonly INotificationService notifications;
+    private readonly ILogService logService;
 
-    public NotificationMiddleware(INotificationService notifications)
+    public NotificationMiddleware(INotificationService notifications, ILogService logService)
     {
-        _notifications = notifications;
+        this.notifications = notifications;
+        this.logService = logService;
     }
 
     public async Task<IActionResult> InvokeAsync(HttpRequest req, HttpRequestValidator httpRequestValidator, Func<Task<IActionResult>> next)
@@ -26,12 +28,14 @@ public class NotificationMiddleware
         }
 
         var result = await next();
+        
+        this.logService.PopulateLogs();
 
-        if (_notifications.HasNotifications)
+        if (notifications.HasNotifications)
         {
-            var obj = JsonConvert.SerializeObject(_notifications.Notifications);
+            var obj = JsonConvert.SerializeObject(notifications.Notifications);
             var badRequest = new BadRequestObjectResult(obj);
-            _notifications.Notifications.Clear();
+            notifications.Notifications.Clear();
             return badRequest;
         }
 

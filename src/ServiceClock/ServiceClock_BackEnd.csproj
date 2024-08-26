@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
     <DockerFastModeProjectMountDirectory>/home/site/wwwroot</DockerFastModeProjectMountDirectory>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
+	  <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
@@ -43,8 +44,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Api\UseCases\" />
-    <Folder Include="Application\Boundaries\" />
-    <Folder Include="Application\UseCases\Common\Handlers\" />
+    <Folder Include="Api\UseCases\Company\GetCompany\" />
+    <Folder Include="Api\UseCases\Company\PatchCompany\" />
+    <Folder Include="Application\UseCases\CreateCompany\Handlers\" />
   </ItemGroup>
 </Project>

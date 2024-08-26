@@ -11,6 +11,7 @@ public class InfraestructureModule : Module
     public override void Configure(IServiceCollection services)
     {
         services.AddSingleton<INotificationService, NotificationService>();
+        services.AddSingleton<ILogService, LogService>();
     }
 }
 

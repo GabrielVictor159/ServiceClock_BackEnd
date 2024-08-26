@@ -16,6 +16,7 @@ public partial class Context : DbContext
     {
     }
     public DbSet<Company> Companies { get; set; }
+    public DbSet<Log> Logs { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
@@ -30,6 +31,7 @@ public partial class Context : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new CompanyMap());
+        modelBuilder.ApplyConfiguration(new LogMap());
         OnModelCreatingPartial(modelBuilder);
     }
 

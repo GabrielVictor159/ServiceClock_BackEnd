@@ -6,7 +6,7 @@ using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.DependencyInjection;
-using ServiceClock_BackEnd.Helpers;
+using ServiceClock_BackEnd.Domain.Helpers;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 public class Startup : FunctionsStartup

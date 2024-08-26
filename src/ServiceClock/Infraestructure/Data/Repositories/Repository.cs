@@ -12,7 +12,7 @@ namespace ServiceClock_BackEnd.Infraestructure.Data.Repositories;
 
 public class Repository<T> : IRepository<T> where T : class
 {
-    public T GetById(string id)
+    public T? GetById(string id)
     {
         using var context = new Context();
         return context.Set<T>().Find(id);
@@ -55,7 +55,7 @@ public class Repository<T> : IRepository<T> where T : class
         return context.Set<T>().Where(predicate).ToList();
     }
 
-    public T FindSingle(Expression<Func<T, bool>> predicate)
+    public T? FindSingle(Expression<Func<T, bool>> predicate)
     {
         using var context = new Context();
         return context.Set<T>().SingleOrDefault(predicate);

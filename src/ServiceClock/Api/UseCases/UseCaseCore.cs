@@ -13,24 +13,24 @@ using System;
 
 namespace ServiceClock_BackEnd.Api.UseCases;
 
-public abstract class UseCaseCore<RequestType> where RequestType : new()
+public abstract class UseCaseCore
 {
     protected readonly HttpRequestValidator httpRequestValidator;
     protected readonly NotificationMiddleware middleware;
 
     protected UseCaseCore(HttpRequestValidator httpRequestValidator, NotificationMiddleware middleware)
     {
-        httpRequestValidator.AddValidator(new BodyValidator<RequestType>());
         this.httpRequestValidator = httpRequestValidator;
         this.middleware = middleware;
     }
 
-    public async Task<IActionResult> Execute(HttpRequest req,
+    public async Task<IActionResult> Execute<RequestType>(HttpRequest req,
              Func<RequestType, Task<IActionResult>> next)
     {
+        this.httpRequestValidator.AddValidator(new BodyValidator<RequestType>());
         return await middleware.InvokeAsync(req, httpRequestValidator, async () =>
         {
-            try
+            try 
             {
                 req.Body.Position = 0;
                 var requestBody = await new StreamReader(req.Body).ReadToEndAsync();

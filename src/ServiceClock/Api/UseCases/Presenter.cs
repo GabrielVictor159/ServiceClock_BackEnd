@@ -4,7 +4,7 @@ using ServiceClock_BackEnd.Application.Boundaries;
 
 namespace ServiceClock_BackEnd.Api.UseCases;
 
-public abstract class Presenter<Request, Response> : IOutputPort<Request>
+public abstract class Presenter<Boundarie, Response> : IOutputPort<Boundarie>
 {
     public IActionResult ViewModel { get; set; } = new ObjectResult(new { StatusCode = 500 });
 
@@ -23,7 +23,7 @@ public abstract class Presenter<Request, Response> : IOutputPort<Request>
         ViewModel = new NotFoundObjectResult(message);
     }
 
-    public void Standard(Request request)
+    public void Standard(Boundarie request)
     {
         var response = Activator.CreateInstance(typeof(Response), request);
         this.ViewModel = new OkObjectResult(response);
