@@ -97,6 +97,11 @@ public class Repository<T> : IRepository<T> where T : class
         context.Set<T>().RemoveRange(entities);
         context.SaveChanges();
     }
+    public int Save()
+    {
+        using var context = new Context();
+        return context.SaveChanges();
+    }
 }
 
 

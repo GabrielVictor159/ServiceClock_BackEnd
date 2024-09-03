@@ -14,8 +14,7 @@ public class CompanyValidator : AbstractValidator<Company>
             .MaximumLength(100).WithMessage("Nome não pode ter mais de 100 caracteres.");
 
         RuleFor(c => c.RegistrationNumber)
-            .NotEmpty().WithMessage("Número de registro é obrigatório.")
-            .Matches(@"^[A-Za-z0-9\-]+$").WithMessage("Número de registro é inválido.");
+            .NotEmpty().WithMessage("Número de registro é obrigatório.");
 
         RuleFor(c => c.Address)
             .NotEmpty().WithMessage("Endereço é obrigatório.")
@@ -34,8 +33,7 @@ public class CompanyValidator : AbstractValidator<Company>
             .MaximumLength(50).WithMessage("País não pode ter mais de 50 caracteres.");
 
         RuleFor(c => c.PostalCode)
-            .NotEmpty().WithMessage("Código postal é obrigatório.")
-            .Matches(@"^\d{5}-\d{4}$").WithMessage("Código postal deve estar no formato XXXXX-XXXX.");
+            .NotEmpty().WithMessage("Código postal é obrigatório.");
 
         RuleFor(c => c.PhoneNumber)
             .NotEmpty().WithMessage("Número de telefone é obrigatório.")

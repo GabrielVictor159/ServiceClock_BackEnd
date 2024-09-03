@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;

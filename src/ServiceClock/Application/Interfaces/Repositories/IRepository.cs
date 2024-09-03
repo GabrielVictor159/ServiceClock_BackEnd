@@ -17,5 +17,6 @@ public interface IRepository<T> where T : class
     void AddRange(IEnumerable<T> entities);
     void UpdateRange(IEnumerable<T> entities);
     void DeleteRange(IEnumerable<T> entities);
+    int Save();
 }
 

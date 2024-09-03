@@ -13,6 +13,7 @@
     <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="7.0.1" />
     <PackageReference Include="Azure.ResourceManager.CosmosDB" Version="1.3.2" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.21.2" />
+    <PackageReference Include="AzureFunctions.Authentication" Version="6.0.1" />
     <PackageReference Include="FluentValidation" Version="11.9.2" />
     <PackageReference Include="FluentValidator" Version="2.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
@@ -32,7 +33,8 @@
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
@@ -44,8 +46,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Api\UseCases\Company\GetCompanyById\" />
-    <Folder Include="Api\UseCases\Company\PatchCompany\" />
     <Folder Include="Application\UseCases\CreateCompany\Handlers\" />
+    <Folder Include="Application\UseCases\PatchCompany\Handlers\" />
   </ItemGroup>
 </Project>

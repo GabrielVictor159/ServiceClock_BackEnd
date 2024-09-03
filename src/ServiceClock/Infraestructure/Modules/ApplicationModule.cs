@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Application.Interfaces.Services;
 using ServiceClock_BackEnd.Application.UseCases.CreateCompany.Modules;
+using ServiceClock_BackEnd.Application.UseCases.PatchCompany.Modules;
 using ServiceClock_BackEnd.Domain.Models;
 using ServiceClock_BackEnd.Domain.Modules;
 using ServiceClock_BackEnd.Infraestructure.Data.Repositories;
@@ -21,6 +22,7 @@ public class ApplicationModule : Module
     private void AddUseCases(IServiceCollection services)
     {
         new CreateCompanyModule().Configure(services);
+        new PatchCompanyModule().Configure(services);
     }
     private void AddServices(IServiceCollection services)
     {

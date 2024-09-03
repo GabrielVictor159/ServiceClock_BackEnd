@@ -1,10 +1,9 @@
 ﻿
-using Microsoft.IdentityModel.Tokens;
-using ServiceClock_BackEnd.Application.Interfaces.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
+using Microsoft.IdentityModel.Tokens;
+using ServiceClock_BackEnd.Application.Interfaces.Services;
 namespace ServiceClock_BackEnd.Infraestructure.Services;
 
 public class TokenService : ITokenService
@@ -35,4 +34,3 @@ public class TokenService : ITokenService
         return tokenFinal;
     }
 }
-

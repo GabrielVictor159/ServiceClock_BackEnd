@@ -11,6 +11,9 @@ using ServiceClock_BackEnd.Api.Validator.Http;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Application.UseCases.CreateCompany;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
+using Microsoft.OpenApi.Models;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Company.GetCompany;
 
@@ -32,6 +35,10 @@ public class GetCompany : UseCaseCore
     [FunctionName("GetCompany")]
     [OpenApiOperation(operationId: "GetCompany", tags: new[] { "GetCompany" })]
     [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(GetCompanyRequest), Description = "Request body containing company information.")]
+    [OpenApiSecurity("bearer",
+                     SecuritySchemeType.ApiKey,
+                     In = OpenApiSecurityLocationType.Query,
+                     Name = "code")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(object), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
     public async Task<IActionResult> Run(
@@ -56,7 +63,7 @@ public class GetCompany : UseCaseCore
                     ,request.IndexPage, ((int)request.PageSize))
                     .Select(e => new 
                     { 
-                        Id = e.Id, Name = e.Name, RegistrationNumber = e.RegistrationNumber, Address = e.Address, City = e.City, State = e.State, 
+                        Name = e.Name, RegistrationNumber = e.RegistrationNumber, Address = e.Address, City = e.City, State = e.State, 
                         Country = e.Country, PostalCode = e.PostalCode, PhoneNumber = e.PhoneNumber, Email = e.Email
                     })
                 );
