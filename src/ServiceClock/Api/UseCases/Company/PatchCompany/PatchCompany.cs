@@ -11,8 +11,8 @@ using ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany;
 using ServiceClock_BackEnd.Api.Validator.Http;
 using ServiceClock_BackEnd.Application.UseCases.CreateCompany;
 using System.Net;
-using ServiceClock_BackEnd.Application.UseCases.PatchCompany;
 using Microsoft.AspNetCore.Authorization;
+using ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Company.PatchCompany;
 
@@ -28,7 +28,7 @@ public class PatchCompany : UseCaseCore
         IMapper mapper,
         PatchCompanyPresenter presenter,
         IPatchCompanyUseCase useCase)
-        : base(httpRequestValidator, middleware)
+        : base(httpRequestValidator.AddValidator(new AuthorizationValidator()), middleware)
     {
         this.mapper = mapper;
         this.presenter = presenter;
@@ -36,7 +36,7 @@ public class PatchCompany : UseCaseCore
     }
 
     [FunctionName("PatchCompany")]
-    [OpenApiOperation(operationId: "CreateCompany", tags: new[] { "Company" })]
+    [OpenApiOperation(operationId: "PatchCompany", tags: new[] { "Company" })]
     [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(PatchCompanyRequest), Description = "Request body containing company information.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(PatchCompanyResponse), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]

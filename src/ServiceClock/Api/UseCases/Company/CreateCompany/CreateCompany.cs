@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 using ServiceClock_BackEnd.Api.Filters;
 using ServiceClock_BackEnd.Api.Validator.Http;
 using AutoMapper;
-using ServiceClock_BackEnd.Application.UseCases.CreateCompany;
+using ServiceClock_BackEnd.Application.UseCases.Company.CreateCompany;
 #pragma warning disable CS1998
 namespace ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany
 {

@@ -7,11 +7,11 @@ namespace ServiceClock_BackEnd.Application.UseCases.Common.Handlers;
 
 public class VerifyDisponibilityCompanyHandler<Request> : Handler<Request>
 {
-    private readonly IRepository<Company> companyRepository;
+    private readonly IRepository<Domain.Models.Company> companyRepository;
     private readonly INotificationService notificationService;
 
     public VerifyDisponibilityCompanyHandler
-        (IRepository<Company> companyRepository, 
+        (IRepository<Domain.Models.Company> companyRepository, 
         INotificationService notificationService, 
         ILogService logService)
         : base(logService)
@@ -24,8 +24,8 @@ public class VerifyDisponibilityCompanyHandler<Request> : Handler<Request>
     {
         var domainObject = typeof(Request)
                 .GetProperties()
-                .FirstOrDefault(prop => prop.PropertyType == typeof(Company))?
-                .GetValue(request) as Company;
+                .FirstOrDefault(prop => prop.PropertyType == typeof(Domain.Models.Company))?
+                .GetValue(request) as Domain.Models.Company;
 
         if (domainObject == null)
         {

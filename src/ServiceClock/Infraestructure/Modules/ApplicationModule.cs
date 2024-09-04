@@ -31,6 +31,7 @@ public class ApplicationModule : Module
     private void AddRepositories(IServiceCollection services)
     {
         services.AddSingleton<IRepository<Company>, Repository<Company>>();
+        services.AddSingleton<IRepository<Client>, Repository<Client>>();
         services.AddSingleton<IRepository<Log>, Repository<Log>>();
     }
 }

@@ -1,7 +1,6 @@
-﻿
-using ServiceClock_BackEnd.Domain.Models;
+﻿using ServiceClock_BackEnd.Domain.Models;
 
-namespace ServiceClock_BackEnd.Application.UseCases.PatchCompany;
+namespace ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany;
 
 public class PatchCompanyUseCaseRequest
 {

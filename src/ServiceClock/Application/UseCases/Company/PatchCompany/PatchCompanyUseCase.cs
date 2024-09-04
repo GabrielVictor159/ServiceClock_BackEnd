@@ -1,5 +1,4 @@
-﻿
-using ServiceClock_BackEnd.Api.UseCases.Company.PatchCompany;
+﻿using ServiceClock_BackEnd.Api.UseCases.Company.PatchCompany;
 using ServiceClock_BackEnd.Application.Boundaries;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Application.Interfaces.Services;
@@ -7,17 +6,17 @@ using ServiceClock_BackEnd.Domain.Enums;
 using ServiceClock_BackEnd.Domain.Models;
 using ServiceClock_BackEnd.Infraestructure.Data.Repositories;
 
-namespace ServiceClock_BackEnd.Application.UseCases.PatchCompany;
+namespace ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany;
 
 public class PatchCompanyUseCase : IPatchCompanyUseCase
 {
-    private readonly IRepository<Company> repository;
+    private readonly IRepository<Domain.Models.Company> repository;
     private readonly INotificationService notificationService;
     private readonly ILogService logService;
     private readonly PatchCompanyPresenter outputPort;
 
     public PatchCompanyUseCase
-        (IRepository<Company> repository, 
+        (IRepository<Domain.Models.Company> repository,
         INotificationService notificationService,
         PatchCompanyPresenter outputPort,
         ILogService logService)
@@ -35,7 +34,7 @@ public class PatchCompanyUseCase : IPatchCompanyUseCase
             var company = repository.GetById(request.Company?.Id.ToString() ?? "");
             if (company == null)
             {
-                this.notificationService.AddNotification("Company not found", "Não foi encontrado nenhuma empresa com esse Id");
+                notificationService.AddNotification("Company not found", "Não foi encontrado nenhuma empresa com esse Id");
                 return;
             }
             company.Name = request.Company!.Name != "" ? request.Company.Name : company.Name;
@@ -48,9 +47,9 @@ public class PatchCompanyUseCase : IPatchCompanyUseCase
             company.PostalCode = request.Company!.PostalCode != "" ? request.Company.PostalCode : company.PostalCode;
             company.PhoneNumber = request.Company!.PhoneNumber != "" ? request.Company.PhoneNumber : company.PhoneNumber;
 
-            if(!company.IsValid)
+            if (!company.IsValid)
             {
-                this.notificationService.AddNotifications(company.ValidationResult);
+                notificationService.AddNotifications(company.ValidationResult);
                 return;
             }
 
@@ -60,7 +59,7 @@ public class PatchCompanyUseCase : IPatchCompanyUseCase
         }
         catch (Exception ex)
         {
-            this.logService.logs.Add(new(LogType.ERROR, "CreateCompanyUseCase", $"Occurring an error: {ex.Message ?? ex.InnerException?.Message}, stacktrace: {ex.StackTrace}"));
+            logService.logs.Add(new(LogType.ERROR, "CreateCompanyUseCase", $"Occurring an error: {ex.Message ?? ex.InnerException?.Message}, stacktrace: {ex.StackTrace}"));
             outputPort.Error(ex.Message!);
         }
     }

@@ -2,8 +2,8 @@
 using AutoMapper;
 using ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany;
 using ServiceClock_BackEnd.Api.UseCases.Company.PatchCompany;
-using ServiceClock_BackEnd.Application.UseCases.CreateCompany;
-using ServiceClock_BackEnd.Application.UseCases.PatchCompany;
+using ServiceClock_BackEnd.Application.UseCases.Company.CreateCompany;
+using ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany;
 using System;
 
 namespace ServiceClock_BackEnd.Api.Mapper;

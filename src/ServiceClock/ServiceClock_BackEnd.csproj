@@ -46,7 +46,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Application\UseCases\CreateCompany\Handlers\" />
-    <Folder Include="Application\UseCases\PatchCompany\Handlers\" />
+    <Folder Include="Application\UseCases\Client\CreateClient\Handlers\" />
+    <Folder Include="Application\UseCases\Company\CreateCompany\Handlers\" />
+    <Folder Include="Application\UseCases\Company\PatchCompany\Handlers\" />
   </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@ using ServiceClock_BackEnd.Domain.Validations;
 using ServiceClock_BackEnd.Domain.Helpers;
 using ServiceClock_BackEnd.Application.Interfaces.Services;
 
-namespace ServiceClock_BackEnd.Application.UseCases.CreateCompany;
+namespace ServiceClock_BackEnd.Application.UseCases.Company.CreateCompany;
 
 public class CreateCompanyUseCase : ICreateCompanyUseCase
 {
@@ -37,12 +37,12 @@ public class CreateCompanyUseCase : ICreateCompanyUseCase
     {
         try
         {
-            this.validDomainHandler.ProcessRequest(request);
-            outputPort.Standard(new() { Company = request.Company});
+            validDomainHandler.ProcessRequest(request);
+            outputPort.Standard(new() { Company = request.Company });
         }
         catch (Exception ex)
         {
-            this.logService.logs.Add(new(LogType.ERROR, "CreateCompanyUseCase", $"Occurring an error: {ex.Message ?? ex.InnerException?.Message}, stacktrace: {ex.StackTrace}"));
+            logService.logs.Add(new(LogType.ERROR, "CreateCompanyUseCase", $"Occurring an error: {ex.Message ?? ex.InnerException?.Message}, stacktrace: {ex.StackTrace}"));
             outputPort.Error(ex.Message!);
         }
     }
