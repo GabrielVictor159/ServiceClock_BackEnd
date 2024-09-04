@@ -10,7 +10,7 @@ public class CreateCompanyUseCaseRequest
         (string name, string password, string registrationNumber, string address, string city, string state, string country,
         string postalCode, string phoneNumber, string email)
     {
-        Company = new Company
+        Company = new Domain.Models.Company
         {
             Id = Guid.NewGuid(),
             Name = name,
@@ -27,7 +27,7 @@ public class CreateCompanyUseCaseRequest
         };
     }
 
-    public Company? Company { get; set; }
+    public Domain.Models.Company? Company { get; set; }
 
 }
 

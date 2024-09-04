@@ -13,15 +13,15 @@ namespace ServiceClock_BackEnd.Application.UseCases.Company.CreateCompany;
 public class CreateCompanyUseCase : ICreateCompanyUseCase
 {
     private readonly CreateCompanyPresenter outputPort;
-    private readonly ValidDomainHandler<Company, CompanyValidator, CreateCompanyUseCaseRequest> validDomainHandler;
+    private readonly ValidDomainHandler<Domain.Models.Company, CompanyValidator, CreateCompanyUseCaseRequest> validDomainHandler;
     private readonly ILogService logService;
 
     public CreateCompanyUseCase
         (CreateCompanyPresenter outputPort,
         ILogService logService,
-        ValidDomainHandler<Company, CompanyValidator, CreateCompanyUseCaseRequest> validDomainHandler,
+        ValidDomainHandler<Domain.Models.Company, CompanyValidator, CreateCompanyUseCaseRequest> validDomainHandler,
         VerifyDisponibilityCompanyHandler<CreateCompanyUseCaseRequest> verifyDisponibilityCompanyHandler,
-        SaveDomainDbHandler<Company, CreateCompanyUseCaseRequest> saveDomainDbHandler)
+        SaveDomainDbHandler<Domain.Models.Company, CreateCompanyUseCaseRequest> saveDomainDbHandler)
     {
         validDomainHandler
             .SetSucessor(verifyDisponibilityCompanyHandler

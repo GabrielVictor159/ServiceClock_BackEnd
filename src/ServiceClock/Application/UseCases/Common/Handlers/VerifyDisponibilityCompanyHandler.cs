@@ -32,9 +32,9 @@ public class VerifyDisponibilityCompanyHandler<Request> : Handler<Request>
             throw new ApplicationException($"Could not find any object with the type Comapny in the request");
         }
 
-        if(companyRepository.FindSingle(e=>e.Name==domainObject.Name || e.Email == domainObject.Email || e.RegistrationNumber == domainObject.RegistrationNumber) !=null)
+        if(companyRepository.FindSingle(e=>(e.Name==domainObject.Name || e.Email == domainObject.Email || e.RegistrationNumber == domainObject.RegistrationNumber) && e.Id != domainObject.Id) !=null)
         {
-            this.notificationService.AddNotification("Company already exists", "Já existe uma empresa com as mesmas propriedades");
+            this.notificationService.AddNotification("Company already exists", "Já existe uma empresa com o mesmo nome, email ou numero de registro");
             return;
         }
 

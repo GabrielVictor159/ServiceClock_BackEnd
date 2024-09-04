@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ServiceClock_BackEnd.Api.Filters;
 using ServiceClock_BackEnd.Api.Mapper;
+using ServiceClock_BackEnd.Api.UseCases.Client.CreateClient;
+using ServiceClock_BackEnd.Api.UseCases.Client.PatchClient;
 using ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany;
 using ServiceClock_BackEnd.Api.UseCases.Company.PatchCompany;
 using ServiceClock_BackEnd.Api.Validator.Http;
@@ -23,6 +25,8 @@ namespace ServiceClock_BackEnd.Api.Modules
             services.AddAutoMapper(typeof(MapperProfile).Assembly);
             services.AddSingleton<CreateCompanyPresenter>();
             services.AddSingleton<PatchCompanyPresenter>();
+            services.AddSingleton<CreateClientPresenter>();
+            services.AddSingleton<PatchClientPresenter>();
         }
     }
 }

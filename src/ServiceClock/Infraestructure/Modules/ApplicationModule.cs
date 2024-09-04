@@ -2,8 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Application.Interfaces.Services;
-using ServiceClock_BackEnd.Application.UseCases.CreateCompany.Modules;
-using ServiceClock_BackEnd.Application.UseCases.PatchCompany.Modules;
+using ServiceClock_BackEnd.Application.UseCases.Client.CreateClient.Modules;
+using ServiceClock_BackEnd.Application.UseCases.Client.PatchClient.Modules;
+using ServiceClock_BackEnd.Application.UseCases.Company.CreateCompany.Modules;
+using ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany.Modules;
 using ServiceClock_BackEnd.Domain.Models;
 using ServiceClock_BackEnd.Domain.Modules;
 using ServiceClock_BackEnd.Infraestructure.Data.Repositories;
@@ -23,6 +25,8 @@ public class ApplicationModule : Module
     {
         new CreateCompanyModule().Configure(services);
         new PatchCompanyModule().Configure(services);
+        new CreateClientModule().Configure(services);
+        new PatchClientModule().Configure(services);
     }
     private void AddServices(IServiceCollection services)
     {

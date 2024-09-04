@@ -5,44 +5,43 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs;
 using ServiceClock_BackEnd.Api.Filters;
+using ServiceClock_BackEnd.Api.UseCases.Company.Login;
 using ServiceClock_BackEnd.Api.Validator.Http;
-using System.Net;
-using ServiceClock_BackEnd.Api.UseCases.Company.GetCompany;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Application.Interfaces.Services;
-using ServiceClock_BackEnd.Domain.Helpers;
+using System.Net;
 
-namespace ServiceClock_BackEnd.Api.UseCases.Company.Login;
+namespace ServiceClock_BackEnd.Api.UseCases.Client.Login;
 
-public class LoginCompany : UseCaseCore
+public class LoginClient : UseCaseCore
 {
-    private readonly IRepository<Domain.Models.Company> repository;
+    private readonly IRepository<Domain.Models.Client> repository;
     private readonly ITokenService tokenService;
-    public LoginCompany
-        (HttpRequestValidator httpRequestValidator, 
+    public LoginClient
+        (HttpRequestValidator httpRequestValidator,
         NotificationMiddleware middleware,
-        IRepository<Domain.Models.Company> repository,
-        ITokenService tokenService) 
+        IRepository<Domain.Models.Client> repository,
+        ITokenService tokenService)
         : base(httpRequestValidator, middleware)
     {
         this.repository = repository;
         this.tokenService = tokenService;
     }
 
-    [FunctionName("LoginCompany")]
-    [OpenApiOperation(operationId: "LoginCompany", tags: new[] { "Company" })]
-    [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(LoginCompanyRequest), Description = "Request body containing company information.")]
-    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(object), Description = "The OK response with the created company details.")]//Arrumar
-    [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(object), Description = "The Bad Request response in case of invalid input.")]//Arrumar
+    [FunctionName("LoginClient")]
+    [OpenApiOperation(operationId: "LoginClient", tags: new[] { "Client" })]
+    [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(LoginClientRequest), Description = "Request body containing company information.")]
+    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(object), Description = "The OK response with the created company details.")]
+    [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(object), Description = "The Bad Request response in case of invalid input.")]
     public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
     {
 
-        return await Execute(req, async (LoginCompanyRequest request) =>
+        return await Execute(req, async (LoginClientRequest request) =>
         {
             if (request != null)
             {
-                var company = this.repository.Find(e => 
+                var company = this.repository.Find(e =>
                 e.Email.Equals(request.Email)
                 && e.Password.Equals(request.Password))
                 .FirstOrDefault();
@@ -59,3 +58,4 @@ public class LoginCompany : UseCaseCore
     }
 }
 
+    

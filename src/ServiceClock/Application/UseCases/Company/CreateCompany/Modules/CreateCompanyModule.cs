@@ -15,9 +15,9 @@ public class CreateCompanyModule : Module
     {
         services.AddTransient<ICreateCompanyUseCase, CreateCompanyUseCase>();
 
-        services.AddSingleton<ValidDomainHandler<Company, CompanyValidator, CreateCompanyUseCaseRequest>>();
+        services.AddSingleton<ValidDomainHandler<Domain.Models.Company, CompanyValidator, CreateCompanyUseCaseRequest>>();
         services.AddSingleton<VerifyDisponibilityCompanyHandler<CreateCompanyUseCaseRequest>>();
-        services.AddSingleton<SaveDomainDbHandler<Company, CreateCompanyUseCaseRequest>>();
+        services.AddSingleton<SaveDomainDbHandler<Domain.Models.Company, CreateCompanyUseCaseRequest>>();
 
     }
 }

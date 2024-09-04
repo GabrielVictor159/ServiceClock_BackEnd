@@ -27,4 +27,7 @@ public class Client : Entity<Client,ClientValidator>
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public bool Active { get; set; } = true;
 
+    public Guid? CompanyId { get; set; } 
+    public Company? Company { get; set; }
+
 }

@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using ServiceClock_BackEnd.Api.Filters;
 using ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany;
 using ServiceClock_BackEnd.Api.Validator.Http;
-using ServiceClock_BackEnd.Application.UseCases.CreateCompany;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany;

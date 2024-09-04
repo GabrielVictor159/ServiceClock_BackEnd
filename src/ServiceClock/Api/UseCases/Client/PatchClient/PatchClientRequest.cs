@@ -1,12 +1,8 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ServiceClock_BackEnd.Api.UseCases.Client.CreateClient;
-public class CreateClientRequest
+namespace ServiceClock_BackEnd.Api.UseCases.Client.PatchClient;
+
+public class PatchClientRequest
 {
     [JsonProperty("Name")]
     public string Name { get; set; } = "";
@@ -29,3 +25,4 @@ public class CreateClientRequest
     [JsonProperty("BirthDate")]
     public DateTime BirthDate { get; set; } = DateTime.MinValue;
 }
+

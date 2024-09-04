@@ -8,7 +8,7 @@ public class PatchCompanyUseCaseRequest
         (string name, string password, string registrationNumber, string address, string city, string state, string country,
         string postalCode, string phoneNumber)
     {
-        Company = new Company
+        Company = new Domain.Models.Company
         {
             Id = Guid.Empty,
             Name = name,
@@ -23,6 +23,6 @@ public class PatchCompanyUseCaseRequest
         };
     }
 
-    public Company Company { get; set; }
+    public Domain.Models.Company Company { get; set; }
 }
 

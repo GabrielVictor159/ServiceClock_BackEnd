@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using ServiceClock_BackEnd.Application.Boundaries.Client;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Client.CreateClient;
-public class CreateClientPresenter
+public class CreateClientPresenter : Presenter<CreateClientBoundarie, CreateClientResponse>
 {
 }

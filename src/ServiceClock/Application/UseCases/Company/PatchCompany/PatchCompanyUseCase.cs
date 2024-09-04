@@ -2,64 +2,54 @@
 using ServiceClock_BackEnd.Application.Boundaries;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Application.Interfaces.Services;
+using ServiceClock_BackEnd.Application.UseCases.Common.Handlers;
+using ServiceClock_BackEnd.Application.UseCases.Company.CreateCompany;
+using ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany.Handlers;
 using ServiceClock_BackEnd.Domain.Enums;
 using ServiceClock_BackEnd.Domain.Models;
+using ServiceClock_BackEnd.Domain.Validations;
 using ServiceClock_BackEnd.Infraestructure.Data.Repositories;
 
 namespace ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany;
 
 public class PatchCompanyUseCase : IPatchCompanyUseCase
 {
-    private readonly IRepository<Domain.Models.Company> repository;
     private readonly INotificationService notificationService;
-    private readonly ILogService logService;
     private readonly PatchCompanyPresenter outputPort;
+    private readonly ILogService logService;
+    private readonly SearchCompanyForUpdateHandler handler;
 
     public PatchCompanyUseCase
-        (IRepository<Domain.Models.Company> repository,
+        (SearchCompanyForUpdateHandler searchCompanyForUpdateHandler,
+        ValidDomainHandler<Domain.Models.Company, CompanyValidator, PatchCompanyUseCaseRequest> validDomainHandler,
+        VerifyDisponibilityCompanyHandler<PatchCompanyUseCaseRequest> verifyDisponibilityCompanyHandler,
+        SaveChangesRepositoryHandler<Domain.Models.Company, PatchCompanyUseCaseRequest> saveChangesHandler,
+        ILogService logService,
         INotificationService notificationService,
-        PatchCompanyPresenter outputPort,
-        ILogService logService)
+        PatchCompanyPresenter outputPort)
     {
-        this.repository = repository;
+        searchCompanyForUpdateHandler
+            .SetSucessor(validDomainHandler
+            .SetSucessor(verifyDisponibilityCompanyHandler
+            .SetSucessor(saveChangesHandler)));
+
+        this.handler = searchCompanyForUpdateHandler;
         this.notificationService = notificationService;
-        this.logService = logService;
         this.outputPort = outputPort;
+        this.logService = logService;
     }
 
     public void Execute(PatchCompanyUseCaseRequest request)
     {
         try
         {
-            var company = repository.GetById(request.Company?.Id.ToString() ?? "");
-            if (company == null)
-            {
-                notificationService.AddNotification("Company not found", "Não foi encontrado nenhuma empresa com esse Id");
-                return;
-            }
-            company.Name = request.Company!.Name != "" ? request.Company.Name : company.Name;
-            company.Password = request.Company!.Password != "" ? request.Company.Password : company.Password;
-            company.RegistrationNumber = request.Company!.RegistrationNumber != "" ? request.Company.RegistrationNumber : company.RegistrationNumber;
-            company.Address = request.Company!.Address != "" ? request.Company.Address : company.Address;
-            company.City = request.Company!.City != "" ? request.Company.City : company.City;
-            company.State = request.Company!.State != "" ? request.Company.State : company.State;
-            company.Country = request.Company!.Country != "" ? request.Company.Country : company.Country;
-            company.PostalCode = request.Company!.PostalCode != "" ? request.Company.PostalCode : company.PostalCode;
-            company.PhoneNumber = request.Company!.PhoneNumber != "" ? request.Company.PhoneNumber : company.PhoneNumber;
+            handler.ProcessRequest(request);
 
-            if (!company.IsValid)
-            {
-                notificationService.AddNotifications(company.ValidationResult);
-                return;
-            }
-
-            repository.Save();
-
-            outputPort.Standard(new() { Company = company });
+            outputPort.Standard(new() { Company = request.Company });
         }
         catch (Exception ex)
         {
-            logService.logs.Add(new(LogType.ERROR, "CreateCompanyUseCase", $"Occurring an error: {ex.Message ?? ex.InnerException?.Message}, stacktrace: {ex.StackTrace}"));
+            logService.logs.Add(new(LogType.ERROR, "PatchCompanyUseCase", $"Occurring an error: {ex.Message ?? ex.InnerException?.Message}, stacktrace: {ex.StackTrace}"));
             outputPort.Error(ex.Message!);
         }
     }
