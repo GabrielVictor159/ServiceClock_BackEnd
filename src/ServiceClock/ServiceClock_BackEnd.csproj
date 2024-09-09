@@ -52,8 +52,6 @@
     <Folder Include="Api\UseCases\Messages\CreateMessage\" />
     <Folder Include="Api\UseCases\Messages\ListMessages\" />
     <Folder Include="Api\UseCases\Messages\DeleteMessage\" />
-    <Folder Include="Api\UseCases\Services\ListService\" />
-    <Folder Include="Api\UseCases\Services\GetServiceById\" />
     <Folder Include="Application\UseCases\Company\CreateCompany\Handlers\" />
     <Folder Include="Application\UseCases\Services\CreateService\Handlers\" />
   </ItemGroup>
