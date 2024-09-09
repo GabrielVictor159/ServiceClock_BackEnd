@@ -38,7 +38,7 @@ public class CreateClient : UseCaseCore
     }
 
     [FunctionName("CreateClient")]
-    [OpenApiOperation(operationId: "CreateClient", tags: new[] { "Company" })]
+    [OpenApiOperation(operationId: "CreateClient", tags: new[] { "Client" })]
     [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(CreateClientRequest), Description = "Request body containing company information.")]
     [OpenApiSecurity("bearer",
                      SecuritySchemeType.ApiKey,

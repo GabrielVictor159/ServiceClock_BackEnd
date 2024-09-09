@@ -17,6 +17,9 @@ public partial class Context : DbContext
     }
     public DbSet<Company> Companies { get; set; }
     public DbSet<Client> Clients { get; set; }
+    public DbSet<Appointment> Appointments { get; set; }
+    public DbSet<Service> Services { get; set; }
+    public DbSet<Message> Messages { get; set; }
     public DbSet<Log> Logs { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -33,7 +36,10 @@ public partial class Context : DbContext
     {
         modelBuilder.ApplyConfiguration(new CompanyMap());
         modelBuilder.ApplyConfiguration(new ClientMap());
+        modelBuilder.ApplyConfiguration(new AppointmentMap());
+        modelBuilder.ApplyConfiguration(new ServiceMap());
         modelBuilder.ApplyConfiguration(new LogMap());
+        modelBuilder.ApplyConfiguration(new MessageMap());
         OnModelCreatingPartial(modelBuilder);
     }
 

@@ -21,6 +21,7 @@ public class Company : Entity<Company, CompanyValidator>
     public string PostalCode { get; set; } = "";
     public string PhoneNumber { get; set; } = "";
     public string Email { get; set; } = "";
+    public string CompanyImage { get; set; } = "";
     public DateTime EstablishedDate { get; set; }
 }
 

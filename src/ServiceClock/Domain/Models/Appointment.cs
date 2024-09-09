@@ -1,10 +1,16 @@
 ﻿
 using ServiceClock_BackEnd.Domain.Enums;
+using ServiceClock_BackEnd.Domain.Validations;
 
 namespace ServiceClock_BackEnd.Domain.Models;
 
-public class Appointment
+public class Appointment : Entity<Appointment,AppointmentValidator>
 {
+    public Appointment() 
+        : base(new())
+    {
+    }
+
     public Guid Id { get; set; }
     public Guid ServiceId { get; set; }
     public Guid ClientId { get; set; }
@@ -13,5 +19,7 @@ public class Appointment
     public AppointmentStatus Status { get; set; }
     public DateTime CreatedAt { get; set; }
 
+    public Client? Client { get; set; }
+    public Service? Service { get; set; }
 }
 

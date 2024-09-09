@@ -6,6 +6,8 @@ using ServiceClock_BackEnd.Application.UseCases.Client.CreateClient.Modules;
 using ServiceClock_BackEnd.Application.UseCases.Client.PatchClient.Modules;
 using ServiceClock_BackEnd.Application.UseCases.Company.CreateCompany.Modules;
 using ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany.Modules;
+using ServiceClock_BackEnd.Application.UseCases.Services.CreateService.Modules;
+using ServiceClock_BackEnd.Application.UseCases.Services.DeleteService.Modules;
 using ServiceClock_BackEnd.Domain.Models;
 using ServiceClock_BackEnd.Domain.Modules;
 using ServiceClock_BackEnd.Infraestructure.Data.Repositories;
@@ -27,6 +29,8 @@ public class ApplicationModule : Module
         new PatchCompanyModule().Configure(services);
         new CreateClientModule().Configure(services);
         new PatchClientModule().Configure(services);
+        new CreateServiceModule().Configure(services);
+        new DeleteServiceUseCaseModule().Configure(services);
     }
     private void AddServices(IServiceCollection services)
     {
@@ -36,6 +40,9 @@ public class ApplicationModule : Module
     {
         services.AddSingleton<IRepository<Company>, Repository<Company>>();
         services.AddSingleton<IRepository<Client>, Repository<Client>>();
+        services.AddSingleton<IRepository<Service>, Repository<Service>>();
+        services.AddSingleton<IRepository<Appointment>, Repository<Appointment>>();
+        services.AddSingleton<IRepository<Message>, Repository<Message>>();
         services.AddSingleton<IRepository<Log>, Repository<Log>>();
     }
 }

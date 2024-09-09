@@ -1,8 +1,15 @@
 ﻿
+using ServiceClock_BackEnd.Domain.Validations;
+
 namespace ServiceClock_BackEnd.Domain.Models;
 
-public class Service
+public class Service : Entity<Service,ServiceValidator>
 {
+    public Service() 
+        : base(new ())
+    {
+    }
+
     public Guid Id { get; set; } 
     public string Name { get; set; } = "";
     public string Description { get; set; } = "";

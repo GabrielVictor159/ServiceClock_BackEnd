@@ -29,7 +29,7 @@ public class VerifyDisponibilityCompanyHandler<Request> : Handler<Request>
 
         if (domainObject == null)
         {
-            throw new ApplicationException($"Could not find any object with the type Comapny in the request");
+            throw new ApplicationException($"Could not find any object with the type Company in the request");
         }
 
         if(companyRepository.FindSingle(e=>(e.Name==domainObject.Name || e.Email == domainObject.Email || e.RegistrationNumber == domainObject.RegistrationNumber) && e.Id != domainObject.Id) !=null)
