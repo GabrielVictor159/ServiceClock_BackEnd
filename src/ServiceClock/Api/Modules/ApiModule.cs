@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ServiceClock_BackEnd.Api.Filters;
 using ServiceClock_BackEnd.Api.Mapper;
+using ServiceClock_BackEnd.Api.UseCases.Appointment.AlterStateAppointment;
+using ServiceClock_BackEnd.Api.UseCases.Appointment.RequestAppointment;
 using ServiceClock_BackEnd.Api.UseCases.Client.CreateClient;
 using ServiceClock_BackEnd.Api.UseCases.Client.PatchClient;
 using ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany;
@@ -31,6 +33,9 @@ namespace ServiceClock_BackEnd.Api.Modules
             services.AddSingleton<PatchClientPresenter>();
             services.AddSingleton<CreateServicePresenter>();
             services.AddSingleton<DeleteServicePresenter>();
+            services.AddSingleton<RequestAppointmentPresenter>();
+            services.AddSingleton<AlterStateAppointmentPresenter>();
+
         }
     }
 }

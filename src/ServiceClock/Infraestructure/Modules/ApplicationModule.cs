@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Application.Interfaces.Services;
+using ServiceClock_BackEnd.Application.UseCases.Appointment.AlterStateAppointment.Modules;
+using ServiceClock_BackEnd.Application.UseCases.Appointment.RequestAppointment.Modules;
 using ServiceClock_BackEnd.Application.UseCases.Client.CreateClient.Modules;
 using ServiceClock_BackEnd.Application.UseCases.Client.PatchClient.Modules;
 using ServiceClock_BackEnd.Application.UseCases.Company.CreateCompany.Modules;
@@ -31,6 +33,8 @@ public class ApplicationModule : Module
         new PatchClientModule().Configure(services);
         new CreateServiceModule().Configure(services);
         new DeleteServiceUseCaseModule().Configure(services);
+        new RequestAppointmentUseCaseModule().Configure(services);
+        new AlterStateAppointmentUseCaseModule().Configure(services);
     }
     private void AddServices(IServiceCollection services)
     {

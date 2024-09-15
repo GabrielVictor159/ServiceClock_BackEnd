@@ -8,6 +8,11 @@
 	  <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Api\UseCases\Appointment\ApproveAppointment\**" />
+    <EmbeddedResource Remove="Api\UseCases\Appointment\ApproveAppointment\**" />
+    <None Remove="Api\UseCases\Appointment\ApproveAppointment\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="AutoMapper.Collection" Version="10.0.0" />
     <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="7.0.1" />
@@ -46,9 +51,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Api\UseCases\Appointment\ApproveAppointment\" />
     <Folder Include="Api\UseCases\Appointment\DateAnalysisJob\" />
-    <Folder Include="Api\UseCases\Appointment\RequestAppointment\" />
     <Folder Include="Api\UseCases\Messages\CreateMessage\" />
     <Folder Include="Api\UseCases\Messages\ListMessages\" />
     <Folder Include="Api\UseCases\Messages\DeleteMessage\" />

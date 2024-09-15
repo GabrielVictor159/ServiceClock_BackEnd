@@ -12,7 +12,7 @@ public class DeleteServiceUseCaseRequest
 
     public Guid ServiceId { get; set; }
     public Guid CompanyId { get; set; }
-    public List<Appointment> appointments { get; set; } = new();
+    public List<Domain.Models.Appointment> appointments { get; set; } = new();
     public Service? Service { get; set; }
     public bool IsDeleted { get; set; } = false;
 }

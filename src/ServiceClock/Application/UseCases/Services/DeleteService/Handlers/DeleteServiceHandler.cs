@@ -7,12 +7,12 @@ namespace ServiceClock_BackEnd.Application.UseCases.Services.DeleteService.Handl
 
 public class DeleteServiceHandler : Handler<DeleteServiceUseCaseRequest>
 {
-    private readonly IRepository<Appointment> repositoryAppointment;
+    private readonly IRepository<Domain.Models.Appointment> repositoryAppointment;
     private readonly IRepository<Service> repositoryService;
     private readonly INotificationService notificationService;
 
     public DeleteServiceHandler
-        (IRepository<Appointment> repositoryAppointment, 
+        (IRepository<Domain.Models.Appointment> repositoryAppointment, 
         IRepository<Service> repositoryService, 
         INotificationService notificationService, 
         ILogService logService)
