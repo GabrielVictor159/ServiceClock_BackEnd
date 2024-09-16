@@ -13,6 +13,8 @@ public class PatchCompanyRequest
     public string RegistrationNumber { get; set; } = "";
     [JsonProperty("Address")]
     public string Address { get; set; } = "";
+    [JsonProperty("Image")]
+    public string Image { get; set; } = "";
     [JsonProperty("City")]
     public string City { get; set; } = "";
     [JsonProperty("State")]

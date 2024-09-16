@@ -14,6 +14,8 @@ public class PatchClientRequest
     public string PhoneNumber { get; set; } = "";
     [JsonProperty("Address")]
     public string Address { get; set; } = "";
+    [JsonProperty("Image")]
+    public string Image { get; set; } = "";
     [JsonProperty("City")]
     public string City { get; set; } = "";
     [JsonProperty("State")]

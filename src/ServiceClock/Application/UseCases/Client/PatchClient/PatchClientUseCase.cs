@@ -25,12 +25,14 @@ public class PatchClientUseCase : IPatchClientUseCase
         SearchClientForUpdateHandler searchClientForUpdateHandler,
         ValidDomainHandler<Domain.Models.Client, ClientValidator, PatchClientUseCaseRequest> validDomainHandler,
         VerifyDisponibilityClientHandler<PatchClientUseCaseRequest> verifyDisponibilityCompanyHandler,
-        SaveChangesRepositoryHandler<Domain.Models.Client, PatchClientUseCaseRequest> saveChangesHandler)
+        SaveChangesRepositoryHandler<Domain.Models.Client, PatchClientUseCaseRequest> saveChangesHandler,
+        SaveImageHandler saveImageHandler)
     {
         searchClientForUpdateHandler
             .SetSucessor(validDomainHandler
             .SetSucessor(verifyDisponibilityCompanyHandler
-            .SetSucessor(saveChangesHandler)));
+            .SetSucessor(saveImageHandler
+            .SetSucessor(saveChangesHandler))));
 
         this.handler = searchClientForUpdateHandler;
         this.logService = logService;

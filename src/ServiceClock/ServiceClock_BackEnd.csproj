@@ -51,7 +51,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Api\UseCases\Appointment\DateAnalysisJob\" />
     <Folder Include="Api\UseCases\Messages\CreateMessage\" />
     <Folder Include="Api\UseCases\Messages\ListMessages\" />
     <Folder Include="Api\UseCases\Messages\DeleteMessage\" />

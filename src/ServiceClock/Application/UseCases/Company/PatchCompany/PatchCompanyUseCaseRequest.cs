@@ -22,7 +22,7 @@ public class PatchCompanyUseCaseRequest
             PhoneNumber = phoneNumber,
         };
     }
-
+    public string Image { get; set; } = "";
     public Domain.Models.Company Company { get; set; }
 }
 

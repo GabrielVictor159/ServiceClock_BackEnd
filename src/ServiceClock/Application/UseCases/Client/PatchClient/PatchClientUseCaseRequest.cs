@@ -21,6 +21,7 @@ public class PatchClientUseCaseRequest
             BirthDate = birthDate
         };
     }
+    public string Image { get; set; } = "";
     public Domain.Models.Client Client { get; set; }
 
 }
