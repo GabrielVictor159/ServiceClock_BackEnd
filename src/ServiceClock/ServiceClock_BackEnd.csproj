@@ -37,6 +37,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.0" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
+    <PackageReference Include="MimeTypesMap" Version="1.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.0" />
@@ -53,7 +54,6 @@
   <ItemGroup>
     <Folder Include="Api\UseCases\Messages\CreateMessage\" />
     <Folder Include="Api\UseCases\Messages\ListMessages\" />
-    <Folder Include="Api\UseCases\Messages\DeleteMessage\" />
     <Folder Include="Application\UseCases\Company\CreateCompany\Handlers\" />
     <Folder Include="Application\UseCases\Services\CreateService\Handlers\" />
   </ItemGroup>

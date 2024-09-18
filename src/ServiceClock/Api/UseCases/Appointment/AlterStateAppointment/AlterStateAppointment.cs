@@ -18,6 +18,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using ServiceClock_BackEnd.Application.UseCases.Appointment.AlterStateAppointment;
+using ServiceClock_BackEnd.Api.Helpers.Hateoas;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Appointment.AlterStateAppointment;
 public class AlterStateAppointment : UseCaseCore
@@ -50,6 +51,7 @@ public class AlterStateAppointment : UseCaseCore
                      Name = "code")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(AlterStateAppointmentResponse), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
+    [Hateoas("Appointment", "update", "/AlterStateAppointment", "POST", typeof(AlterStateAppointmentRequest))]
     public async Task<IActionResult> Run(
            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
     {

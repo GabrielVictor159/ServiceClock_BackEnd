@@ -13,6 +13,7 @@ using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.OpenApi.Models;
+using ServiceClock_BackEnd.Api.Helpers.Hateoas;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Company.GetCompany;
 
@@ -40,6 +41,7 @@ public class GetCompany : UseCaseCore
                      Name = "code")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(object), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
+    [Hateoas("Company", "search", "/GetCompany", "POST", typeof(GetCompanyRequest))]
     public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
     {
@@ -47,7 +49,8 @@ public class GetCompany : UseCaseCore
         {
             if (request != null)
             {
-                return new OkObjectResult(
+
+                return new OkObjectResult(new { Companies =
                     this.repository.Find(e =>
                         (request.Id == Guid.Empty || e.Id == request.Id) &&
                         e.Name.ToLower().Contains(request.Name.ToLower()) &&
@@ -59,12 +62,12 @@ public class GetCompany : UseCaseCore
                         e.PostalCode.ToLower().Contains(request.PostalCode.ToLower()) &&
                         e.PhoneNumber.ToLower().Contains(request.PhoneNumber.ToLower()) &&
                         e.Email.ToLower().Contains(request.Email.ToLower())
-                    ,request.IndexPage, ((int)request.PageSize))
-                    .Select(e => new 
-                    { 
-                        Name = e.Name, RegistrationNumber = e.RegistrationNumber, Address = e.Address, City = e.City, State = e.State, 
+                    , request.IndexPage, ((int)request.PageSize))
+                    .Select(e => new
+                    {
+                        Name = e.Name, RegistrationNumber = e.RegistrationNumber, Address = e.Address, City = e.City, State = e.State,
                         Country = e.Country, PostalCode = e.PostalCode, PhoneNumber = e.PhoneNumber, Email = e.Email
-                    })
+                    }), _links = HateoasScheme.Instance.GetLinks("Company") }
                 );
             }
             return new OkResult();

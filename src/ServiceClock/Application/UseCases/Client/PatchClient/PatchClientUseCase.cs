@@ -26,7 +26,7 @@ public class PatchClientUseCase : IPatchClientUseCase
         ValidDomainHandler<Domain.Models.Client, ClientValidator, PatchClientUseCaseRequest> validDomainHandler,
         VerifyDisponibilityClientHandler<PatchClientUseCaseRequest> verifyDisponibilityCompanyHandler,
         SaveChangesRepositoryHandler<Domain.Models.Client, PatchClientUseCaseRequest> saveChangesHandler,
-        SaveImageHandler saveImageHandler)
+        Handlers.SaveImageHandler saveImageHandler)
     {
         searchClientForUpdateHandler
             .SetSucessor(validDomainHandler

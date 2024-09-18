@@ -1,4 +1,5 @@
-﻿using ServiceClock_BackEnd.Domain.Models;
+﻿using Newtonsoft.Json;
+using ServiceClock_BackEnd.Domain.Models;
 
 namespace ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany;
 
@@ -23,6 +24,7 @@ public class PatchCompanyUseCaseRequest
         };
     }
     public string Image { get; set; } = "";
+    public string ImageName { get; set; } = "";
     public Domain.Models.Company Company { get; set; }
 }
 

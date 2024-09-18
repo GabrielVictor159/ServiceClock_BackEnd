@@ -23,7 +23,7 @@ public class SaveImageHandler : Handler<PatchClientUseCaseRequest>
     {
         if (request.Image != "")
         {
-            var result = blobService.SaveImage(request.Image);
+            var result = blobService.SaveBlob(request.Image,request.ImageName);
             if (!result.Sucess)
             {
                 this.notificationService.AddNotification("Image not save", $"Não foi possivel salvar a imagem");

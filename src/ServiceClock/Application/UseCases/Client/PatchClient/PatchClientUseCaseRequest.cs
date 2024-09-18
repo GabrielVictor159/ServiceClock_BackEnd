@@ -22,6 +22,7 @@ public class PatchClientUseCaseRequest
         };
     }
     public string Image { get; set; } = "";
+    public string ImageName { get; set; } = "";
     public Domain.Models.Client Client { get; set; }
 
 }

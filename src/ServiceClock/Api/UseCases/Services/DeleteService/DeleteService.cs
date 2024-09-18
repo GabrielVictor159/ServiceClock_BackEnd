@@ -13,6 +13,7 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
 using ServiceClock_BackEnd.Application.UseCases.Services.DeleteService;
+using ServiceClock_BackEnd.Api.Helpers.Hateoas;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Services.DeleteService;
 
@@ -42,6 +43,7 @@ public class DeleteService : UseCaseCore
                      Name = "code")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(object), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
+    [Hateoas("Service","delete","/DeleteService","DELETE",typeof(DeleteServiceRequest))]
     public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "DeleteService")] HttpRequest req)
     {

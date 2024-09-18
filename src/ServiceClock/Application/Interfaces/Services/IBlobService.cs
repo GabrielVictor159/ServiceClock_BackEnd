@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 namespace ServiceClock_BackEnd.Application.Interfaces.Services;
 public interface IBlobService
 {
-    (bool Sucess, string Id, Exception? e) SaveImage(string Blob);
-    void DeleteImage(string blobName);
+    (bool Sucess, string Id, Exception? e) SaveBlob(string Blob, string FileName);
+    void DeleteBlob(string blobName);
 }

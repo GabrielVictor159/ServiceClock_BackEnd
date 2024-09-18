@@ -20,6 +20,7 @@ using ServiceClock_BackEnd.Api.UseCases.Client.CreateClient;
 using ServiceClock_BackEnd.Application.UseCases.Client.CreateClient;
 using ServiceClock_BackEnd.Application.UseCases.Appointment.RequestAppointment;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
+using ServiceClock_BackEnd.Api.Helpers.Hateoas;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Appointment.RequestAppointment;
 public class RequestAppointment : UseCaseCore
@@ -52,6 +53,7 @@ public class RequestAppointment : UseCaseCore
                      Name = "code")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(RequestAppointmentResponse), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
+    [Hateoas("Appointment","create","/RequestAppointment","POST", typeof(RequestAppointmentRequest))]
     public async Task<IActionResult> Run(
            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
     {

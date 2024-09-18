@@ -1,6 +1,8 @@
 ﻿
+using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using HeyRed.Mime;
 using ServiceClock_BackEnd.Application.Interfaces.Services;
 using System.IO;
 
@@ -13,28 +15,37 @@ public class BlobService : IBlobService
     {
         blobServiceClient = new BlobServiceClient(Environment.GetEnvironmentVariable("STORAGE_CONECTION_STRING"), new BlobClientOptions());
     }
-    public (bool Sucess, string Id, Exception? e) SaveImage(string Blob)
+    public (bool Sucess, string Id, Exception? e) SaveBlob(string Blob, string FileName)
     {
+        long maxFileSize = 10 * 1024 * 1024; //10mb
         Guid Id = Guid.NewGuid();
 
         BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient(Environment.GetEnvironmentVariable("BLOB_CONTAINER"));
         try
         {
-            string base64WithoutPrefix = Blob.Replace("data:image/jpeg;base64,", "").Replace("data:image/png;base64,", "");
+            string base64WithoutPrefix = Blob.Split(',').Last();
 
-            byte[] imageBytes = Convert.FromBase64String(base64WithoutPrefix);
+            byte[] fileBytes = Convert.FromBase64String(base64WithoutPrefix);
+
+            if (fileBytes.Length > maxFileSize)
+            {
+               throw new InfraestructureException($"O arquivo excede o limite de tamanho permitido de {maxFileSize / (1024 * 1024)} MB.");
+            }
+
+            string fileExtension = Path.GetExtension(FileName); 
+            string contentType = MimeTypesMap.GetMimeType(fileExtension);
 
             BlobClient blobClient = blobContainerClient.GetBlobClient(Id.ToString());
             BlobHttpHeaders headers = new BlobHttpHeaders
             {
-                ContentType = "image/png"
-            };
+                ContentType = contentType
+            };  
 
-            using (var stream = new MemoryStream(imageBytes))
+            using (var stream = new MemoryStream(fileBytes))
             {
                 blobClient.Upload(stream, headers);
             }
-            return (true, Id.ToString() + ".png", null);
+            return (true, Id.ToString() + fileExtension, null);
         }
         catch (Exception E)
         {
@@ -42,7 +53,7 @@ public class BlobService : IBlobService
         }
     }
 
-    public void DeleteImage(string blobName)
+    public void DeleteBlob(string blobName)
     {
         BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient(Environment.GetEnvironmentVariable("BLOB_CONTAINER"));
 

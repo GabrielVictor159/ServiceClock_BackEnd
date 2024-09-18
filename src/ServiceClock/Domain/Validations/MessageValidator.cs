@@ -24,15 +24,18 @@ public class MessageValidator : AbstractValidator<Message>
             .NotEmpty()
             .WithMessage("CompanyId é obrigatório.");
 
-        RuleFor(x => x.MessageContent)
+        RuleFor(x => x.CreatedBy)
             .NotEmpty()
-            .WithMessage("Message Content é obrigatório.")
+            .WithMessage("CreatedBy é obrigatório.");
+
+        RuleFor(x => x.MessageContent)
             .MaximumLength(200)
             .WithMessage("O tamanho maximo da mensagem é 200 Carácteres");
 
-        RuleFor(x => x.LogDate)
+        RuleFor(x => x.CreateAt)
             .NotEmpty()
-            .WithMessage("LogDate é obrigatório.");
+            .WithMessage("CreateAt é obrigatório.");
+
     }
 }
 

@@ -6,9 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Appointment.RequestAppointment;
-public class RequestAppointmentResponse
+public class RequestAppointmentResponse : ResponseCore
 {
     public RequestAppointmentResponse(RequestAppointmentBoundarie boundarie)
+        : base("Appointment")
     {
         if(boundarie.Appointment!=null)
         {

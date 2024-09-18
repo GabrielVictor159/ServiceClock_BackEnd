@@ -17,6 +17,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Grpc.Core;
+using ServiceClock_BackEnd.Api.Helpers.Hateoas;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Appointment.ListAppointment;
 public class ListAppointment : UseCaseCore
@@ -42,6 +43,7 @@ public class ListAppointment : UseCaseCore
                      Name = "code")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
+    [Hateoas("Appointment","search","/ListAppointment","POST",typeof(ListAppointmentRequest))]
     public async Task<IActionResult> Run(
            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
     {
@@ -67,7 +69,9 @@ public class ListAppointment : UseCaseCore
                     return new ForbidResult("Você não tem permissão para ver os agendamentos deste serviço");
                 }
             }
-            return new OkObjectResult (this.appointmentRepository.Find(e =>
+            return new OkObjectResult (new
+            {  Appointments =
+                this.appointmentRepository.Find(e =>
                 (request.Id == Guid.Empty || e.Id == request.Id) &&
                 (request.ClientId == Guid.Empty || e.ClientId == request.ClientId) &&
                 (e.ServiceId == request.ServiceId) &&
@@ -85,7 +89,8 @@ public class ListAppointment : UseCaseCore
                     Description = e.Description,
                     CreatedAt = e.CreatedAt
                 })
-                );   
+            , _links = HateoasScheme.Instance.GetLinks("Appointment")
+            });   
         });
     }
 }

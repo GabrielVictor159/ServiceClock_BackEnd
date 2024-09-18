@@ -9,6 +9,7 @@ using ServiceClock_BackEnd.Api.UseCases.Company.GetCompany;
 using ServiceClock_BackEnd.Api.Validator.Http;
 using System.Net;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
+using ServiceClock_BackEnd.Api.Helpers.Hateoas;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Company.GetCompanyById;
 
@@ -28,6 +29,7 @@ public class GetCompanyById : UseCaseCore
     [OpenApiOperation(operationId: "GetCompanyById", tags: new[] { "Company" })]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(object), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
+    [Hateoas("Company","search","/GetCompany/{id}","GET")]
     public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "GetCompany/{id}")] HttpRequest req,
             string id)
@@ -49,7 +51,7 @@ public class GetCompanyById : UseCaseCore
             return new BadRequestObjectResult("Company not found");
         }
 
-        return new OkObjectResult(result);
+        return new OkObjectResult(new { Company = result, _links = HateoasScheme.Instance.GetLinks("Company") });
 
     }
 }

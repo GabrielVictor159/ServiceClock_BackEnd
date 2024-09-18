@@ -15,8 +15,10 @@ public class Message : Entity<Message, MessageValidator>
     public MessageType Type { get; set; }
     public Guid ClientId { get; set; }
     public Guid CompanyId { get; set; }
+    public Guid CreatedBy { get; set; }
     public string MessageContent { get; set; } = "";
-    public DateTime LogDate { get; set; } = DateTime.Now;
+    public DateTime CreateAt { get; set; } = DateTime.Now;
+    public bool Active { get; set; } = true;
 
     public Client? Client { get; set; }
     public Company? Company { get; set; }

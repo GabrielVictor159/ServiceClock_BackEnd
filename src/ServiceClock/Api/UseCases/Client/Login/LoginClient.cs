@@ -10,6 +10,7 @@ using ServiceClock_BackEnd.Api.Validator.Http;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Application.Interfaces.Services;
 using System.Net;
+using ServiceClock_BackEnd.Api.Helpers.Hateoas;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Client.Login;
 
@@ -33,6 +34,7 @@ public class LoginClient : UseCaseCore
     [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(LoginClientRequest), Description = "Request body containing company information.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(object), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(object), Description = "The Bad Request response in case of invalid input.")]
+    [Hateoas("Client", "related", "/LoginClient", "POST", typeof(LoginClientRequest))]
     public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
     {
@@ -51,7 +53,7 @@ public class LoginClient : UseCaseCore
                     return new BadRequestObjectResult("Login Invalid");
                 }
                 var token = this.tokenService.Generate("Company", company.Id);
-                return new OkObjectResult(new { Token = token });
+                return new OkObjectResult(new { Token = token, _links = HateoasScheme.Instance.GetLinks("Client") });
             }
             return new OkResult();
         });

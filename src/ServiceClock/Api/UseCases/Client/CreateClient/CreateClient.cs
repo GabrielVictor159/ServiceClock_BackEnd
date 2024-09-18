@@ -17,6 +17,7 @@ using ServiceClock_BackEnd.Application.UseCases.Company.CreateCompany;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.OpenApi.Models;
 using ServiceClock_BackEnd.Application.UseCases.Client.CreateClient;
+using ServiceClock_BackEnd.Api.Helpers.Hateoas;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Client.CreateClient;
 public class CreateClient : UseCaseCore
@@ -46,6 +47,7 @@ public class CreateClient : UseCaseCore
                      Name = "code")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(CreateClientResponse), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
+    [Hateoas("Client","create","/CreateClient","POST",typeof(CreateClientRequest))]
     public async Task<IActionResult> Run(
            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
     {

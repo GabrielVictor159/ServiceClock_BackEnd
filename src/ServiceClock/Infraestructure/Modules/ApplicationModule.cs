@@ -8,6 +8,7 @@ using ServiceClock_BackEnd.Application.UseCases.Client.CreateClient.Modules;
 using ServiceClock_BackEnd.Application.UseCases.Client.PatchClient.Modules;
 using ServiceClock_BackEnd.Application.UseCases.Company.CreateCompany.Modules;
 using ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany.Modules;
+using ServiceClock_BackEnd.Application.UseCases.Messages.CreateMessage.Modules;
 using ServiceClock_BackEnd.Application.UseCases.Services.CreateService.Modules;
 using ServiceClock_BackEnd.Application.UseCases.Services.DeleteService.Modules;
 using ServiceClock_BackEnd.Domain.Models;
@@ -35,6 +36,7 @@ public class ApplicationModule : Module
         new DeleteServiceUseCaseModule().Configure(services);
         new RequestAppointmentUseCaseModule().Configure(services);
         new AlterStateAppointmentUseCaseModule().Configure(services);
+        new CreateMessageModule().Configure(services);
     }
     private void AddServices(IServiceCollection services)
     {

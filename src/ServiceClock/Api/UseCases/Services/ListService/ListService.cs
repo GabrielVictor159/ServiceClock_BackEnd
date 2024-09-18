@@ -12,6 +12,7 @@ using ServiceClock_BackEnd.Api.UseCases.Client.GetClient;
 using ServiceClock_BackEnd.Api.Validator.Http;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using System.Net;
+using ServiceClock_BackEnd.Api.Helpers.Hateoas;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Services.ListService;
 
@@ -42,6 +43,7 @@ public class ListService : UseCaseCore
                      Name = "code")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(object), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
+    [Hateoas("Service", "search", "/ListService", "POST", typeof(ListServiceRequest))]
     public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
     {
@@ -66,7 +68,8 @@ public class ListService : UseCaseCore
             }
             if (request != null)
             {
-                return new OkObjectResult(
+                return new OkObjectResult(new
+                { Services =
                     this.serviceRepository.Find(e =>
                         (request.Id == Guid.Empty || e.Id == request.Id) &&
                         e.Name.ToLower().Contains(request.Name.ToLower()) &&
@@ -80,10 +83,10 @@ public class ListService : UseCaseCore
                     , request.IndexPage, ((int)request.PageSize))
                     .Select(e => new
                     {
-                        Id = e.Id, Name = e.Name, Description = e.Description, Address = e.Address, 
+                        Id = e.Id, Name = e.Name, Description = e.Description, Address = e.Address,
                         City = e.City, State = e.State, Country = e.Country, PostalCode = e.PostalCode,
                     })
-                );
+                , _links = HateoasScheme.Instance.GetLinks("Service")});
             }
             return new OkResult();
         });

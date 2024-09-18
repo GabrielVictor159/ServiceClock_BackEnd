@@ -14,6 +14,7 @@ using ServiceClock_BackEnd.Api.Filters;
 using ServiceClock_BackEnd.Api.Validator.Http;
 using AutoMapper;
 using ServiceClock_BackEnd.Application.UseCases.Company.CreateCompany;
+using ServiceClock_BackEnd.Api.Helpers.Hateoas;
 #pragma warning disable CS1998
 namespace ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany
 {
@@ -41,6 +42,7 @@ namespace ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany
         [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(CreateCompanyRequest), Description = "Request body containing company information.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(CreateCompanyResponse), Description = "The OK response with the created company details.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
+        [Hateoas("Company", "create", "/CreateCompany", "POST", typeof(CreateCompanyRequest))]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {

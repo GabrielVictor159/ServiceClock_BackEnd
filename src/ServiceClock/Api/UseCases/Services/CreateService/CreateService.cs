@@ -13,6 +13,7 @@ using ServiceClock_BackEnd.Api.Validator.Http;
 using ServiceClock_BackEnd.Application.UseCases.Client.CreateClient;
 using ServiceClock_BackEnd.Application.UseCases.Services.CreateService;
 using System.Net;
+using ServiceClock_BackEnd.Api.Helpers.Hateoas;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Services.CreateService;
 
@@ -43,6 +44,7 @@ public class CreateService : UseCaseCore
                      Name = "code")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(CreateServiceResponse), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
+    [Hateoas("Service","create","/CreateService","POST",typeof(CreateServiceRequest))]
     public async Task<IActionResult> Run(
            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
     {

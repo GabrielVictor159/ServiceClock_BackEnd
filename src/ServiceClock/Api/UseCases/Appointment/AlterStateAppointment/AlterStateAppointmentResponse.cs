@@ -6,9 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Appointment.AlterStateAppointment;
-public class AlterStateAppointmentResponse
+public class AlterStateAppointmentResponse : ResponseCore
 {
     public AlterStateAppointmentResponse(AlterStateAppointmentBoundarie boundarie)
+        : base("Appointment")
     {
         if(boundarie.Appointment!=null && boundarie.Appointment.Status==boundarie.Status)
         {

@@ -20,7 +20,7 @@ public class PatchClientModule : Module
         services.AddSingleton<ValidDomainHandler<Domain.Models.Client, ClientValidator, PatchClientUseCaseRequest>>();
         services.AddSingleton<VerifyDisponibilityClientHandler<PatchClientUseCaseRequest>>();
         services.AddSingleton<SearchClientForUpdateHandler>();
-        services.AddSingleton<SaveImageHandler>();
+        services.AddSingleton<Handlers.SaveImageHandler>();
     }
 }
 

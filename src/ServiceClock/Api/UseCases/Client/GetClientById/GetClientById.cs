@@ -8,6 +8,7 @@ using ServiceClock_BackEnd.Api.Filters;
 using ServiceClock_BackEnd.Api.Validator.Http;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using System.Net;
+using ServiceClock_BackEnd.Api.Helpers.Hateoas;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Client.GetClientById;
 
@@ -26,6 +27,7 @@ public class GetClientById : UseCaseCore
     [OpenApiOperation(operationId: "GetClientById", tags: new[] { "Client" })]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(object), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
+    [Hateoas("Client","search","/GetClient/{id}","GET")]
     public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "GetClient/{id}")] HttpRequest req,
             string id)
@@ -47,7 +49,7 @@ public class GetClientById : UseCaseCore
             return new BadRequestObjectResult("Client not found");
         }
 
-        return new OkObjectResult(result);
+        return new OkObjectResult(new { Client = result, _links = HateoasScheme.Instance.GetLinks("Client") });
 
     }
 

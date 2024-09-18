@@ -11,6 +11,7 @@ using ServiceClock_BackEnd.Api.UseCases.Company.GetCompany;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Application.Interfaces.Services;
 using ServiceClock_BackEnd.Domain.Helpers;
+using ServiceClock_BackEnd.Api.Helpers.Hateoas;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Company.Login;
 
@@ -32,8 +33,9 @@ public class LoginCompany : UseCaseCore
     [FunctionName("LoginCompany")]
     [OpenApiOperation(operationId: "LoginCompany", tags: new[] { "Company" })]
     [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(LoginCompanyRequest), Description = "Request body containing company information.")]
-    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(object), Description = "The OK response with the created company details.")]//Arrumar
-    [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(object), Description = "The Bad Request response in case of invalid input.")]//Arrumar
+    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(object), Description = "The OK response with the created company details.")]
+    [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(object), Description = "The Bad Request response in case of invalid input.")]
+    [Hateoas("Company","related","/LoginCompany","POST",typeof(LoginCompanyRequest))]
     public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
     {
@@ -52,7 +54,7 @@ public class LoginCompany : UseCaseCore
                     return new BadRequestObjectResult("Login Invalid");
                 }
                 var token = this.tokenService.Generate("Company", company.Id);
-                return new OkObjectResult(new { Token = token });
+                return new OkObjectResult(new { Token = token, _links=HateoasScheme.Instance.GetLinks("Company")});
             }
             return new OkResult();
         });

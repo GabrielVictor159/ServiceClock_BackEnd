@@ -10,6 +10,7 @@ using ServiceClock_BackEnd.Api.Validator.Http;
 using ServiceClock_BackEnd.Application.UseCases.Client.PatchClient;
 using ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany;
 using System.Net;
+using ServiceClock_BackEnd.Api.Helpers.Hateoas;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Client.PatchClient;
 
@@ -36,8 +37,9 @@ public class PatchClient : UseCaseCore
     [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(PatchClientRequest), Description = "Request body containing company information.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(PatchClientResponse), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
+    [Hateoas("Client","update","/PatchClient","PATCH", typeof(PatchClientRequest))]
     public async Task<IActionResult> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = null)] HttpRequest req)
     {
         return await Execute(req, async (PatchClientRequest request) =>
         {

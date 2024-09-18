@@ -12,6 +12,7 @@ using ServiceClock_BackEnd.Api.Validator.Http;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany;
+using ServiceClock_BackEnd.Api.Helpers.Hateoas;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Company.PatchCompany;
 
@@ -39,6 +40,7 @@ public class PatchCompany : UseCaseCore
     [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(PatchCompanyRequest), Description = "Request body containing company information.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(PatchCompanyResponse), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
+    [Hateoas("Company", "update", "/PatchCompany", "POST", typeof(PatchCompanyRequest))]
     public async Task<IActionResult> Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
     {
