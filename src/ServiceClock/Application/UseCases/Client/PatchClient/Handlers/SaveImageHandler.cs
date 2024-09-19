@@ -23,6 +23,10 @@ public class SaveImageHandler : Handler<PatchClientUseCaseRequest>
     {
         if (request.Image != "")
         {
+            if(request.Client.ClientImage!="")
+            {
+                blobService.DeleteBlob(request.Client.ClientImage);
+            }
             var result = blobService.SaveBlob(request.Image,request.ImageName);
             if (!result.Sucess)
             {

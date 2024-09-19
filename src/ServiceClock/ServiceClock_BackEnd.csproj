@@ -53,7 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Api\UseCases\Messages\CreateMessage\" />
-    <Folder Include="Api\UseCases\Messages\ListMessages\" />
     <Folder Include="Application\UseCases\Company\CreateCompany\Handlers\" />
     <Folder Include="Application\UseCases\Services\CreateService\Handlers\" />
   </ItemGroup>

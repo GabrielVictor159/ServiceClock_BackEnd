@@ -48,7 +48,7 @@ public class CreateMessage : UseCaseCore
     [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(CreateMessageRequest), Description = "Request body containing company information.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(CreateMessageResponse), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
-    [Hateoas("Message","self","/CreateMessage","POST",typeof(CreateMessageRequest))]
+    [Hateoas("Message","create","/CreateMessage","POST",typeof(CreateMessageRequest))]
     public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
     {

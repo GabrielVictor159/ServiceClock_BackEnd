@@ -63,5 +63,34 @@ public class BlobService : IBlobService
         blobClient.DeleteIfExists();
     }
 
+    public (bool Success, string? Error) MoveBlobToPrivateContainer(string blobName)
+    {
+        BlobContainerClient publicContainerClient = blobServiceClient.GetBlobContainerClient(Environment.GetEnvironmentVariable("BLOB_CONTAINER"));
+        BlobContainerClient privateContainerClient = blobServiceClient.GetBlobContainerClient(Environment.GetEnvironmentVariable("PRIVATE_BLOB_CONTAINER"));
+
+        try
+        {
+            BlobClient publicBlobClient = publicContainerClient.GetBlobClient(blobName);
+
+            BlobClient privateBlobClient = privateContainerClient.GetBlobClient(blobName);
+
+            privateBlobClient.StartCopyFromUri(publicBlobClient.Uri);
+
+            BlobProperties properties = privateBlobClient.GetProperties();
+            if (properties.CopyStatus != CopyStatus.Success)
+            {
+                throw new Exception("Falha ao copiar o blob para o container privado.");
+            }
+
+            publicBlobClient.DeleteIfExists();
+
+            return (true, null);
+        }
+        catch (Exception ex)
+        {
+            return (false, ex.Message);
+        }
+    }
+
 }
 

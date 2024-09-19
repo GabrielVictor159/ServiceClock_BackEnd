@@ -9,4 +9,5 @@ public interface IBlobService
 {
     (bool Sucess, string Id, Exception? e) SaveBlob(string Blob, string FileName);
     void DeleteBlob(string blobName);
+    (bool Success, string? Error) MoveBlobToPrivateContainer(string blobName);
 }
