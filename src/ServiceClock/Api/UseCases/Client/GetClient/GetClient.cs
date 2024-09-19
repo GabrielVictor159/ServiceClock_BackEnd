@@ -46,11 +46,19 @@ public class GetClient : UseCaseCore
     {
         return await Execute(req, async (GetClientRequest request) =>
         {
+            var UserId = Guid.Parse(httpRequestValidator.Claims.Where(e => e.Type == "User_Id").First().Value);
+            var UserType = httpRequestValidator.Claims.Where(e => e.Type == "User_Rule").First().Value;
+            if (UserType == "Client")
+            {
+                return new ForbidResult("Você não tem permissão para listar os clientes");
+            }
+
             if (request != null)
             {
                 var result = this.repository.Find(e =>
                         e.Active == true &&
                         (request.Id == Guid.Empty || e.Id == request.Id) &&
+                        e.CompanyId == UserId &&
                         e.Name.ToLower().Contains(request.Name.ToLower()) &&
                         e.PhoneNumber.ToLower().Contains(request.PhoneNumber.ToLower()) &&
                         e.Address.ToLower().Contains(request.Address.ToLower()) &&
