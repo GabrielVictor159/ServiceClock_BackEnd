@@ -5,10 +5,9 @@ namespace ServiceClock_BackEnd.Application.Interfaces.Repositories;
 
 public interface IRepository<T> where T : class
 {
-    T? GetById(string id);
+    T? GetById(dynamic id);
     IEnumerable<T> GetAll();
     void Add(T entity);
-    void Update(T entity);
     void Delete(T entity);
     IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
     IEnumerable<T> Find(Expression<Func<T, bool>> predicate, int pageNumber, int pageSize);
@@ -17,6 +16,7 @@ public interface IRepository<T> where T : class
     void AddRange(IEnumerable<T> entities);
     void UpdateRange(IEnumerable<T> entities);
     void DeleteRange(IEnumerable<T> entities);
+    int Update(T entity);
     int Save();
 }
 

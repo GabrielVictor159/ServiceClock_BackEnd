@@ -40,9 +40,9 @@ public class PatchCompany : UseCaseCore
     [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(PatchCompanyRequest), Description = "Request body containing company information.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(PatchCompanyResponse), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
-    [Hateoas("Company", "update", "/PatchCompany", "POST", typeof(PatchCompanyRequest))]
+    [Hateoas("Company", "update", "/PatchCompany", "PATCH", typeof(PatchCompanyRequest))]
     public async Task<IActionResult> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = null)] HttpRequest req)
     {
         return await Execute(req, async (PatchCompanyRequest request) =>
         {

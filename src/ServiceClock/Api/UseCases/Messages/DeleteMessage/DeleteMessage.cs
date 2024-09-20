@@ -63,7 +63,7 @@ public class DeleteMessage : UseCaseCore
                 blobService.MoveBlobToPrivateContainer(message.MessageContent);
             }
             message.Active = false;
-            this.repository.Save();
+            this.repository.Update(message);
 
             return new OkResult();
         });

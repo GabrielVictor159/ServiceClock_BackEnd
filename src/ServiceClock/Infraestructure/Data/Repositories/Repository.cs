@@ -12,7 +12,7 @@ namespace ServiceClock_BackEnd.Infraestructure.Data.Repositories;
 
 public class Repository<T> : IRepository<T> where T : class
 {
-    public T? GetById(string id)
+    public T? GetById(dynamic id)
     {
         using var context = new Context();
         return context.Set<T>().Find(id);
@@ -28,13 +28,6 @@ public class Repository<T> : IRepository<T> where T : class
     {
         using var context = new Context();
         context.Set<T>().Add(entity);
-        context.SaveChanges();
-    }
-
-    public void Update(T entity)
-    {
-        using var context = new Context();
-        context.Set<T>().Update(entity);
         context.SaveChanges();
     }
 
@@ -93,6 +86,27 @@ public class Repository<T> : IRepository<T> where T : class
         context.Set<T>().RemoveRange(entities);
         context.SaveChanges();
     }
+    public int Update(T entity)
+    {
+        using var context = new Context();
+
+        var idProperty = typeof(T).GetProperty("Id");
+        if (idProperty == null)
+        {
+            throw new Exception("Entity does not have an Id property.");
+        }
+
+        var idValue = idProperty.GetValue(entity);
+        var existingEntity = context.Set<T>().Find(idValue);
+        if (existingEntity == null)
+        {
+            throw new Exception("Entity not found.");
+        }
+
+        context.Entry(existingEntity).CurrentValues.SetValues(entity);
+        return context.SaveChanges();
+    }
+
     public int Save()
     {
         using var context = new Context();

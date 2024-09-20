@@ -22,7 +22,7 @@ public class AlterStateAppointmentHandler : Handler<AlterStateAppointmentUseCase
         if(request.Appointment!=null)
         {
             request.Appointment.Status = request.Status;
-            repository.Save();
+            repository.Update(request.Appointment);
         }
        sucessor?.ProcessRequest(request);
     }

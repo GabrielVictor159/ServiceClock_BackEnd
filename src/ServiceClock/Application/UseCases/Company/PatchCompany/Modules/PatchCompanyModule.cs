@@ -19,6 +19,7 @@ public class PatchCompanyModule : Module
         services.AddSingleton<ValidDomainHandler<Domain.Models.Company, CompanyValidator, PatchCompanyUseCaseRequest>>();
         services.AddSingleton<VerifyDisponibilityCompanyHandler<PatchCompanyUseCaseRequest>>();
         services.AddSingleton<SearchCompanyForUpdateHandler>();
+        services.AddSingleton<SaveImageHandler>();
     }
 }
 

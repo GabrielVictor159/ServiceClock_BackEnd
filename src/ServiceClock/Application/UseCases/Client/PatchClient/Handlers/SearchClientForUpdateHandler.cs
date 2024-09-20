@@ -21,7 +21,7 @@ public class SearchClientForUpdateHandler : Handler<PatchClientUseCaseRequest>
 
     public override void ProcessRequest(PatchClientUseCaseRequest request)
     {
-        var client = repository.GetById(request.Client?.Id.ToString() ?? "");
+        var client = repository.GetById(request.Client!.Id);
         if (client == null)
         {
             notificationService.AddNotification("Client not found", "Não foi encontrado nenhum cliente com esse Id");
@@ -32,7 +32,6 @@ public class SearchClientForUpdateHandler : Handler<PatchClientUseCaseRequest>
         client.Address = request.Client!.Address != "" ? request.Client.Address : client.Address;
         client.City = request.Client!.City != "" ? request.Client.City : client.City;
         client.State = request.Client!.State != "" ? request.Client.State : client.State;
-        client.Country = request.Client!.Country != "" ? request.Client.Country : client.Country;
         client.PostalCode = request.Client!.PostalCode != "" ? request.Client.PostalCode : client.PostalCode;
         client.PhoneNumber = request.Client!.PhoneNumber != "" ? request.Client.PhoneNumber : client.PhoneNumber;
         client.BirthDate = request.Client!.BirthDate != DateTime.MinValue ? request.Client.BirthDate : client.BirthDate;

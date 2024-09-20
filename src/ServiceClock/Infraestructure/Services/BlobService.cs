@@ -35,7 +35,7 @@ public class BlobService : IBlobService
             string fileExtension = Path.GetExtension(FileName); 
             string contentType = MimeTypesMap.GetMimeType(fileExtension);
 
-            BlobClient blobClient = blobContainerClient.GetBlobClient(Id.ToString());
+            BlobClient blobClient = blobContainerClient.GetBlobClient(Id.ToString()+fileExtension);
             BlobHttpHeaders headers = new BlobHttpHeaders
             {
                 ContentType = contentType

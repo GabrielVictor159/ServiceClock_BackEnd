@@ -17,7 +17,13 @@ public class SaveChangesRepositoryHandler<Domain, Request> : Handler<Request> wh
 
     public override void ProcessRequest(Request request)
     {
-        this.repository.Save();
+        var domainObject = typeof(Request)
+                .GetProperties()
+                .FirstOrDefault(prop => prop.PropertyType == typeof(Domain))?
+                .GetValue(request) as Domain;
+
+        this.repository.Update(domainObject!);
+
         sucessor?.ProcessRequest(request);
     }
 }

@@ -14,7 +14,7 @@ public class ClientMap : IEntityTypeConfiguration<Client>
     public void Configure(EntityTypeBuilder<Client> builder)
     {
         builder.ToContainer("Clients");
-        builder.HasPartitionKey(c => c.City);
+        builder.HasPartitionKey(c => c.Country);
 
         builder.HasKey(c => c.Id);
 

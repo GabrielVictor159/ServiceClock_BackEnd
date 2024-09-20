@@ -21,7 +21,7 @@ public class SearchCompanyForUpdateHandler : Handler<PatchCompanyUseCaseRequest>
 
     public override void ProcessRequest(PatchCompanyUseCaseRequest request)
     {
-        var company = repository.GetById(request.Company?.Id.ToString() ?? "");
+        var company = repository.GetById(request.Company!.Id);
         if (company == null)
         {
             notificationService.AddNotification("Company not found", "Não foi encontrado nenhuma empresa com esse Id");
@@ -33,7 +33,6 @@ public class SearchCompanyForUpdateHandler : Handler<PatchCompanyUseCaseRequest>
         company.Address = request.Company!.Address != "" ? request.Company.Address : company.Address;
         company.City = request.Company!.City != "" ? request.Company.City : company.City;
         company.State = request.Company!.State != "" ? request.Company.State : company.State;
-        company.Country = request.Company!.Country != "" ? request.Company.Country : company.Country;
         company.PostalCode = request.Company!.PostalCode != "" ? request.Company.PostalCode : company.PostalCode;
         company.PhoneNumber = request.Company!.PhoneNumber != "" ? request.Company.PhoneNumber : company.PhoneNumber;
 

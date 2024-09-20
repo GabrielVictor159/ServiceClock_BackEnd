@@ -24,6 +24,7 @@ public class PatchCompanyUseCase : IPatchCompanyUseCase
         ValidDomainHandler<Domain.Models.Company, CompanyValidator, PatchCompanyUseCaseRequest> validDomainHandler,
         VerifyDisponibilityCompanyHandler<PatchCompanyUseCaseRequest> verifyDisponibilityCompanyHandler,
         SaveChangesRepositoryHandler<Domain.Models.Company, PatchCompanyUseCaseRequest> saveChangesHandler,
+        SaveImageHandler saveImageHandler,
         ILogService logService,
         INotificationService notificationService,
         PatchCompanyPresenter outputPort)
@@ -31,7 +32,8 @@ public class PatchCompanyUseCase : IPatchCompanyUseCase
         searchCompanyForUpdateHandler
             .SetSucessor(validDomainHandler
             .SetSucessor(verifyDisponibilityCompanyHandler
-            .SetSucessor(saveChangesHandler)));
+            .SetSucessor(saveImageHandler
+            .SetSucessor(saveChangesHandler))));
 
         this.handler = searchCompanyForUpdateHandler;
         this.notificationService = notificationService;

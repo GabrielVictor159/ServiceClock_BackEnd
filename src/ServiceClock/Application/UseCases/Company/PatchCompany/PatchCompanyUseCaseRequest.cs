@@ -6,7 +6,7 @@ namespace ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany;
 public class PatchCompanyUseCaseRequest
 {
     public PatchCompanyUseCaseRequest
-        (string name, string password, string registrationNumber, string address, string city, string state, string country,
+        (string name, string password, string registrationNumber, string address, string city, string state,
         string postalCode, string phoneNumber)
     {
         Company = new Domain.Models.Company
@@ -18,7 +18,6 @@ public class PatchCompanyUseCaseRequest
             Address = address,
             City = city,
             State = state,
-            Country = country,
             PostalCode = postalCode,
             PhoneNumber = phoneNumber,
         };

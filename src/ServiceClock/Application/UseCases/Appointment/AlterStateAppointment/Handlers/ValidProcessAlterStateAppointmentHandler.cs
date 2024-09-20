@@ -37,7 +37,7 @@ public class ValidProcessAlterStateAppointmentHandler : Handler<AlterStateAppoin
             notificationService.AddNotification("Status not allowed", "Status não permitido");
             return;
         }
-        request.Appointment = appointmentRepository.GetById(request.AppointmentId.ToString());
+        request.Appointment = appointmentRepository.GetById(request.AppointmentId);
         if (request.Appointment == null)
         {
             notificationService.AddNotification("Appointment not found", "Agendamento não encontrado");

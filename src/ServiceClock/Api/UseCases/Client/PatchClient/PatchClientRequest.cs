@@ -22,8 +22,6 @@ public class PatchClientRequest
     public string City { get; set; } = "";
     [JsonProperty("State")]
     public string State { get; set; } = "";
-    [JsonProperty("Country")]
-    public string Country { get; set; } = "";
     [JsonProperty("PostalCode")]
     public string PostalCode { get; set; } = "";
     [JsonProperty("BirthDate")]
