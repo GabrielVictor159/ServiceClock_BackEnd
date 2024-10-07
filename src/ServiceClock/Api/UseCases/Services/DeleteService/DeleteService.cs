@@ -43,9 +43,9 @@ public class DeleteService : UseCaseCore
                      Name = "code")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(object), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
-    [Hateoas("Service","delete","/DeleteService","DELETE",typeof(DeleteServiceRequest))]
+    [Hateoas("Service","delete","/DeleteService","POST",typeof(DeleteServiceRequest))]
     public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "DeleteService")] HttpRequest req)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "DeleteService")] HttpRequest req)
     {
         return await Execute(req, async (DeleteServiceRequest request) =>
         {
