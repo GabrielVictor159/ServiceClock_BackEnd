@@ -52,7 +52,7 @@ public class LoginClient : UseCaseCore
                 {
                     return new BadRequestObjectResult("Login Invalid");
                 }
-                var token = this.tokenService.Generate("Company", company.Id);
+                var token = this.tokenService.Generate("Client", company.Id);
                 return new OkObjectResult(new { Token = token, _links = HateoasScheme.Instance.GetLinks("Client") });
             }
             return new OkResult();

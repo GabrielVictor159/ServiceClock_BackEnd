@@ -15,9 +15,15 @@ public class SearchEntitiesDbAppointmentHandler : Handler<RequestAppointmentUseC
     private readonly INotificationService notificationService;
 
     public SearchEntitiesDbAppointmentHandler
-        (ILogService logService) 
+        (IRepository<Service> serviceRepository, 
+        IRepository<Domain.Models.Client> clientRepository, 
+        INotificationService notificationService, 
+        ILogService logService) 
         : base(logService)
     {
+        this.serviceRepository = serviceRepository;
+        this.clientRepository = clientRepository;
+        this.notificationService = notificationService;
     }
 
     public override void ProcessRequest(RequestAppointmentUseCaseRequest request)

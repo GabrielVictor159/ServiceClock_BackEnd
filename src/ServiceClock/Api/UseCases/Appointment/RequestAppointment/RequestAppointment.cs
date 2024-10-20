@@ -61,9 +61,11 @@ public class RequestAppointment : UseCaseCore
         {
             if (httpRequestValidator.Claims.Where(e => e.Type == "User_Rule").First().Value != "Client")
             {
-                return new ForbidResult("Você não tem permissão para criar um apontamento");
+
+                return new UnauthorizedObjectResult("The user does not have permission to perform this action.");
             }
-            var client = this.clientReposiotory.Find(e => e.Id == Guid.Parse(httpRequestValidator.Claims.Where(e => e.Type == "User_Id").First().Value)).FirstOrDefault();
+            var userId = Guid.Parse(httpRequestValidator.Claims.Where(e => e.Type == "User_Id").First().Value);
+            var client = this.clientReposiotory.Find(e => e.Id == userId).FirstOrDefault();
             if (request != null && client!=null)
             {
                 request.clientId = client.Id;

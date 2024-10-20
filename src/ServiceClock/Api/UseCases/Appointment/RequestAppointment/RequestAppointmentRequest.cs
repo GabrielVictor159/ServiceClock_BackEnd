@@ -12,6 +12,8 @@ public class RequestAppointmentRequest
     public DateTime Date { get; set; }
     [JsonProperty("Description")]
     public string Description { get; set; } = "";
+    [JsonProperty("ServiceId")]
+    public Guid ServiceId { get; set; }
     [JsonIgnore]
     public Guid clientId { get; set; }
 }
