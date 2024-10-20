@@ -53,6 +53,22 @@ public class Repository<T> : IRepository<T> where T : class
             .Take(pageSize)
             .ToList();
     }
+    public IEnumerable<T> FindContainIncludes(Expression<Func<T, bool>> predicate, int pageNumber, int pageSize, params Expression<Func<T, object>>[] includes)
+    {
+        using var context = new Context();
+
+        var query = context.Set<T>().Where(predicate);
+
+        foreach (var include in includes)
+        {
+            query = query.Include(include);
+        }
+
+        return query
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+    }
 
     public T? FindSingle(Expression<Func<T, bool>> predicate)
     {

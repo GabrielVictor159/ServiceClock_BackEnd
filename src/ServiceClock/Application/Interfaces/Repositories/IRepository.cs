@@ -11,6 +11,7 @@ public interface IRepository<T> where T : class
     void Delete(T entity);
     IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
     IEnumerable<T> Find(Expression<Func<T, bool>> predicate, int pageNumber, int pageSize);
+    IEnumerable<T> FindContainIncludes(Expression<Func<T, bool>> predicate, int pageNumber, int pageSize, params Expression<Func<T, object>>[] includes);
     T? FindSingle(Expression<Func<T, bool>> predicate);
     int Count(Expression<Func<T, bool>> predicate);
     void AddRange(IEnumerable<T> entities);
