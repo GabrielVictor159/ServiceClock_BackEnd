@@ -73,7 +73,7 @@ public class ValidProcessAlterStateAppointmentHandler : Handler<AlterStateAppoin
                     return;
                 }
                 break;
-            case "System":
+            case "Company":
                 break;
             default:
                 notificationService.AddNotification("User type not found", "Tipo de usuário não encontrado");
