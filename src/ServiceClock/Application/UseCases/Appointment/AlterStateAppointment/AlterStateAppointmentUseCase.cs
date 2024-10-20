@@ -35,7 +35,7 @@ public class AlterStateAppointmentUseCase : IAlterStateAppointmentUseCase
         try
         {
             this.handler.ProcessRequest(request);
-            outputPort.Standard(new() { Appointment = request.Appointment });
+            outputPort.Standard(new() { Appointment = request.Appointment, Status=request.Status });
         }
         catch (Exception ex)
         {

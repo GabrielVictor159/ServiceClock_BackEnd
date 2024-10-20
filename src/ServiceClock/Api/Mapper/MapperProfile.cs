@@ -1,5 +1,6 @@
 ﻿
 using AutoMapper;
+using ServiceClock_BackEnd.Api.UseCases.Appointment.AlterStateAppointment;
 using ServiceClock_BackEnd.Api.UseCases.Appointment.RequestAppointment;
 using ServiceClock_BackEnd.Api.UseCases.Client.CreateClient;
 using ServiceClock_BackEnd.Api.UseCases.Client.PatchClient;
@@ -8,6 +9,7 @@ using ServiceClock_BackEnd.Api.UseCases.Company.PatchCompany;
 using ServiceClock_BackEnd.Api.UseCases.Messages.CreateMessage;
 using ServiceClock_BackEnd.Api.UseCases.Services.CreateService;
 using ServiceClock_BackEnd.Api.UseCases.Services.DeleteService;
+using ServiceClock_BackEnd.Application.UseCases.Appointment.AlterStateAppointment;
 using ServiceClock_BackEnd.Application.UseCases.Appointment.RequestAppointment;
 using ServiceClock_BackEnd.Application.UseCases.Client.CreateClient;
 using ServiceClock_BackEnd.Application.UseCases.Client.PatchClient;
@@ -32,6 +34,7 @@ public class MapperProfile : Profile
         CreateMap<DeleteServiceRequest, DeleteServiceUseCaseRequest>();
         CreateMap<RequestAppointmentRequest, RequestAppointmentUseCaseRequest>();
         CreateMap<CreateMessageRequest, CreateMessageUseCaseRequest>();
+        CreateMap<AlterStateAppointmentRequest, AlterStateAppointmentUseCaseRequest>();
     }
 }
 

@@ -25,7 +25,8 @@ public class AlterStateAppointment : UseCaseCore
 {
     private readonly IMapper mapper;
     private readonly AlterStateAppointmentPresenter presenter;
-    private readonly IRepository<Domain.Models.Client> clientReposiotory;
+    private readonly IRepository<Domain.Models.Client> clientRepository;
+    private readonly IRepository<Domain.Models.Company> companyRepository;
     private IAlterStateAppointmentUseCase useCase;
     public AlterStateAppointment
         (HttpRequestValidator httpRequestValidator,
@@ -33,13 +34,15 @@ public class AlterStateAppointment : UseCaseCore
         IMapper mapper,
         AlterStateAppointmentPresenter presenter,
         IAlterStateAppointmentUseCase useCase,
-        IRepository<Domain.Models.Client> clientReposiotory)
+        IRepository<Domain.Models.Client> clientRepository,
+        IRepository<Domain.Models.Company> companyRepository)
         : base(httpRequestValidator.AddValidator(new AuthorizationValidator()), middleware)
     {
         this.mapper = mapper;
         this.presenter = presenter;
         this.useCase = useCase;
-        this.clientReposiotory = clientReposiotory;
+        this.clientRepository = clientRepository;
+        this.companyRepository = companyRepository;
     }
 
     [FunctionName("AlterStateAppointment")]
@@ -57,11 +60,20 @@ public class AlterStateAppointment : UseCaseCore
     {
         return await Execute(req, async (AlterStateAppointmentRequest request) =>
         {
-            var client = this.clientReposiotory.Find(e => e.Id == Guid.Parse(httpRequestValidator.Claims.Where(e => e.Type == "User_Id").First().Value)).FirstOrDefault();
-            if (request != null && client != null)
+            request.UserId = Guid.Parse(httpRequestValidator.Claims.Where(e => e.Type == "User_Id").First().Value);
+            request.UserType = httpRequestValidator.Claims.Where(e => e.Type == "User_Rule").First().Value;
+            Domain.Models.Client? client = null;
+            Domain.Models.Company? company = null;
+            if (request.UserType == "Client")
             {
-                request.UserId = Guid.Parse(httpRequestValidator.Claims.Where(e => e.Type == "User_Id").First().Value);
-                request.UserType = httpRequestValidator.Claims.Where(e => e.Type == "User_Rule").First().Value;
+                client = this.clientRepository.Find(e => e.Id == request.UserId).FirstOrDefault();
+            }
+            else
+            {
+                company = this.companyRepository.Find(e => e.Id == request.UserId).FirstOrDefault();
+            }
+            if (request != null && (client != null || company!=null))
+            {
                 var requestUseCase = this.mapper.Map<AlterStateAppointmentUseCaseRequest>(request);
                 this.useCase.Execute(requestUseCase);
             }
