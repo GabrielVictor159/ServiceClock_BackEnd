@@ -67,16 +67,9 @@ public class ValidProcessAlterStateAppointmentHandler : Handler<AlterStateAppoin
         switch (request.UserType)
         {
             case "Client":
-                if(request.Status== Domain.Enums.AppointmentStatus.Canceled || request.Status == Domain.Enums.AppointmentStatus.Approved)
+                if(request.Status== Domain.Enums.AppointmentStatus.Completed || request.Status == Domain.Enums.AppointmentStatus.Approved)
                 {
-                    notificationService.AddNotification("Client can't cancel a confirmed appointment", "Cliente não pode cancelar, confirmar ou completar um agendamento");
-                    return;
-                }
-                break;
-            case "Company":
-                if(request.Status==Domain.Enums.AppointmentStatus.Canceled || request.Status == Domain.Enums.AppointmentStatus.Completed)
-                {
-                    notificationService.AddNotification("Company can't cancel or complete an appointment", "Empresa não pode cancelar ou completar um agendamento");
+                    notificationService.AddNotification("Client can't cancel a confirmed appointment", "Cliente não pode confirmar ou completar um agendamento");
                     return;
                 }
                 break;
