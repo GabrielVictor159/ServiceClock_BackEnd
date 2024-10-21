@@ -23,4 +23,5 @@ public class RequestAppointmentUseCaseRequest
     }
 
     public Domain.Models.Appointment Appointment { get; set; }
+    public Domain.Models.Client? Client { get; set; }
 }

@@ -42,7 +42,7 @@ public class RequestAppointmentUseCase : IRequestAppointmentUseCase
         try
         {
             this.validDomainHandler.ProcessRequest(request);
-            outputPort.Standard(new() { Appointment = request.Appointment });
+            outputPort.Standard(new() { Appointment = request.Appointment, Client = request.Client });
         }
         catch (Exception ex)
         {

@@ -70,6 +70,7 @@ public class RequestAppointment : UseCaseCore
             {
                 request.clientId = client.Id;
                 var requestUseCase = this.mapper.Map<RequestAppointmentUseCaseRequest>(request);
+                requestUseCase.Client = client;
                 this.useCase.Execute(requestUseCase);
             }
             return this.presenter.ViewModel;
