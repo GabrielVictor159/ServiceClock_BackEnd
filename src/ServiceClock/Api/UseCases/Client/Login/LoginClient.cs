@@ -43,17 +43,17 @@ public class LoginClient : UseCaseCore
         {
             if (request != null)
             {
-                var company = this.repository.Find(e =>
+                var client = this.repository.Find(e =>
                 e.Email.Equals(request.Email)
                 && e.Password.Equals(request.Password))
                 .FirstOrDefault();
 
-                if (company == null)
+                if (client == null)
                 {
                     return new BadRequestObjectResult("Login Invalid");
                 }
-                var token = this.tokenService.Generate("Client", company.Id);
-                return new OkObjectResult(new { Token = token, _links = HateoasScheme.Instance.GetLinks("Client") });
+                var token = this.tokenService.Generate("Client", client.Id);
+                return new OkObjectResult(new { UserId= client.Id, Token = token, _links = HateoasScheme.Instance.GetLinks("Client") });
             }
             return new OkResult();
         });

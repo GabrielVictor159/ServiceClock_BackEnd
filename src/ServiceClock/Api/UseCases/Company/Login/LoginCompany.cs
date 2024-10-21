@@ -54,7 +54,7 @@ public class LoginCompany : UseCaseCore
                     return new BadRequestObjectResult("Login Invalid");
                 }
                 var token = this.tokenService.Generate("Company", company.Id);
-                return new OkObjectResult(new { Token = token, _links=HateoasScheme.Instance.GetLinks("Company")});
+                return new OkObjectResult(new { UserId = company.Id, Token = token, _links=HateoasScheme.Instance.GetLinks("Company")});
             }
             return new OkResult();
         });
