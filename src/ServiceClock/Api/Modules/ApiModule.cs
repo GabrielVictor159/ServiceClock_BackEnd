@@ -14,6 +14,7 @@ using ServiceClock_BackEnd.Api.UseCases.Company.PatchCompany;
 using ServiceClock_BackEnd.Api.UseCases.Messages.CreateMessage;
 using ServiceClock_BackEnd.Api.UseCases.Services.CreateService;
 using ServiceClock_BackEnd.Api.UseCases.Services.DeleteService;
+using ServiceClock_BackEnd.Api.UseCases.Services.EditService;
 using ServiceClock_BackEnd.Api.Validator.Http;
 using ServiceClock_BackEnd.Domain.Modules;
 using System.Configuration;
@@ -37,6 +38,7 @@ namespace ServiceClock_BackEnd.Api.Modules
             services.AddSingleton<RequestAppointmentPresenter>();
             services.AddSingleton<AlterStateAppointmentPresenter>();
             services.AddSingleton<CreateMessagePresenter>();
+            services.AddSingleton<EditServicePresenter>();
 
         }
     }

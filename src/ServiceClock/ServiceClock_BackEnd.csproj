@@ -55,5 +55,6 @@
     <Folder Include="Api\UseCases\Messages\CreateMessage\" />
     <Folder Include="Application\UseCases\Company\CreateCompany\Handlers\" />
     <Folder Include="Application\UseCases\Services\CreateService\Handlers\" />
+    <Folder Include="Application\UseCases\Services\EditService\Handlers\" />
   </ItemGroup>
 </Project>

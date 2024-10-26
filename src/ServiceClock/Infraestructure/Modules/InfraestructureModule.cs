@@ -13,6 +13,7 @@ public class InfraestructureModule : Module
         services.AddSingleton<INotificationService, NotificationService>();
         services.AddSingleton<ILogService, LogService>();
         services.AddSingleton<IBlobService, BlobService>();
+        services.AddLogging();
     }
 }
 

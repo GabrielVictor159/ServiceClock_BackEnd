@@ -11,6 +11,7 @@ using ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany.Modules;
 using ServiceClock_BackEnd.Application.UseCases.Messages.CreateMessage.Modules;
 using ServiceClock_BackEnd.Application.UseCases.Services.CreateService.Modules;
 using ServiceClock_BackEnd.Application.UseCases.Services.DeleteService.Modules;
+using ServiceClock_BackEnd.Application.UseCases.Services.EditService.Modules;
 using ServiceClock_BackEnd.Domain.Models;
 using ServiceClock_BackEnd.Domain.Modules;
 using ServiceClock_BackEnd.Infraestructure.Data.Repositories;
@@ -37,6 +38,7 @@ public class ApplicationModule : Module
         new RequestAppointmentUseCaseModule().Configure(services);
         new AlterStateAppointmentUseCaseModule().Configure(services);
         new CreateMessageModule().Configure(services);
+        new EditServiceUseCaseModule().Configure(services);
     }
     private void AddServices(IServiceCollection services)
     {
