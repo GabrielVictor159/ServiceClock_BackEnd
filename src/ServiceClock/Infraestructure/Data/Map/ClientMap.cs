@@ -72,8 +72,5 @@ public class ClientMap : IEntityTypeConfiguration<Client>
         builder.Property(c => c.CompanyId)
             .IsRequired();
 
-        builder.HasOne(c => c.Company)
-            .WithMany()
-            .HasForeignKey(c => c.CompanyId);
     }
 }

@@ -34,9 +34,11 @@ public class Repository<T> : IRepository<T> where T : class
     public void Delete(T entity)
     {
         using var context = new Context();
+        context.Attach(entity);
         context.Set<T>().Remove(entity);
         context.SaveChanges();
     }
+
 
     public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
     {

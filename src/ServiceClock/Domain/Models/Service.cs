@@ -21,7 +21,6 @@ public class Service : Entity<Service,ServiceValidator>
     public DateTime CreatedAt { get; set; } = DateTime.Now;
 
     public Guid CompanyId { get; set; }
-    public Company? Company { get; set; }
 
 }
 

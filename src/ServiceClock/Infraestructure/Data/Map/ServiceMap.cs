@@ -45,9 +45,6 @@ public class ServiceMap : IEntityTypeConfiguration<Service>
         builder.Property(c => c.CreatedAt)
             .IsRequired();
 
-        builder.HasOne(c => c.Company)
-            .WithMany()
-            .HasForeignKey(c => c.CompanyId);
     }
 }
 

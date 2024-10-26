@@ -14,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using AutoMapper;
 using ServiceClock_BackEnd.Application.UseCases.Services.DeleteService;
 using ServiceClock_BackEnd.Api.Helpers.Hateoas;
+using ServiceClock_BackEnd.Api.UseCases.Services.ListService;
 
 namespace ServiceClock_BackEnd.Api.UseCases.Services.DeleteService;
 
@@ -37,11 +38,12 @@ public class DeleteService : UseCaseCore
 
     [FunctionName("DeleteService")]
     [OpenApiOperation(operationId: "DeleteService", tags: new[] { "Service" })]
+    [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(DeleteServiceRequest), Description = "Request body containing company information.")]
     [OpenApiSecurity("bearer",
                      SecuritySchemeType.ApiKey,
                      In = OpenApiSecurityLocationType.Query,
                      Name = "code")]
-    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(object), Description = "The OK response with the created company details.")]
+    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(DeleteServiceResponse), Description = "The OK response with the created company details.")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The Bad Request response in case of invalid input.")]
     [Hateoas("Service","delete","/DeleteService","POST",typeof(DeleteServiceRequest))]
     public async Task<IActionResult> Run(

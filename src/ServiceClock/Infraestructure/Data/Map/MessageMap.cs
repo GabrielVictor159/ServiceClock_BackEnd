@@ -38,14 +38,6 @@ public class MessageMap : IEntityTypeConfiguration<Message>
         builder.Property(c => c.CreateAt)
             .IsRequired();
 
-        builder.HasOne(c => c.Client)
-            .WithMany()
-            .HasForeignKey(c => c.ClientId);
-
-        builder.HasOne(c => c.Company)
-            .WithMany()
-            .HasForeignKey(c => c.CompanyId);
-
         builder.Property(c => c.Active)
             .IsRequired();
 

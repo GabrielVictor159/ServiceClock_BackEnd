@@ -29,6 +29,5 @@ public class Client : Entity<Client,ClientValidator>
     public bool Active { get; set; } = true;
 
     public Guid? CompanyId { get; set; } 
-    public Company? Company { get; set; }
 
 }

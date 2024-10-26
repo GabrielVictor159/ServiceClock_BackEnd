@@ -36,13 +36,6 @@ public class AppointmentMap : IEntityTypeConfiguration<Appointment>
         builder.Property(c => c.CreatedAt)
             .IsRequired();
 
-        builder.HasOne(c => c.Client)
-            .WithMany()
-            .HasForeignKey(c => c.ClientId);
-
-        builder.HasOne(c => c.Service)
-           .WithMany()
-           .HasForeignKey(c => c.ServiceId);
     }
 }
 
