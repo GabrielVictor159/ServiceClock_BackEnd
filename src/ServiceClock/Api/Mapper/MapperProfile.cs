@@ -37,7 +37,8 @@ public class MapperProfile : Profile
         CreateMap<RequestAppointmentRequest, RequestAppointmentUseCaseRequest>();
         CreateMap<CreateMessageRequest, CreateMessageUseCaseRequest>();
         CreateMap<AlterStateAppointmentRequest, AlterStateAppointmentUseCaseRequest>();
-        CreateMap<EditServiceRequest, Service>();
+        CreateMap<EditServiceRequest, Service>()
+            .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
     }
 }
 
