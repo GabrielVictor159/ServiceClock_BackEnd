@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using ServiceClock_BackEnd.Domain.Models;
+
 namespace ServiceClock_BackEnd.Domain.Validations;
 
 public class CompanyValidator : AbstractValidator<Company>
@@ -44,13 +45,13 @@ public class CompanyValidator : AbstractValidator<Company>
             .EmailAddress().WithMessage("E-mail é inválido.");
 
         RuleFor(c => c.Password)
-                .NotEmpty().WithMessage("Senha é obrigatória.")
-                .MinimumLength(8).WithMessage("Senha deve ter no mínimo 8 caracteres.")
-                .Matches(@"[A-Z]").WithMessage("Senha deve conter pelo menos uma letra maiúscula.")
-                .Matches(@"[a-z]").WithMessage("Senha deve conter pelo menos uma letra minúscula.")
-                .Matches(@"[0-9]").WithMessage("Senha deve conter pelo menos um número.")
-                .Matches(@"[\W]").WithMessage("Senha deve conter pelo menos um caractere especial.");
+            .NotEmpty().WithMessage("Senha é obrigatória.")
+            .MinimumLength(8).WithMessage("Senha deve ter no mínimo 8 caracteres.")
+            .Matches(@"[A-Z]").WithMessage("Senha deve conter pelo menos uma letra maiúscula.")
+            .Matches(@"[a-z]").WithMessage("Senha deve conter pelo menos uma letra minúscula.")
+            .Matches(@"[0-9]").WithMessage("Senha deve conter pelo menos um número.")
+            .Matches(@"[\W]").WithMessage("Senha deve conter pelo menos um caractere especial.")
+            .When(c => c.Password.Length != 32 || !System.Text.RegularExpressions.Regex.IsMatch(c.Password, "^[a-f0-9]{32}$"))
+            .WithMessage("A validação de senha é ignorada para senhas encriptadas.");
     }
 }
-
-
