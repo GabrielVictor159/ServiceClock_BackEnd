@@ -72,7 +72,8 @@ public class GetClient : UseCaseCore
                     {
                         Name = e.Name, Address = e.Address, City = e.City, State = e.State,
                         Country = e.Country, PostalCode = e.PostalCode, PhoneNumber = e.PhoneNumber,
-                        Email = e.Email, BirthDate = e.BirthDate, CreatedAt = e.CreatedAt
+                        Email = e.Email, BirthDate = e.BirthDate, CreatedAt = e.CreatedAt,
+                        Image = e.ClientImage
                     });
                 return new OkObjectResult(
                     new {Clients = result, _links = HateoasScheme.Instance.GetLinks("Client")}
