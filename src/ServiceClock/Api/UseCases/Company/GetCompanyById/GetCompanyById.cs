@@ -43,7 +43,7 @@ public class GetCompanyById : UseCaseCore
         .Select(e => new
         {
             Id = e.Id, Password = e.Password, Name = e.Name, RegistrationNumber = e.RegistrationNumber, Address = e.Address, City = e.City, State = e.State,
-            Country = e.Country, PostalCode = e.PostalCode, PhoneNumber = e.PhoneNumber, Email = e.Email
+            Country = e.Country, PostalCode = e.PostalCode, PhoneNumber = e.PhoneNumber, Email = e.Email, Image = e.CompanyImage
         }).FirstOrDefault();
 
         if (result == null)

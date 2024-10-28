@@ -66,7 +66,7 @@ public class GetCompany : UseCaseCore
                     .Select(e => new
                     {
                         Name = e.Name, RegistrationNumber = e.RegistrationNumber, Address = e.Address, City = e.City, State = e.State,
-                        Country = e.Country, PostalCode = e.PostalCode, PhoneNumber = e.PhoneNumber, Email = e.Email
+                        Country = e.Country, PostalCode = e.PostalCode, PhoneNumber = e.PhoneNumber, Email = e.Email, Image = e.CompanyImage
                     }), _links = HateoasScheme.Instance.GetLinks("Company") }
                 );
             }
