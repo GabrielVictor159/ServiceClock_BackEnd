@@ -4,14 +4,13 @@ namespace ServiceClock_BackEnd.Application.UseCases.Client.PatchClient;
 public class PatchClientUseCaseRequest
 {
 
-    public PatchClientUseCaseRequest(string name, string password, string email, string phoneNumber, string address, string city, string state, string postalCode, DateTime birthDate)
+    public PatchClientUseCaseRequest(string name, string password, string phoneNumber, string address, string city, string state, string postalCode, DateTime birthDate)
     {
         this.Client = new Domain.Models.Client()
         {
             Id = Guid.Empty,
             Name = name,
             Password = password,
-            Email = email,
             PhoneNumber = phoneNumber,
             Address = address,
             City = city,
