@@ -41,7 +41,8 @@ public class GetClientById : UseCaseCore
         .Select(e => new
         {
             Id = e.Id, Password = e.Password, Name = e.Name, Address = e.Address, City = e.City, State = e.State,
-            Country = e.Country, PostalCode = e.PostalCode, PhoneNumber = e.PhoneNumber, Email = e.Email, Image = e.ClientImage
+            Country = e.Country, PostalCode = e.PostalCode, PhoneNumber = e.PhoneNumber, Email = e.Email, Image = e.ClientImage,
+            BirthDate = e.BirthDate
         }).FirstOrDefault();
 
         if (result == null)
