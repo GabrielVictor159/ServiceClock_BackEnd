@@ -71,7 +71,7 @@ public class GetClient : UseCaseCore
                     , request.IndexPage, ((int)request.PageSize))
                     .Select(e => new
                     {
-                        Name = e.Name, Address = e.Address, City = e.City, State = e.State,
+                        Id=e.Id, Name = e.Name, Address = e.Address, City = e.City, State = e.State,
                         Country = e.Country, PostalCode = e.PostalCode, PhoneNumber = e.PhoneNumber,
                         Email = e.Email, BirthDate = e.BirthDate, CreatedAt = e.CreatedAt,
                         Image = e.ClientImage
