@@ -66,7 +66,8 @@ public class GetClient : UseCaseCore
                         e.State.ToLower().Contains(request.State.ToLower()) &&
                         e.Country.ToLower().Contains(request.Country.ToLower()) &&
                         e.PostalCode.ToLower().Contains(request.PostalCode.ToLower()) &&
-                        e.Email.ToLower().Contains(request.Email.ToLower())
+                        e.Email.ToLower().Contains(request.Email.ToLower()) &&
+                        e.Active == true
                     , request.IndexPage, ((int)request.PageSize))
                     .Select(e => new
                     {

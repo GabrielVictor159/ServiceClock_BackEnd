@@ -37,12 +37,12 @@ public class GetClientById : UseCaseCore
         {
             return new BadRequestObjectResult("Invalid Id");
         }
-        var result = this.repository.Find(e => e.Id == companyId)
+        var result = this.repository.Find(e => e.Id == companyId && e.Active == true)
         .Select(e => new
         {
             Id = e.Id, Password = e.Password, Name = e.Name, Address = e.Address, City = e.City, State = e.State,
             Country = e.Country, PostalCode = e.PostalCode, PhoneNumber = e.PhoneNumber, Email = e.Email, Image = e.ClientImage,
-            BirthDate = e.BirthDate
+            BirthDate = e.BirthDate, CreatedAt = e.CreatedAt,
         }).FirstOrDefault();
 
         if (result == null)

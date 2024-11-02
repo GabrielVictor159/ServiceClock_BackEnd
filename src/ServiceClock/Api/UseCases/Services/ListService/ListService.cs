@@ -54,7 +54,7 @@ public class ListService : UseCaseCore
             var companyId = Guid.Empty;
             if (rule != "Company")
             {
-                var client = this.clientRepository.Find(e => e.Id == Guid.Parse(id)).FirstOrDefault();
+                var client = this.clientRepository.Find(e => e.Id == Guid.Parse(id) && e.Active==true).FirstOrDefault();
                 if(client == null)
                 {
                     return new UnauthorizedResult();

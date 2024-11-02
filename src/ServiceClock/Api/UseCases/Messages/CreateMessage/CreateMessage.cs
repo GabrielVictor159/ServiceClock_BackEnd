@@ -63,7 +63,7 @@ public class CreateMessage : UseCaseCore
 
                 if (UserType == "Client")
                 {
-                   var client = this.clientRepository.Find(e => e.Id == UserId).FirstOrDefault();
+                   var client = this.clientRepository.Find(e => e.Id == UserId && e.Active==true).FirstOrDefault();
                    if(client == null)
                    {
                        return new BadRequestObjectResult("Client not found");
@@ -75,7 +75,7 @@ public class CreateMessage : UseCaseCore
                 if(UserType == "Company")
                 {
                     request.CompanyId = UserId;
-                    var client = this.clientRepository.Find(e => e.Id == request.ClientId && e.CompanyId==request.CompanyId).FirstOrDefault();
+                    var client = this.clientRepository.Find(e => e.Id == request.ClientId && e.CompanyId==request.CompanyId && e.Active == true).FirstOrDefault();
                     if(client == null)
                     {
                         return new BadRequestObjectResult("Client not found");

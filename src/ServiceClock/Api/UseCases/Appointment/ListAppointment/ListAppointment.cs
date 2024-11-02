@@ -86,7 +86,7 @@ public class ListAppointment : UseCaseCore
 
             var clientIds = appointments.Select(a => a.ClientId).Distinct().ToList();
 
-            var clients = clientRepository.Find(e => clientIds.Contains(e.Id)).ToList();
+            var clients = clientRepository.Find(e => clientIds.Contains(e.Id) && e.Active==true).ToList();
 
             var clientsDict = clients.ToDictionary(c => c.Id);
 

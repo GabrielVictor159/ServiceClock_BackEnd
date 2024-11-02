@@ -66,7 +66,7 @@ public class AlterStateAppointment : UseCaseCore
             Domain.Models.Company? company = null;
             if (request.UserType == "Client")
             {
-                client = this.clientRepository.Find(e => e.Id == request.UserId).FirstOrDefault();
+                client = this.clientRepository.Find(e => e.Id == request.UserId && e.Active==true).FirstOrDefault();
             }
             else
             {

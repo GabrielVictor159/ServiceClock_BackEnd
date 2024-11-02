@@ -91,18 +91,18 @@ public class Repository<T> : IRepository<T> where T : class
         context.SaveChanges();
     }
 
-    public void UpdateRange(IEnumerable<T> entities)
+    public int UpdateRange(IEnumerable<T> entities)
     {
         using var context = new Context();
         context.Set<T>().UpdateRange(entities);
-        context.SaveChanges();
+        return context.SaveChanges();
     }
 
-    public void DeleteRange(IEnumerable<T> entities)
+    public int DeleteRange(IEnumerable<T> entities)
     {
         using var context = new Context();
         context.Set<T>().RemoveRange(entities);
-        context.SaveChanges();
+        return context.SaveChanges();
     }
     public int Update(T entity)
     {

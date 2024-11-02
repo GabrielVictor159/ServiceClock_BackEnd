@@ -15,8 +15,8 @@ public interface IRepository<T> where T : class
     T? FindSingle(Expression<Func<T, bool>> predicate);
     int Count(Expression<Func<T, bool>> predicate);
     void AddRange(IEnumerable<T> entities);
-    void UpdateRange(IEnumerable<T> entities);
-    void DeleteRange(IEnumerable<T> entities);
+    int UpdateRange(IEnumerable<T> entities);
+    int DeleteRange(IEnumerable<T> entities);
     int Update(T entity);
     int Save();
 }

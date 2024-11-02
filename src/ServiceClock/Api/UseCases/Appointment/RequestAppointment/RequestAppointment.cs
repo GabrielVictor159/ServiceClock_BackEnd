@@ -65,7 +65,7 @@ public class RequestAppointment : UseCaseCore
                 return new UnauthorizedObjectResult("The user does not have permission to perform this action.");
             }
             var userId = Guid.Parse(httpRequestValidator.Claims.Where(e => e.Type == "User_Id").First().Value);
-            var client = this.clientReposiotory.Find(e => e.Id == userId).FirstOrDefault();
+            var client = this.clientReposiotory.Find(e => e.Id == userId && e.Active==true).FirstOrDefault();
             if (request != null && client!=null)
             {
                 request.clientId = client.Id;

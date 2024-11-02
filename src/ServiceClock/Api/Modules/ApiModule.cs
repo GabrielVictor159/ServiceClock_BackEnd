@@ -8,6 +8,7 @@ using ServiceClock_BackEnd.Api.Mapper;
 using ServiceClock_BackEnd.Api.UseCases.Appointment.AlterStateAppointment;
 using ServiceClock_BackEnd.Api.UseCases.Appointment.RequestAppointment;
 using ServiceClock_BackEnd.Api.UseCases.Client.CreateClient;
+using ServiceClock_BackEnd.Api.UseCases.Client.DeleteClient;
 using ServiceClock_BackEnd.Api.UseCases.Client.PatchClient;
 using ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany;
 using ServiceClock_BackEnd.Api.UseCases.Company.PatchCompany;
@@ -39,6 +40,7 @@ namespace ServiceClock_BackEnd.Api.Modules
             services.AddSingleton<AlterStateAppointmentPresenter>();
             services.AddSingleton<CreateMessagePresenter>();
             services.AddSingleton<EditServicePresenter>();
+            services.AddSingleton<DeleteClientPresenter>();
 
         }
     }

@@ -34,7 +34,7 @@ public class VerifyDisponibilityClientHandler<Request> : Handler<Request>
             throw new ApplicationException($"Could not find any object with the type Client in the request");
         }
 
-        if (companyRepository.FindSingle(e => (e.Name == domainObject.Name || e.Email == domainObject.Email) && e.Id != domainObject.Id) != null)
+        if (companyRepository.FindSingle(e => (e.Name == domainObject.Name || e.Email == domainObject.Email) && e.Id != domainObject.Id && e.Active==true) != null)
         {
             this.notificationService.AddNotification("Client already exists", "Já existe um cliente com o mesmo nome ou email");
             return;

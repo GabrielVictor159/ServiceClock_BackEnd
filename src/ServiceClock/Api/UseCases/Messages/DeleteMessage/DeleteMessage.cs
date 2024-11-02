@@ -49,7 +49,7 @@ public class DeleteMessage : UseCaseCore
         return await Execute(req, async (DeleteMessageRequest request) =>
         {
             var UserId = Guid.Parse(httpRequestValidator.Claims.Where(e => e.Type == "User_Id").First().Value);
-            var message = this.repository.Find(e=>e.Id==request.MessageId).FirstOrDefault();
+            var message = this.repository.Find(e=>e.Id==request.MessageId && e.Active==true).FirstOrDefault();
             if(message == null)
             {
                 return new BadRequestObjectResult("Message not found");

@@ -20,13 +20,16 @@ namespace ServiceClock_BackEnd.Api.UseCases.Messages.ListMessage;
 public class ListMessage : UseCaseCore
 {
     private readonly IRepository<Domain.Models.Message> repository;
+    private readonly IRepository<Domain.Models.Client> repositoryClient;
     public ListMessage
         (HttpRequestValidator httpRequestValidator, 
         NotificationMiddleware middleware,
-        IRepository<Domain.Models.Message> repository) 
+        IRepository<Domain.Models.Message> repository,
+        IRepository<Domain.Models.Client> repositoryClient) 
         : base(httpRequestValidator.AddValidator(new AuthorizationValidator()), middleware)
     {
         this.repository = repository;
+        this.repositoryClient = repositoryClient;
     }
     [FunctionName("ListMessage")]
     [OpenApiOperation(operationId: "ListMessage", tags: new[] { "Message" })]
@@ -45,6 +48,7 @@ public class ListMessage : UseCaseCore
         {
             var UserId = Guid.Parse(httpRequestValidator.Claims.Where(e => e.Type == "User_Id").First().Value);
             var UserType = httpRequestValidator.Claims.Where(e => e.Type == "User_Rule").First().Value;
+
             if (UserType == "Client")
             {
                 request.ClientId = UserId;
@@ -54,6 +58,11 @@ public class ListMessage : UseCaseCore
                 request.CompanyId = UserId;
             }
 
+            var client = repositoryClient.Find(e=>e.Id==request.ClientId && e.Active ==true).FirstOrDefault();
+            if(client == null)
+            {
+                return new BadRequestObjectResult("Cliente não encontrado");
+            }
             return new OkObjectResult(new 
             {
                 Messages =

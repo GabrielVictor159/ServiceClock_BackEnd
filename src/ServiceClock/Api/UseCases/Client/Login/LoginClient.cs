@@ -45,7 +45,8 @@ public class LoginClient : UseCaseCore
             {
                 var client = this.repository.Find(e =>
                 e.Email.Equals(request.Email)
-                && e.Password.Equals(request.Password))
+                && e.Password.Equals(request.Password)
+                && e.Active == true)
                 .FirstOrDefault();
 
                 if (client == null)
