@@ -38,8 +38,8 @@ public class CompanyValidator : AbstractValidator<Company>
 
         RuleFor(c => c.PhoneNumber)
             .NotEmpty().WithMessage("Número de telefone é obrigatório.")
-            .Matches(@"^\+?(\d{1,3})?[-. \(\)]?\(?\d{1,4}\)?[-. \(\)]?\d{1,4}[-. \(\)]?\d{1,9}$")
-            .WithMessage("Número de telefone é inválido.");
+            .Matches(@"^[\d\s\+\-\(\)]+$")
+            .WithMessage("Número de telefone contém caracteres inválidos.");
 
         RuleFor(c => c.Email)
             .NotEmpty().WithMessage("E-mail é obrigatório.")
