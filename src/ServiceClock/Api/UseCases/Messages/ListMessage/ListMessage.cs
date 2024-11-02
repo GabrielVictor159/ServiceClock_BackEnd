@@ -67,7 +67,7 @@ public class ListMessage : UseCaseCore
             {
                 Messages =
                 this.repository
-                .Find(e=>e.ClientId==request.ClientId && e.CompanyId==request.CompanyId && e.Active==true)
+                .Find(e=>e.ClientId==request.ClientId && e.CompanyId==request.CompanyId && (request.MinDate==null?true:e.CreateAt>request.MinDate) && e.Active==true)
                 .OrderByDescending(e=>e.CreateAt)
                 .Select(e=> new
                 {

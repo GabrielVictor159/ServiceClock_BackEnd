@@ -9,5 +9,7 @@ public class ListMessageRequest
     public Guid ClientId { get; set; }
     [JsonProperty("CompanyId")]
     public Guid CompanyId { get; set; }
+    [JsonProperty("MinDate")]
+    public DateTime? MinDate { get; set; }
 }
 
