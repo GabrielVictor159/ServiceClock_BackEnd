@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="UseCases\Company\CreateCompany\Handlers\" />
+    <Folder Include="UseCases\Services\CreateService\Handlers\" />
+    <Folder Include="UseCases\Services\EditService\Handlers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceClock_BackEnd_Domain\ServiceClock_BackEnd_Domain.csproj" />
+  </ItemGroup>
+
+</Project>
