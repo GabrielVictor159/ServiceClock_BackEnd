@@ -7,8 +7,34 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
     ports:
-      - "8080"
-      - "8081"
+      - "7054:8080"
+      - "7055:8081"
+    env_file:
+      - Envs/dev.env
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    networks:
+      - serviceclock
+    depends_on:
+      - serviceclock_db
+  
+  serviceclock_db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5548:5432
+    networks:
+      - serviceclock
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+
+networks:
+  serviceclock:
+
+volumes:
+  postgres-data:

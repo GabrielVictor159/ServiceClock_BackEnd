@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Domain.Models;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 using ServiceClock_BackEnd.UseCases.Services.ListService;
 
 namespace ServiceClock_BackEnd_Api.UseCases.Services.ListService;
@@ -26,8 +25,7 @@ public class ListServiceController : ControllerBase
     }
 
     [HttpPost]
-    [Hateoas("Service", "search", "/ListService", "POST", typeof(ListServiceRequest))]
-    public async Task<IActionResult> Run(ListServiceRequest request)
+    public IActionResult Run([FromBody] ListServiceRequest request)
     {
         var UserId = Guid.Parse(User.FindFirst("User_Id")!.Value);
         var UserType = User.FindFirst("User_Rule")!.Value;
@@ -68,7 +66,6 @@ public class ListServiceController : ControllerBase
                     Id = e.Id, Name = e.Name, Description = e.Description, Address = e.Address,
                     City = e.City, State = e.State, Country = e.Country, PostalCode = e.PostalCode,
                 })
-            , _links = HateoasScheme.Instance.GetLinks("Service")
             });
         }
         return new OkResult();

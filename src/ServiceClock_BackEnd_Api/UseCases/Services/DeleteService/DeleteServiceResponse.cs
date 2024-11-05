@@ -3,10 +3,9 @@ using ServiceClock_BackEnd.Application.Boundaries.Services;
 
 namespace ServiceClock_BackEnd.UseCases.Services.DeleteService;
 
-public class DeleteServiceResponse : ResponseCore
+public class DeleteServiceResponse
 {
     public DeleteServiceResponse(DeleteServiceBoundarie boundarie)
-        : base("Service")
     {
         this.Sucess = boundarie.Sucess;
     }

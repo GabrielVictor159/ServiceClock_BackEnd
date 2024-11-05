@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceClock_BackEnd.Application.Boundaries.Services;
 using ServiceClock_BackEnd.Application.UseCases.Services.DeleteService;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 using ServiceClock_BackEnd.UseCases.Services.DeleteService;
 using ServiceClock_BackEnd_Application.Interfaces;
 
@@ -27,8 +26,7 @@ public class DeleteServiceController : ControllerBase
     }
 
     [HttpPost]
-    [Hateoas("Service", "delete", "/DeleteService", "POST", typeof(DeleteServiceRequest))]
-    public IActionResult Run(DeleteServiceRequest request)
+    public IActionResult Run([FromBody] DeleteServiceRequest request)
     {
         var UserId = Guid.Parse(User.FindFirst("User_Id")!.Value);
 

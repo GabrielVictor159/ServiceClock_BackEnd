@@ -1,10 +1,9 @@
 ﻿
 namespace ServiceClock_BackEnd.UseCases.Company.PatchCompany;
 
-public class PatchCompanyResponse: ResponseCore
+public class PatchCompanyResponse
 {
     public PatchCompanyResponse(Application.Boundaries.Company.PatchCompanyBoundarie? boundarie)
-        : base("Company")
     {
         if(boundarie !=null && boundarie.Company!=null)
         {

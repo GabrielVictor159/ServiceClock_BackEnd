@@ -10,7 +10,7 @@ public class TokenService : ITokenService
 {
     public string Generate(string rule, Guid IdUser)
     {
-        var Secret = Environment.GetEnvironmentVariable("JWTSECRET");
+        var Secret = Environment.GetEnvironmentVariable("JWT_SECRET");
         if (Secret == null)
         {
             throw new InvalidOperationException("SECRET environment variable not deified");

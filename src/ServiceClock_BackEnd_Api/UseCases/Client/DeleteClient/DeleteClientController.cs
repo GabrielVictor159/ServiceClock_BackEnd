@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Application.UseCases.Client.DeleteClient;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 using ServiceClock_BackEnd.UseCases.Client.DeleteClient;
 
 namespace ServiceClock_BackEnd_Api.UseCases.Client.DeleteClient;
@@ -29,8 +28,7 @@ public class DeleteClientController : ControllerBase
     }
 
     [HttpPost]
-    [Hateoas("Client", "delete", "/DeleteClient", "POST", typeof(DeleteClientRequest))]
-    public IActionResult Run(DeleteClientRequest request)
+    public IActionResult Run([FromBody] DeleteClientRequest request)
     {
             var userId = Guid.Parse(User.FindFirst("User_Id")!.Value);
             var client = this.clientRepository.Find(e => e.Id == request.ClientId && e.CompanyId == userId && e.Active == true).FirstOrDefault();

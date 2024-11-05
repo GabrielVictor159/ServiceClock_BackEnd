@@ -1,9 +1,8 @@
 ﻿namespace ServiceClock_BackEnd.UseCases.Client.PatchClient;
 
-public class PatchClientResponse : ResponseCore
+public class PatchClientResponse
 {
     public PatchClientResponse(Application.Boundaries.Client.PatchClientBoundarie? boundarie)
-        : base("Client")
     {
         if(boundarie !=null && boundarie.Client!=null)
         {

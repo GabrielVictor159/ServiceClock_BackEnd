@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Domain.Models;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 using ServiceClock_BackEnd.UseCases.Appointment.ListAppointment;
 
 namespace ServiceClock_BackEnd_Api.UseCases.Appointment.ListAppointment;
@@ -25,8 +24,7 @@ public class ListAppointmentController : ControllerBase
     }
 
     [HttpPost]
-    [Hateoas("Appointment", "search", "/ListAppointment", "POST", typeof(ListAppointmentRequest))]
-    public IActionResult Run(ListAppointmentRequest request)
+    public IActionResult Run([FromBody] ListAppointmentRequest request)
     {
         var userId = Guid.Parse(User.FindFirst("User_Id")!.Value);
         var userRule = User.FindFirst("User_Rule")!.Value;
@@ -88,8 +86,7 @@ public class ListAppointmentController : ControllerBase
 
         return new OkObjectResult(new
         {
-            Appointments = result,
-            _links = HateoasScheme.Instance.GetLinks("Appointment")
+            Appointments = result
         });
 
     }

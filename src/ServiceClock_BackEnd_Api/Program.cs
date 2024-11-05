@@ -1,13 +1,15 @@
-
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.WebSockets;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ServiceClock_BackEnd.Filters;
+using ServiceClock_BackEnd_Api.Helpers;
 using ServiceClock_BackEnd_Api.Modules.DependencyInjection;
+using ServiceClock_BackEnd_Api.UseCases.Messages.ListMessage;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.AddAutofacRegistration());
 
 builder.Services.AddLogging();
+builder.Services.AddSignalR();
 
 var key = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET")!);
 
@@ -43,7 +46,10 @@ builder.Services.AddAuthorization(options =>
         .Build();
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<NotificationMiddleware>();
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -73,7 +79,10 @@ builder.Services.AddSwaggerGen(c =>
         }
     };
     c.AddSecurityRequirement(securityRequirement);
+
+    c.AddSignalRDocumentation();
 });
+
 
 var corsPolicyAllOrigins = "AllowAllOrigins";
 
@@ -86,6 +95,7 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
 app.UseCors(corsPolicyAllOrigins);
 
 if (app.Environment.IsDevelopment())
@@ -97,10 +107,11 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseMiddleware<NotificationMiddleware>();
+app.MapHub<ListMessageHub>("/listMessageHub");
 
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
 
 app.Run();

@@ -3,10 +3,9 @@ using ServiceClock_BackEnd.Application.Boundaries.Messages;
 
 namespace ServiceClock_BackEnd.UseCases.Messages.CreateMessage;
 
-public class CreateMessageResponse : ResponseCore
+public class CreateMessageResponse
 {
     public CreateMessageResponse(CreateMessageBoundarie boundarie)
-        : base("Message")
     {
         if(boundarie.Message!=null)
         {

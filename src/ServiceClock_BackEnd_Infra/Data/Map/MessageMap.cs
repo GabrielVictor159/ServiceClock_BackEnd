@@ -10,6 +10,7 @@ public class MessageMap : IEntityTypeConfiguration<Message>
 {
     public void Configure(EntityTypeBuilder<Message> builder)
     {
+        builder.ToTable("Message", "ServiceClock");
 
         builder.HasKey(c => c.Id);
 

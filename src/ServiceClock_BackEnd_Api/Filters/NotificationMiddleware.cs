@@ -9,17 +9,13 @@ using System.Net;
 
 namespace ServiceClock_BackEnd.Filters;
 
-public class NotificationMiddleware
+public class NotificationMiddleware : IAsyncResultFilter
 {
     private readonly INotificationService notifications;
-    private readonly ILogService logService;
-
-    public NotificationMiddleware(INotificationService notifications, ILogService logService)
+    public NotificationMiddleware(INotificationService notifications)
     {
         this.notifications = notifications;
-        this.logService = logService;
     }
-
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
         if (notifications.HasNotifications)

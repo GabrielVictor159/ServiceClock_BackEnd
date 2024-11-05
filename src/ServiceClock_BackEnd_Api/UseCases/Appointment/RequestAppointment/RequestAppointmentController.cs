@@ -5,7 +5,6 @@ using ServiceClock_BackEnd.Application.Boundaries.Appointment;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Application.UseCases.Appointment.RequestAppointment;
 using ServiceClock_BackEnd.Domain.Models;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 using ServiceClock_BackEnd.UseCases.Appointment.RequestAppointment;
 using ServiceClock_BackEnd_Application.Interfaces;
 
@@ -32,7 +31,6 @@ public class RequestAppointmentController : ControllerBase
     }
 
     [HttpPost]
-    [Hateoas("Appointment", "create", "/RequestAppointment", "POST", typeof(RequestAppointmentRequest))]
     public IActionResult Run([FromBody] RequestAppointmentRequest request)
     {
         if (User.FindFirst("User_Rule")!.Value != "Client")

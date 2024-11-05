@@ -7,10 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceClock_BackEnd.UseCases.Client.CreateClient;
-public class CreateClientResponse : ResponseCore
+public class CreateClientResponse 
 {
     public CreateClientResponse(CreateClientBoundarie boundarie)
-        : base ("Client")
     {
         if (boundarie.Client != null)
         {

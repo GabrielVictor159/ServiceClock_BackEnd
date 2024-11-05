@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceClock_BackEnd.Application.Boundaries.Company;
 using ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 using ServiceClock_BackEnd.UseCases.Company.PatchCompany;
 using ServiceClock_BackEnd_Application.Interfaces;
 
@@ -27,8 +26,7 @@ public class PatchCompanyController : ControllerBase
     }
 
     [HttpPatch]
-    [Hateoas("Company", "update", "/PatchCompany", "PATCH", typeof(PatchCompanyRequest))]
-    public IActionResult Run(PatchCompanyRequest request)
+    public IActionResult Run([FromBody] PatchCompanyRequest request)
     {
         if (request != null)
         {

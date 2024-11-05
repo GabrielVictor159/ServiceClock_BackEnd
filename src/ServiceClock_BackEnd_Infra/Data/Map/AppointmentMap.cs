@@ -9,6 +9,8 @@ public class AppointmentMap : IEntityTypeConfiguration<Appointment>
 {
     public void Configure(EntityTypeBuilder<Appointment> builder)
     {
+        builder.ToTable("Appointment", "ServiceClock");
+
         builder.HasKey(c => c.Id);
 
         builder.Property(c => c.Id)

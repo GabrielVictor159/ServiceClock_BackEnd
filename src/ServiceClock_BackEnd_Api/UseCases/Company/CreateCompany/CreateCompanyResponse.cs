@@ -3,10 +3,9 @@ using ServiceClock_BackEnd.Application.Boundaries.Company;
 
 namespace ServiceClock_BackEnd.UseCases.Company.CreateCompany;
 
-public class CreateCompanyResponse : ResponseCore
+public class CreateCompanyResponse
 {
     public CreateCompanyResponse(CreateCompanyBoundarie boundarie)
-        : base ("Company")
     {
         if(boundarie.Company!=null)
         {

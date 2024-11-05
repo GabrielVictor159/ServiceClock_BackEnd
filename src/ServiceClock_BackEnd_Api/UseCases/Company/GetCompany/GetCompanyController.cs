@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 using ServiceClock_BackEnd.UseCases.Company.GetCompany;
 
 namespace ServiceClock_BackEnd_Api.UseCases.Company.GetCompany;
@@ -23,8 +22,7 @@ public class GetCompanyController : ControllerBase
     }
 
     [HttpPost]
-    [Hateoas("Company", "search", "/GetCompany", "POST", typeof(GetCompanyRequest))]
-    public IActionResult Run(GetCompanyRequest request)
+    public IActionResult Run([FromBody] GetCompanyRequest request)
     {
         if (request != null)
         {
@@ -48,7 +46,7 @@ public class GetCompanyController : ControllerBase
                 {
                     Name = e.Name, RegistrationNumber = e.RegistrationNumber, Address = e.Address, City = e.City, State = e.State,
                     Country = e.Country, PostalCode = e.PostalCode, PhoneNumber = e.PhoneNumber, Email = e.Email, Image = e.CompanyImage
-                }), _links = HateoasScheme.Instance.GetLinks("Company")
+                }), 
             }
             );
         }

@@ -5,7 +5,6 @@ using ServiceClock_BackEnd.Application.Boundaries.Services;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Application.UseCases.Services.EditService;
 using ServiceClock_BackEnd.Domain.Models;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 using ServiceClock_BackEnd.UseCases.Services.EditService;
 using ServiceClock_BackEnd_Application.Interfaces;
 
@@ -32,8 +31,7 @@ public class EditServiceController : ControllerBase
     }
 
     [HttpPatch]
-    [Hateoas("Service", "edit", "/EditService", "PATCH", typeof(EditServiceRequest))]
-    public IActionResult Run(EditServiceRequest request)
+    public IActionResult Run([FromBody] EditServiceRequest request)
     {
         var UserId = Guid.Parse(User.FindFirst("User_Id")!.Value);
         var UserType = User.FindFirst("User_Rule")!.Value;

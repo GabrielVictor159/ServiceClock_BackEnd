@@ -2,10 +2,9 @@
 
 
 namespace ServiceClock_BackEnd.UseCases.Appointment.RequestAppointment;
-public class RequestAppointmentResponse : ResponseCore
+public class RequestAppointmentResponse
 {
     public RequestAppointmentResponse(RequestAppointmentBoundarie boundarie)
-        : base("Appointment")
     {
         if(boundarie.Appointment!=null)
         {

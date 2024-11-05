@@ -2,10 +2,9 @@
 using ServiceClock_BackEnd.UseCases;
 
 namespace ServiceClock_BackEnd.UseCases.Appointment.AlterStateAppointment;
-public class AlterStateAppointmentResponse : ResponseCore
+public class AlterStateAppointmentResponse
 {
     public AlterStateAppointmentResponse(AlterStateAppointmentBoundarie boundarie)
-        : base("Appointment")
     {
         if(boundarie.Appointment!=null && boundarie.Appointment.Status==boundarie.Status)
         {

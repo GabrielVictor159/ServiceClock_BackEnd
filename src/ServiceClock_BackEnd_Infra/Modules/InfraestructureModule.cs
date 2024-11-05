@@ -2,6 +2,10 @@
 using Autofac;
 using ServiceClock_BackEnd.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
+using ServiceClock_BackEnd.Application.UseCases.Common.Handlers;
+using ServiceClock_BackEnd.Infraestructure.Data.Repositories;
+using ServiceClock_BackEnd.Application.Interfaces.Repositories;
+using Microsoft.Extensions.Logging;
 
 namespace ServiceClock_BackEnd.Infraestructure.Modules;
 
@@ -11,6 +15,10 @@ public class InfraestructureModule : Module
     {
         builder.RegisterAssemblyTypes(typeof(InfraestructureException).Assembly)
         .AsImplementedInterfaces().AsSelf().InstancePerLifetimeScope();
+
+        builder.RegisterGeneric(typeof(Logger<>))
+               .As(typeof(ILogger<>))
+               .InstancePerLifetimeScope();
 
         DataAccess(builder);
         base.Load(builder);
@@ -24,6 +32,10 @@ public class InfraestructureModule : Module
             .Where(t => (t.Namespace ?? string.Empty).Contains("Database"))
             .AsImplementedInterfaces()
             .InstancePerLifetimeScope();
+        
+        builder.RegisterGeneric(typeof(Repository<>))
+               .As(typeof(IRepository<>))
+               .InstancePerLifetimeScope();
 
         if (!string.IsNullOrEmpty(connection))
         {

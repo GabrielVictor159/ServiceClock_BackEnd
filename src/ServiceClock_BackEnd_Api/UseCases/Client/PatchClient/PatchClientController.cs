@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceClock_BackEnd.Application.Boundaries.Client;
 using ServiceClock_BackEnd.Application.UseCases.Client.PatchClient;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 using ServiceClock_BackEnd.UseCases.Client.PatchClient;
 using ServiceClock_BackEnd_Application.Interfaces;
 
@@ -27,8 +26,7 @@ public class PatchClientController : ControllerBase
     }
 
     [HttpPatch]
-    [Hateoas("Client", "update", "/PatchClient", "PATCH", typeof(PatchClientRequest))]
-    public IActionResult Run(PatchClientRequest request)
+    public IActionResult Run([FromBody] PatchClientRequest request)
     {
             if (request != null)
             {

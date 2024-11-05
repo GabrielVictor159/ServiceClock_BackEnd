@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceClock_BackEnd.Application.Boundaries.Services;
 using ServiceClock_BackEnd.Application.UseCases.Services.CreateService;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 using ServiceClock_BackEnd.UseCases.Services.CreateService;
 using ServiceClock_BackEnd_Application.Interfaces;
 
@@ -27,8 +26,7 @@ public class CreateServiceController : ControllerBase
     }
 
     [HttpPost]
-    [Hateoas("Service", "create", "/CreateService", "POST", typeof(CreateServiceRequest))]
-    public IActionResult Run(CreateServiceRequest request)
+    public IActionResult Run([FromBody] CreateServiceRequest request)
     {
         var UserId = Guid.Parse(User.FindFirst("User_Id")!.Value);
         var UserType = User.FindFirst("User_Rule")!.Value;

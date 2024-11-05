@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Application.Interfaces.Services;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 using ServiceClock_BackEnd.UseCases.Client.Login;
 
 namespace ServiceClock_BackEnd_Api.UseCases.Client.Login;
@@ -24,8 +23,7 @@ public class LoginClientController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost]
-    [Hateoas("Client", "related", "/LoginClient", "POST", typeof(LoginClientRequest))]
-    public IActionResult Run(LoginClientRequest request)
+    public IActionResult Run([FromBody] LoginClientRequest request)
     {
         if (request != null)
         {
@@ -40,7 +38,7 @@ public class LoginClientController : ControllerBase
                 return new BadRequestObjectResult("Login Invalid");
             }
             var token = this.tokenService.Generate("Client", client.Id);
-            return new OkObjectResult(new { UserId = client.Id, Token = token, _links = HateoasScheme.Instance.GetLinks("Client") });
+            return new OkObjectResult(new { UserId = client.Id, Token = token });
         }
         return new OkResult();
     }

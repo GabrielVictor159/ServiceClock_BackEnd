@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceClock_BackEnd.Application.Boundaries.Company;
 using ServiceClock_BackEnd.Application.UseCases.Company.CreateCompany;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 using ServiceClock_BackEnd.UseCases.Company.CreateCompany;
 using ServiceClock_BackEnd_Application.Interfaces;
 
@@ -29,8 +28,7 @@ public class CreateCompanyController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost]
-    [Hateoas("Company", "create", "/CreateCompany", "POST", typeof(CreateCompanyRequest))]
-    public IActionResult Run(CreateCompanyRequest request)
+    public IActionResult Run([FromBody] CreateCompanyRequest request)
     {
 
         if (request != null)

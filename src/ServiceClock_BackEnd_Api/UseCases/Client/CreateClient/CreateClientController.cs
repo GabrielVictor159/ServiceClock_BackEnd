@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceClock_BackEnd.Application.Boundaries.Client;
 using ServiceClock_BackEnd.Application.UseCases.Client.CreateClient;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 using ServiceClock_BackEnd.UseCases.Client.CreateClient;
 using ServiceClock_BackEnd_Application.Interfaces;
 
@@ -27,8 +26,7 @@ public class CreateClientController : ControllerBase
     }
 
     [HttpPost]
-    [Hateoas("Client", "create", "/CreateClient", "POST", typeof(CreateClientRequest))]
-    public IActionResult Run(CreateClientRequest request)
+    public IActionResult Run([FromBody] CreateClientRequest request)
     {
         if (User.FindFirst("User_Rule")!.Value != "Company")
         {

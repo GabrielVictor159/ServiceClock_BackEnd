@@ -4,7 +4,6 @@ using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Application.Interfaces.Services;
 using ServiceClock_BackEnd.Domain.Enums;
 using ServiceClock_BackEnd.Domain.Models;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 using ServiceClock_BackEnd.UseCases.Messages.DeleteMessage;
 
 namespace ServiceClock_BackEnd_Api.UseCases.Messages.DeleteMessage;
@@ -22,8 +21,7 @@ public class DeleteMessageController : ControllerBase
     }
 
     [HttpPost]
-    [Hateoas("Message", "delete", "/DeleteMessage", "POST", typeof(DeleteMessageRequest))]
-    public IActionResult Run(DeleteMessageRequest request)
+    public IActionResult Run([FromBody] DeleteMessageRequest request)
     {
         var UserId = Guid.Parse(User.FindFirst("User_Id")!.Value);
         var message = this.repository.Find(e => e.Id == request.MessageId && e.Active == true).FirstOrDefault();

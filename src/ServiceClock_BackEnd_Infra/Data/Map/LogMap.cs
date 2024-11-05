@@ -10,7 +10,8 @@ namespace ServiceClock_BackEnd.Infraestructure.Data.Map;
 public class LogMap : IEntityTypeConfiguration<Log>
 {
     public void Configure(EntityTypeBuilder<Log> builder)
-    {       
+    {
+        builder.ToTable("Log", "ServiceClock");
 
         builder.HasKey(c => c.Id);
 

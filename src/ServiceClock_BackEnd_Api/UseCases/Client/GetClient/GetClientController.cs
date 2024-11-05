@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 using ServiceClock_BackEnd.UseCases.Client.GetClient;
 
 namespace ServiceClock_BackEnd_Api.UseCases.Client.GetClient;
@@ -23,8 +22,7 @@ public class GetClientController : ControllerBase
     }
 
     [HttpPost]
-    [Hateoas("Client", "search", "/GetClient", "POST", typeof(GetClientRequest))]
-    public IActionResult Run(GetClientRequest request)
+    public IActionResult Run([FromBody] GetClientRequest request)
     {
         var UserId = Guid.Parse(User.FindFirst("User_Id")!.Value);
         var UserType = User.FindFirst("User_Rule")!.Value;
@@ -57,7 +55,7 @@ public class GetClientController : ControllerBase
                     Image = e.ClientImage
                 });
             return new OkObjectResult(
-                new { Clients = result, _links = HateoasScheme.Instance.GetLinks("Client") }
+                new { Clients = result }
             );
         }
         return new OkResult();

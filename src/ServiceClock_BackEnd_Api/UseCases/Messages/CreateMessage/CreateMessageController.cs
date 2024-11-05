@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using ServiceClock_BackEnd.Application.Boundaries.Messages;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Application.UseCases.Messages.CreateMessage;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 using ServiceClock_BackEnd.UseCases.Messages.CreateMessage;
 using ServiceClock_BackEnd_Application.Interfaces;
 
@@ -31,8 +30,7 @@ public class CreateMessageController : ControllerBase
     }
 
     [HttpPost]
-    [Hateoas("Message", "create", "/CreateMessage", "POST", typeof(CreateMessageRequest))]
-    public IActionResult Run(CreateMessageRequest request)
+    public IActionResult Run([FromBody] CreateMessageRequest request)
     {
             if (request != null)
             {

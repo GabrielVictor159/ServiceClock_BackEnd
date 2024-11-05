@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
-using ServiceClock_BackEnd.Helpers.Hateoas;
 
 namespace ServiceClock_BackEnd_Api.UseCases.Company.GetCompanyById;
 [Route("api/[controller]")]
@@ -18,8 +17,7 @@ public class GetCompanyByIdController : ControllerBase
 
     [AllowAnonymous]
     [HttpGet("{id}")]
-    [Hateoas("Company", "search", "/GetCompany/{id}", "GET")]
-    public IActionResult Run(string id)
+    public IActionResult Run([FromRoute] string id)
     {
         Guid.TryParse(id, out Guid companyId);
         if (companyId == Guid.Empty)
@@ -38,7 +36,7 @@ public class GetCompanyByIdController : ControllerBase
             return new BadRequestObjectResult("Company not found");
         }
 
-        return new OkObjectResult(new { Company = result, _links = HateoasScheme.Instance.GetLinks("Company") });
+        return new OkObjectResult(new { Company = result});
 
     }
 }

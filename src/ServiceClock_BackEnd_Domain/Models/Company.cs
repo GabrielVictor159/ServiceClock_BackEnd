@@ -22,7 +22,7 @@ public class Company : Entity<Company, CompanyValidator>
     public string PhoneNumber { get; set; } = "";
     public string Email { get; set; } = "";
     public string CompanyImage { get; set; } = "";
-    public DateTime EstablishedDate { get; set; }
+    public DateTime EstablishedDate { get; set; } = DateTime.Now;
 
     public virtual ICollection<Client> Clients { get; set; }
     public virtual ICollection<Service> Services { get; set; }

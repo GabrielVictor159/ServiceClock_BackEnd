@@ -9,6 +9,7 @@ public class CompanyMap : IEntityTypeConfiguration<Company>
 {
     public void Configure(EntityTypeBuilder<Company> builder)
     {
+        builder.ToTable("Company", "ServiceClock");
 
         builder.HasKey(c => c.Id);
 

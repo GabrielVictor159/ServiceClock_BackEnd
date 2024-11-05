@@ -13,6 +13,7 @@ public class ClientMap : IEntityTypeConfiguration<Client>
 {
     public void Configure(EntityTypeBuilder<Client> builder)
     {
+        builder.ToTable("Client", "ServiceClock");
 
         builder.HasKey(c => c.Id);
 
