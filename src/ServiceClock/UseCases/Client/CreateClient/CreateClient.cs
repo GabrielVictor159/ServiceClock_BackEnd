@@ -4,31 +4,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs;
-using ServiceClock_BackEnd.Api.Filters;
-using ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany;
-using ServiceClock_BackEnd.Validator.Http
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using ServiceClock_BackEnd.Validator.Http;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using ServiceClock_BackEnd.Application.UseCases.Company.CreateCompany;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.OpenApi.Models;
 using ServiceClock_BackEnd.Application.UseCases.Client.CreateClient;
-using ServiceClock_BackEnd.Api.Helpers.Hateoas;
+using ServiceClock_BackEnd.UseCases;
+using ServiceClock_BackEnd.Filters;
+using ServiceClock_BackEnd.Helpers.Hateoas;
+using ServiceClock_BackEnd.Application.Boundaries.Appointment;
+using ServiceClock_BackEnd_Application.Interfaces;
+using ServiceClock_BackEnd.Application.Boundaries.Client;
 
-namespace ServiceClock_BackEnd.Api.UseCases.Client.CreateClient;
+namespace ServiceClock_BackEnd.UseCases.Client.CreateClient;
 public class CreateClient : UseCaseCore
 {
     private readonly IMapper mapper;
-    private readonly CreateClientPresenter presenter;
+    private readonly IOutputPort<CreateClientBoundarie> presenter;
     private ICreateClientUseCase useCase;
     public CreateClient
         (HttpRequestValidator httpRequestValidator, 
         NotificationMiddleware middleware,
-        CreateClientPresenter createClientPresenter,
+        IOutputPort<CreateClientBoundarie> createClientPresenter,
         ICreateClientUseCase useCase,
         IMapper mapper) 
         : base(httpRequestValidator.AddValidator(new AuthorizationValidator()), middleware)

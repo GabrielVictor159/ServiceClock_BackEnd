@@ -10,8 +10,6 @@ public class MessageMap : IEntityTypeConfiguration<Message>
 {
     public void Configure(EntityTypeBuilder<Message> builder)
     {
-        builder.ToContainer("Messages");
-        builder.HasPartitionKey(c => c.Type);
 
         builder.HasKey(c => c.Id);
 

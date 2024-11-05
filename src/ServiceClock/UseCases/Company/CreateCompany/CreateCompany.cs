@@ -1,34 +1,33 @@
-using System.IO;
+
 using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
-using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json;
-using ServiceClock_BackEnd.Api.Filters;
-using ServiceClock_BackEnd.Validator.Http
+using ServiceClock_BackEnd.Validator.Http;
 using AutoMapper;
 using ServiceClock_BackEnd.Application.UseCases.Company.CreateCompany;
-using ServiceClock_BackEnd.Api.Helpers.Hateoas;
+using ServiceClock_BackEnd.Filters;
+using ServiceClock_BackEnd.Helpers.Hateoas;
+using ServiceClock_BackEnd_Application.Interfaces;
+using ServiceClock_BackEnd.Application.Boundaries.Company;
 #pragma warning disable CS1998
-namespace ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany
+namespace ServiceClock_BackEnd.UseCases.Company.CreateCompany
 {
     public class CreateCompany : UseCaseCore
     {
         private readonly IMapper mapper;
-        private readonly CreateCompanyPresenter presenter;
+        private readonly IOutputPort<CreateCompanyBoundarie> presenter;
         private readonly ICreateCompanyUseCase useCase;
 
         public CreateCompany
             (HttpRequestValidator httpRequestValidator,
             NotificationMiddleware middleware,ILogger<CreateCompany> logger, 
-            IMapper mapper, 
-            CreateCompanyPresenter presenter, 
+            IMapper mapper,
+            IOutputPort<CreateCompanyBoundarie> presenter, 
             ICreateCompanyUseCase useCase)
             : base(httpRequestValidator, middleware)
         {

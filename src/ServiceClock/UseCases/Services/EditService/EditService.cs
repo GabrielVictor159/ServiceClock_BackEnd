@@ -7,22 +7,22 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Azure.WebJobs;
 using Microsoft.OpenApi.Models;
-using ServiceClock_BackEnd.Api.Filters;
-using ServiceClock_BackEnd.Api.Helpers.Hateoas;
-using ServiceClock_BackEnd.Api.UseCases.Services.CreateService;
-using ServiceClock_BackEnd.Validator.Http
-using ServiceClock_BackEnd.Application.UseCases.Services.CreateService;
+using ServiceClock_BackEnd.Validator.Http;
 using System.Net;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd.Domain.Models;
 using ServiceClock_BackEnd.Application.UseCases.Services.EditService;
+using ServiceClock_BackEnd.Filters;
+using ServiceClock_BackEnd.Application.Boundaries.Services;
+using ServiceClock_BackEnd_Application.Interfaces;
+using ServiceClock_BackEnd.Helpers.Hateoas;
 
-namespace ServiceClock_BackEnd.Api.UseCases.Services.EditService;
+namespace ServiceClock_BackEnd.UseCases.Services.EditService;
 
 public class EditService : UseCaseCore
 {
     private readonly IMapper mapper;
-    private readonly EditServicePresenter presenter;
+    private readonly IOutputPort<EditServiceBoundarie> presenter;
     private readonly IRepository<Service> repository;
     private IEditServiceUseCase useCase;
 
@@ -30,7 +30,7 @@ public class EditService : UseCaseCore
         (HttpRequestValidator httpRequestValidator,
         NotificationMiddleware middleware,
         IMapper mapper,
-        EditServicePresenter presenter,
+        IOutputPort<EditServiceBoundarie> presenter,
         IRepository<Service> repository,
         IEditServiceUseCase useCase)
         : base(httpRequestValidator.AddValidator(new AuthorizationValidator()), middleware)

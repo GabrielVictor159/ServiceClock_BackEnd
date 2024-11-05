@@ -20,6 +20,7 @@ public class Message : Entity<Message, MessageValidator>
     public DateTime CreateAt { get; set; } = DateTime.Now;
     public bool Active { get; set; } = true;
 
-
+    public virtual Client Client { get; set; }
+    public virtual Company Company { get; set; }
 }
 

@@ -4,30 +4,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs;
-using ServiceClock_BackEnd.Api.Filters;
-using ServiceClock_BackEnd.Validator.Http
+using ServiceClock_BackEnd.Validator.Http;
 using System.Net;
-using ServiceClock_BackEnd.Api.UseCases.Services.CreateService;
-using ServiceClock_BackEnd.Application.UseCases.Services.CreateService;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
 using ServiceClock_BackEnd.Application.UseCases.Services.DeleteService;
-using ServiceClock_BackEnd.Api.Helpers.Hateoas;
-using ServiceClock_BackEnd.Api.UseCases.Services.ListService;
+using ServiceClock_BackEnd.Filters;
+using ServiceClock_BackEnd.Helpers.Hateoas;
+using ServiceClock_BackEnd.Application.Boundaries.Services;
+using ServiceClock_BackEnd_Application.Interfaces;
 
-namespace ServiceClock_BackEnd.Api.UseCases.Services.DeleteService;
+namespace ServiceClock_BackEnd.UseCases.Services.DeleteService;
 
 public class DeleteService : UseCaseCore
 {
     private readonly IMapper mapper;
-    private readonly DeleteServicePresenter presenter;
+    private readonly IOutputPort<DeleteServiceBoundarie> presenter;
     private IDeleteServiceUseCase useCase;
     public DeleteService
         (HttpRequestValidator httpRequestValidator, 
         NotificationMiddleware middleware,
         IMapper mapper,
-        DeleteServicePresenter presenter,
+        IOutputPort<DeleteServiceBoundarie> presenter,
         IDeleteServiceUseCase useCase) 
         : base(httpRequestValidator.AddValidator(new AuthorizationValidator()), middleware)
     {

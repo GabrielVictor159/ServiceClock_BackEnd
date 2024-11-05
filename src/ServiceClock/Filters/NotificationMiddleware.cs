@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using using ServiceClock_BackEnd.Validator.Http;
+using ServiceClock_BackEnd.Validator.Http;
 using ServiceClock_BackEnd.Application.Interfaces.Services;
 
 namespace ServiceClock_BackEnd.Filters;

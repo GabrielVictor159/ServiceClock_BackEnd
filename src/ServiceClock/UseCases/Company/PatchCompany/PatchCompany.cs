@@ -6,27 +6,27 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
-using ServiceClock_BackEnd.Api.Filters;
-using ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany;
-using ServiceClock_BackEnd.Validator.Http
+using ServiceClock_BackEnd.Validator.Http;
 using System.Net;
-using Microsoft.AspNetCore.Authorization;
 using ServiceClock_BackEnd.Application.UseCases.Company.PatchCompany;
-using ServiceClock_BackEnd.Api.Helpers.Hateoas;
+using ServiceClock_BackEnd.Filters;
+using ServiceClock_BackEnd.Helpers.Hateoas;
+using ServiceClock_BackEnd.Application.Boundaries.Company;
+using ServiceClock_BackEnd_Application.Interfaces;
 
-namespace ServiceClock_BackEnd.Api.UseCases.Company.PatchCompany;
+namespace ServiceClock_BackEnd.UseCases.Company.PatchCompany;
 
 public class PatchCompany : UseCaseCore
 {
     private readonly IMapper mapper;
-    private readonly PatchCompanyPresenter presenter;
+    private readonly IOutputPort<PatchCompanyBoundarie> presenter;
     private readonly IPatchCompanyUseCase useCase;
 
     public PatchCompany
         (HttpRequestValidator httpRequestValidator,
         NotificationMiddleware middleware, ILogger<PatchCompany> logger,
         IMapper mapper,
-        PatchCompanyPresenter presenter,
+        IOutputPort<PatchCompanyBoundarie> presenter,
         IPatchCompanyUseCase useCase)
         : base(httpRequestValidator.AddValidator(new AuthorizationValidator()), middleware)
     {

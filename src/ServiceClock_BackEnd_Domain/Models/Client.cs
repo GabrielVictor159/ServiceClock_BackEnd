@@ -30,4 +30,7 @@ public class Client : Entity<Client,ClientValidator>
 
     public Guid? CompanyId { get; set; } 
 
+    public virtual Company Company { get; set; }
+    public virtual ICollection<Appointment> Appointments { get; set; }
+    public virtual ICollection<Message> Messages { get; set; }
 }

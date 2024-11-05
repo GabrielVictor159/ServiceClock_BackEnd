@@ -40,9 +40,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Api\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ServiceClock_BackEnd_Application\ServiceClock_BackEnd_Application.csproj" />
     <ProjectReference Include="..\ServiceClock_BackEnd_Infra\ServiceClock_BackEnd_Infra.csproj" />
   </ItemGroup>

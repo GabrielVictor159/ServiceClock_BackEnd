@@ -5,14 +5,13 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Azure.WebJobs;
 using Microsoft.OpenApi.Models;
-using ServiceClock_BackEnd.Validator.Http
+using ServiceClock_BackEnd.Validator.Http;
 using System.Net;
 using AutoMapper;
 using ServiceClock_BackEnd.Application.UseCases.Appointment.RequestAppointment;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using ServiceClock_BackEnd_Application.Interfaces;
 using ServiceClock_BackEnd.Application.Boundaries.Appointment;
-using using ServiceClock_BackEnd.Validator.Http;
 using ServiceClock_BackEnd.Filters;
 using ServiceClock_BackEnd.Helpers.Hateoas;
 

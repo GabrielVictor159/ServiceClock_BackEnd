@@ -9,8 +9,6 @@ public class CompanyMap : IEntityTypeConfiguration<Company>
 {
     public void Configure(EntityTypeBuilder<Company> builder)
     {
-        builder.ToContainer("Companies");
-        builder.HasPartitionKey(c => c.Country);
 
         builder.HasKey(c => c.Id);
 

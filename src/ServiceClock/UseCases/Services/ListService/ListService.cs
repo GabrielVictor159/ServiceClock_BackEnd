@@ -7,14 +7,13 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Azure.WebJobs;
 using Microsoft.OpenApi.Models;
-using ServiceClock_BackEnd.Api.Filters;
-using ServiceClock_BackEnd.Api.UseCases.Client.GetClient;
-using ServiceClock_BackEnd.Validator.Http
+using ServiceClock_BackEnd.Validator.Http;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using System.Net;
-using ServiceClock_BackEnd.Api.Helpers.Hateoas;
+using ServiceClock_BackEnd.Filters;
+using ServiceClock_BackEnd.Helpers.Hateoas;
 
-namespace ServiceClock_BackEnd.Api.UseCases.Services.ListService;
+namespace ServiceClock_BackEnd.UseCases.Services.ListService;
 
 public class ListService : UseCaseCore
 {

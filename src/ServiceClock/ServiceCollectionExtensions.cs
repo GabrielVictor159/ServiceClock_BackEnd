@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceClock_BackEnd;
-using ServiceClock_BackEnd.Api.Modules;
 using ServiceClock_BackEnd.Application.Modules;
 using ServiceClock_BackEnd.Infraestructure.Modules;
+using ServiceClock_BackEnd.Modules;
 
 namespace ServiceClock_BackEnd;
 

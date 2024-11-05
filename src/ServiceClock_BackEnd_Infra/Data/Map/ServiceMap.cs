@@ -9,8 +9,6 @@ public class ServiceMap : IEntityTypeConfiguration<Service>
 {
     public void Configure(EntityTypeBuilder<Service> builder)
     {
-        builder.ToContainer("Services");
-        builder.HasPartitionKey(c => c.CompanyId);
 
         builder.HasKey(c => c.Id);
 

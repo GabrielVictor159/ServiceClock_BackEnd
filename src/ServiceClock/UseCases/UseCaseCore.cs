@@ -1,14 +1,9 @@
 ﻿
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using using ServiceClock_BackEnd.Validator.Http;
+using ServiceClock_BackEnd.Validator.Http;
 using System.IO;
-using AutoMapper;
-using System;
 using ServiceClock_BackEnd.Filters;
 
 namespace ServiceClock_BackEnd.UseCases;

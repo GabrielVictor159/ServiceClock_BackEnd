@@ -1,34 +1,43 @@
 ﻿
-using Microsoft.Extensions.DependencyInjection;
-using ServiceClock_BackEnd.Application.Interfaces.Repositories;
-using ServiceClock_BackEnd.Application.Interfaces.Services;
-using ServiceClock_BackEnd.Domain.Models;
-using ServiceClock_BackEnd.Domain.Modules;
-using ServiceClock_BackEnd.Infraestructure.Data.Repositories;
-using ServiceClock_BackEnd.Infraestructure.Services;
+using Autofac;
+using ServiceClock_BackEnd.Infraestructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ServiceClock_BackEnd.Infraestructure.Modules;
 
 public class InfraestructureModule : Module
 {
-    public override void Configure(IServiceCollection services)
+    protected override void Load(ContainerBuilder builder)
     {
-        services.AddSingleton<INotificationService, NotificationService>();
-        services.AddSingleton<ILogService, LogService>();
-        services.AddSingleton<IBlobService, BlobService>();
-        services.AddSingleton<ITokenService, TokenService>();
-        services.AddLogging();
-        AddRepositories(services);
+        builder.RegisterAssemblyTypes(typeof(InfraestructureException).Assembly)
+        .AsImplementedInterfaces().AsSelf().InstancePerLifetimeScope();
+
+        DataAccess(builder);
+        base.Load(builder);
     }
 
-    private void AddRepositories(IServiceCollection services)
+    private void DataAccess(ContainerBuilder builder)
     {
-        services.AddSingleton<IRepository<Company>, Repository<Company>>();
-        services.AddSingleton<IRepository<Client>, Repository<Client>>();
-        services.AddSingleton<IRepository<Service>, Repository<Service>>();
-        services.AddSingleton<IRepository<Appointment>, Repository<Appointment>>();
-        services.AddSingleton<IRepository<Message>, Repository<Message>>();
-        services.AddSingleton<IRepository<Log>, Repository<Log>>();
+        var connection = Environment.GetEnvironmentVariable("DBCONN");
+
+        builder.RegisterAssemblyTypes(typeof(InfraestructureException).Assembly)
+            .Where(t => (t.Namespace ?? string.Empty).Contains("Database"))
+            .AsImplementedInterfaces()
+            .InstancePerLifetimeScope();
+
+        if (!string.IsNullOrEmpty(connection))
+        {
+            try
+            {
+                using var context = new Context();
+                context.Database.Migrate();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
     }
 }
 

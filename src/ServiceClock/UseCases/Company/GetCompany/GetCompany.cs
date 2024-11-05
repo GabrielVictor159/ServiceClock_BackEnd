@@ -5,17 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs;
-using ServiceClock_BackEnd.Api.Filters;
-using ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany;
-using ServiceClock_BackEnd.Validator.Http
+using ServiceClock_BackEnd.Validator.Http;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using System.Net;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.OpenApi.Models;
-using ServiceClock_BackEnd.Api.Helpers.Hateoas;
+using ServiceClock_BackEnd.Filters;
+using ServiceClock_BackEnd.Helpers.Hateoas;
 
-namespace ServiceClock_BackEnd.Api.UseCases.Company.GetCompany;
+namespace ServiceClock_BackEnd.UseCases.Company.GetCompany;
 
 public class GetCompany : UseCaseCore
 {

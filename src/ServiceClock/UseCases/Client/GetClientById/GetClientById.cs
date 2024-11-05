@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs;
-using ServiceClock_BackEnd.Api.Filters;
-using ServiceClock_BackEnd.Validator.Http
+using ServiceClock_BackEnd.Validator.Http;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
 using System.Net;
-using ServiceClock_BackEnd.Api.Helpers.Hateoas;
+using ServiceClock_BackEnd.Filters;
+using ServiceClock_BackEnd.Helpers.Hateoas;
 
-namespace ServiceClock_BackEnd.Api.UseCases.Client.GetClientById;
+namespace ServiceClock_BackEnd.UseCases.Client.GetClientById;
 
 public class GetClientById : UseCaseCore
 {

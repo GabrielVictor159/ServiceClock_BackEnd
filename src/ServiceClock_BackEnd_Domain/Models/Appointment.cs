@@ -19,5 +19,8 @@ public class Appointment : Entity<Appointment,AppointmentValidator>
     public AppointmentStatus Status { get; set; }
     public DateTime CreatedAt { get; set; }
 
+    public virtual Service Service { get; set; }
+    public virtual Client Client { get; set; }
+
 }
 

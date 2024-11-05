@@ -11,8 +11,6 @@ public class LogMap : IEntityTypeConfiguration<Log>
 {
     public void Configure(EntityTypeBuilder<Log> builder)
     {       
-        builder.ToContainer("Log");
-        builder.HasPartitionKey(l => l.Type);
 
         builder.HasKey(c => c.Id);
 

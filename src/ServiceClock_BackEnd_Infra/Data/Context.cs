@@ -23,13 +23,6 @@ public partial class Context : DbContext
     public DbSet<Log> Logs { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseCosmos(
-                Environment.GetEnvironmentVariable("COSMOS_URL")!,
-                Environment.GetEnvironmentVariable("COSMOS_KEY")!,
-                databaseName: Environment.GetEnvironmentVariable("COSMOS_DATABASE")!);
-        }
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

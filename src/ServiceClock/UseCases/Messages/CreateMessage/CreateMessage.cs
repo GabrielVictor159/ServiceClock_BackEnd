@@ -5,30 +5,31 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs;
-using ServiceClock_BackEnd.Api.Filters;
-using ServiceClock_BackEnd.Api.UseCases.Company.CreateCompany;
-using ServiceClock_BackEnd.Validator.Http
-using ServiceClock_BackEnd.Application.UseCases.Company.CreateCompany;
+using ServiceClock_BackEnd.Validator.Http;
 using ServiceClock_BackEnd.Application.UseCases.Messages.CreateMessage;
 using System.Net;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.OpenApi.Models;
 using ServiceClock_BackEnd.Application.Interfaces.Repositories;
-using ServiceClock_BackEnd.Api.Helpers.Hateoas;
+using ServiceClock_BackEnd.Filters;
+using ServiceClock_BackEnd.Helpers.Hateoas;
+using ServiceClock_BackEnd.Application.Boundaries.Company;
+using ServiceClock_BackEnd_Application.Interfaces;
+using ServiceClock_BackEnd.Application.Boundaries.Messages;
 
-namespace ServiceClock_BackEnd.Api.UseCases.Messages.CreateMessage;
+namespace ServiceClock_BackEnd.UseCases.Messages.CreateMessage;
 
 public class CreateMessage : UseCaseCore
 {
     private readonly IMapper mapper;
-    private readonly CreateMessagePresenter presenter;
+    private readonly IOutputPort<CreateMessageBoundarie> presenter;
     private readonly ICreateMessageUseCase useCase;
     private readonly IRepository<Domain.Models.Client> clientRepository;
     public CreateMessage
         (HttpRequestValidator httpRequestValidator,
         NotificationMiddleware middleware,
-        IMapper mapper, 
-        CreateMessagePresenter presenter, 
+        IMapper mapper,
+        IOutputPort<CreateMessageBoundarie> presenter, 
         ICreateMessageUseCase useCase,
         IRepository<Domain.Models.Client> clientRepository) 
         : base(httpRequestValidator.AddValidator(new AuthorizationValidator()), middleware)

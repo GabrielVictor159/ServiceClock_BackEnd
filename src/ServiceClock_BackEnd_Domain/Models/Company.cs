@@ -23,5 +23,9 @@ public class Company : Entity<Company, CompanyValidator>
     public string Email { get; set; } = "";
     public string CompanyImage { get; set; } = "";
     public DateTime EstablishedDate { get; set; }
+
+    public virtual ICollection<Client> Clients { get; set; }
+    public virtual ICollection<Service> Services { get; set; }
+    public virtual ICollection<Message> Messages { get; set; }
 }
 
