@@ -6,7 +6,6 @@ namespace ServiceClock_BackEnd_Api.UseCases.Auth.IsAuthenticated;
 [ApiController]
 public class IsAuthenticatedController : ControllerBase
 {
-    [AllowAnonymous]
     [HttpGet]
     [HttpPost]
     public IActionResult Run()
