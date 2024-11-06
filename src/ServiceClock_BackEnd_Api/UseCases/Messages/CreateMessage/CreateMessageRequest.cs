@@ -9,15 +9,15 @@ public class CreateMessageRequest
     [JsonProperty("type")]
     public MessageType Type { get; set; }
     [JsonProperty("clientId")]
-    public Guid ClientId { get; set; }
+    public Guid? ClientId { get; set; }
     [JsonProperty("companyId")]
-    public Guid CompanyId { get; set; }
+    public Guid? CompanyId { get; set; }
     [JsonProperty("content")]
     public string Content { get; set; } = "";
     [JsonProperty("fileName")]
     public string FileName { get; set; } = "";
 
     [JsonIgnore]
-    public Guid CreatedBy { get; set; }
+    public Guid? CreatedBy { get; set; }
 }
 

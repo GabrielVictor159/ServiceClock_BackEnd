@@ -3,6 +3,9 @@ using Autofac;
 using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
 using ServiceClock_BackEnd.Infraestructure;
+using ServiceClock_BackEnd_Api.Factory;
+using ServiceClock_BackEnd_Api.Factory.Handlers;
+using System.Reflection;
 
 namespace ServiceClock_BackEnd.Modules
 {
@@ -10,6 +13,13 @@ namespace ServiceClock_BackEnd.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+           .Where(t => typeof(WebSocketHandler<>).IsAssignableFrom(t) && t != typeof(WebSocketHandler<>))
+           .AsSelf()
+           .InstancePerLifetimeScope();
+
+            builder.RegisterType<WebSocketFactory>().AsSelf().InstancePerLifetimeScope();
+
             builder.RegisterAssemblyTypes(typeof(ApiException).Assembly)
                      .AsImplementedInterfaces().AsSelf().InstancePerLifetimeScope();
 
