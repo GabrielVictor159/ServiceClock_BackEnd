@@ -1,7 +1,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.WebSockets;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -12,7 +12,6 @@ using ServiceClock_BackEnd_Api.Factory;
 using ServiceClock_BackEnd_Api.Helpers;
 using ServiceClock_BackEnd_Api.Modules.DependencyInjection;
 using ServiceClock_BackEnd_Api.UseCases.Messages.ListMessage;
-using System.Net.WebSockets;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,14 +48,12 @@ builder.Services.AddAuthentication(x =>
     e.TokenValidationParameters = tokenValidationParameters;
 });
 
-
 builder.Services.AddAuthorization(options =>
 {
-    options.FallbackPolicy = new AuthorizationPolicyBuilder()
-                                .RequireAssertion(_ => true)
-                                .Build();
+    options.FallbackPolicy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
 });
-
 
 builder.Services.AddControllers(options =>
 {
@@ -91,7 +88,10 @@ builder.Services.AddSwaggerGen(c =>
         }
     };
     c.AddSecurityRequirement(securityRequirement);
+
+    c.AddSignalRDocumentation();
 });
+
 
 var corsPolicyAllOrigins = "AllowAllOrigins";
 
@@ -112,9 +112,9 @@ var webSocketOptions = new WebSocketOptions
 
 app.UseWebSockets(webSocketOptions);
 
-app.Use(async (context, next) =>
+app.Map("/ws", wsApp =>
 {
-    if (context.Request.Path == "/ws")
+    wsApp.Run(async context =>
     {
         if (context.WebSockets.IsWebSocketRequest)
         {
@@ -127,11 +127,7 @@ app.Use(async (context, next) =>
         {
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
         }
-    }
-    else
-    {
-        await next(context);
-    }
+    });
 });
 
 app.UseCors(corsPolicyAllOrigins);
@@ -142,12 +138,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseAuthentication(); 
-app.UseAuthorization(); 
-app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+
 
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
 
 app.Run();
