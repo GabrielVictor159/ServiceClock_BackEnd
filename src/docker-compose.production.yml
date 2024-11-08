@@ -2,6 +2,10 @@ version: '3.4'
 
 services:
   serviceclock_backend_api:
+    image: ${DOCKER_REGISTRY-}serviceclockbackendapi
+    build:
+      context: .
+      dockerfile: ServiceClock_BackEnd_Api/Dockerfile
     restart: always
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -11,14 +15,17 @@ services:
       - BLOB_CONTAINER=${SERVICE_CLOCK_BLOB_CONTAINER}
       - PRIVATE_BLOB_CONTAINER=${SERVICE_CLOCK_PRIVATE_BLOB_CONTAINER}
       - STORAGE_CONECTION_STRING=${SERVICE_CLOCK_STORAGE_CONECTION_STRING}
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - "7754:8080"
     networks:
-      - ${NETWORK}
+      - traefik-network
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`${BASE_PATH}`) && Path(`/serviceclock`)"
-      - "traefik.http.routers.whoami.entrypoints=${HTTP_SCHEME}"
-      - "traefik.http.routers.whoami.tls.certresolver=${TLS_POLITIC}"
-      - "traefik.http.services.whoami.loadbalancer.server.port=443"
+      - "traefik.http.routers.serviceclock.rule=Host(`${BASE_PATH}`) && Path(`/seviceclock`)"
+      - "traefik.http.routers.serviceclock.entrypoints=${HTTP_SCHEME}"
+      - "traefik.http.routers.serviceclock.tls.certresolver=${TLS_POLITIC}"
+      - "traefik.http.services.serviceclock.loadbalancer.server.port=7754"
 
 networks:
   traefik-network:
