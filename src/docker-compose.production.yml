@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  serviceclock_backend_api:
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DBCONN=${DBCONN}
+      - JWT_SECRET=${JWT_SECRET}
+      - TOKEN_EXPIRES=${TOKEN_EXPIRES}
+      - BLOB_CONTAINER=${SERVICE_CLOCK_BLOB_CONTAINER}
+      - PRIVATE_BLOB_CONTAINER=${SERVICE_CLOCK_PRIVATE_BLOB_CONTAINER}
+      - STORAGE_CONECTION_STRING=${SERVICE_CLOCK_STORAGE_CONECTION_STRING}
+    networks:
+      - ${NETWORK}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`${BASE_PATH}`) && Path(`/serviceclock`)"
+      - "traefik.http.routers.whoami.entrypoints=${HTTP_SCHEME}"
+      - "traefik.http.routers.whoami.tls.certresolver=${TLS_POLITIC}"
+      - "traefik.http.services.whoami.loadbalancer.server.port=443"
+
+networks:
+  traefik-network:
+    external: true
