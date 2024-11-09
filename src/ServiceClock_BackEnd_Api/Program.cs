@@ -91,7 +91,7 @@ builder.Services.AddSwaggerGen(c =>
     };
     c.AddSecurityRequirement(securityRequirement);
 
-    c.DocumentFilter<PrefixDocumentFilter>($"{Environment.GetEnvironmentVariable("PREFIX_PATH")??""}api/");
+    c.DocumentFilter<PrefixDocumentFilter>($"{Environment.GetEnvironmentVariable("PREFIX_PATH") ?? "" }");
 
     c.AddSignalRDocumentation();
 });

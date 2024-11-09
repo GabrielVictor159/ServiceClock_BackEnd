@@ -18,7 +18,7 @@ public class PrefixDocumentFilter : IDocumentFilter
 
         foreach (var path in swaggerDoc.Paths)
         {
-            var newPath = $"/{_prefix}{path.Key}";
+            var newPath = $"{_prefix}{path.Key}";
             updatedPaths.Add(newPath, path.Value);
         }
 
