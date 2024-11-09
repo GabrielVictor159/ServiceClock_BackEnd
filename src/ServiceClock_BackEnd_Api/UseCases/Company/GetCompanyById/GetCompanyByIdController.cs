@@ -27,7 +27,7 @@ public class GetCompanyByIdController : ControllerBase
         var result = this.repository.Find(e => e.Id == companyId)
         .Select(e => new
         {
-            Id = e.Id, Password = e.Password, Name = e.Name, RegistrationNumber = e.RegistrationNumber, Address = e.Address, City = e.City, State = e.State,
+            Id = e.Id, Name = e.Name, RegistrationNumber = e.RegistrationNumber, Address = e.Address, City = e.City, State = e.State,
             Country = e.Country, PostalCode = e.PostalCode, PhoneNumber = e.PhoneNumber, Email = e.Email, Image = e.CompanyImage
         }).FirstOrDefault();
 

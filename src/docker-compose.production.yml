@@ -16,6 +16,7 @@ services:
       - PRIVATE_BLOB_CONTAINER=${SERVICE_CLOCK_PRIVATE_BLOB_CONTAINER}
       - STORAGE_CONECTION_STRING=${SERVICE_CLOCK_STORAGE_CONECTION_STRING}
       - ASPNETCORE_HTTP_PORTS=8080
+      - PREFIX_PATH="serviceclock/"
     networks:
       - traefik-network
     labels:

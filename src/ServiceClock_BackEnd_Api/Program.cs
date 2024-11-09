@@ -9,9 +9,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ServiceClock_BackEnd.Filters;
 using ServiceClock_BackEnd_Api.Factory;
+using ServiceClock_BackEnd_Api.Filters;
 using ServiceClock_BackEnd_Api.Helpers;
 using ServiceClock_BackEnd_Api.Modules.DependencyInjection;
 using ServiceClock_BackEnd_Api.UseCases.Messages.ListMessage;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -89,8 +91,11 @@ builder.Services.AddSwaggerGen(c =>
     };
     c.AddSecurityRequirement(securityRequirement);
 
+    c.DocumentFilter<PrefixDocumentFilter>($"{Environment.GetEnvironmentVariable("PREFIX_PATH")??""}api/");
+
     c.AddSignalRDocumentation();
 });
+
 
 
 var corsPolicyAllOrigins = "AllowAllOrigins";

@@ -12,12 +12,11 @@
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>
+    <None Include="docker-compose.production.yml" />
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
     <None Include="envs\.env.sample" />
     <None Include="envs\dev.env" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Envs\" />
+    <None Include="Envs\Prod.env" />
   </ItemGroup>
 </Project>
