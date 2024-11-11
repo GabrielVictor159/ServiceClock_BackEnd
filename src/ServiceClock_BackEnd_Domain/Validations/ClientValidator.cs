@@ -36,8 +36,7 @@ public class ClientValidator : AbstractValidator<Client>
             .Matches(@"[a-z]").WithMessage("Senha deve conter pelo menos uma letra minúscula.")
             .Matches(@"[0-9]").WithMessage("Senha deve conter pelo menos um número.")
             .Matches(@"[\W]").WithMessage("Senha deve conter pelo menos um caractere especial.")
-            .When(c => c.Password.Length != 32 || !System.Text.RegularExpressions.Regex.IsMatch(c.Password, "^[a-f0-9]{32}$"))
-            .WithMessage("A validação de senha é ignorada para senhas encriptadas.");
+            .When(c => c.Password.Length != 32 || !System.Text.RegularExpressions.Regex.IsMatch(c.Password, "^[a-f0-9]{32}$"));
 
         RuleFor(c => c.Address)
             .NotEmpty().WithMessage("Endereço é obrigatório.")
