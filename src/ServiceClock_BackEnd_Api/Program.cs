@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ServiceClock_BackEnd.Filters;
+using ServiceClock_BackEnd.UseCases.Appointment.DateAnalysisJob;
 using ServiceClock_BackEnd_Api.Factory;
 using ServiceClock_BackEnd_Api.Filters;
 using ServiceClock_BackEnd_Api.Helpers;
@@ -107,6 +108,8 @@ builder.Services.AddCors(options =>
                           .AllowAnyMethod()
                           .AllowAnyHeader());
 });
+
+builder.Services.AddHostedService<DateAnalysisJob>();
 
 var app = builder.Build();
 

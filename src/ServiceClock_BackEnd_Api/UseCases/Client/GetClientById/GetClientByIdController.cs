@@ -19,17 +19,17 @@ public class GetClientByIdController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult Run([FromRoute] string id)
     {
-        Guid.TryParse(id, out Guid companyId);
-        if (companyId == Guid.Empty)
+        Guid.TryParse(id, out Guid clientId);
+        if (clientId == Guid.Empty)
         {
             return new BadRequestObjectResult("Invalid Id");
         }
-        var result = this.repository.Find(e => e.Id == companyId && e.Active == true)
+        var result = this.repository.Find(e => e.Id == clientId && e.Active == true)
         .Select(e => new
         {
             Id = e.Id, Name = e.Name, Address = e.Address, City = e.City, State = e.State,
             Country = e.Country, PostalCode = e.PostalCode, PhoneNumber = e.PhoneNumber, Email = e.Email, Image = e.ClientImage,
-            BirthDate = e.BirthDate, CreatedAt = e.CreatedAt,
+            BirthDate = e.BirthDate, CreatedAt = e.CreatedAt, CompanyId = e.CompanyId
         }).FirstOrDefault();
 
         if (result == null)
