@@ -120,8 +120,6 @@ var app = builder.Build();
 
 app.UseHttpMetrics();
 
- app.UseMiddleware<RequestMetricsMiddleware>();
-
 app.UseMiddleware<RequestLoggingMiddleware>();
 
 var webSocketOptions = new WebSocketOptions
