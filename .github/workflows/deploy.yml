@@ -35,6 +35,7 @@ jobs:
         run: |
           echo "DOCKER_USERNAME: $DOCKER_USERNAME"
           echo "DOCKER_PASSWORD: $DOCKER_PASSWORD"
+          env
 
       - name: Docker Login
         run: |
