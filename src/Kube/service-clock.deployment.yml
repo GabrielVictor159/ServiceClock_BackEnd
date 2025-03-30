@@ -16,7 +16,7 @@ spec:
         - name: serviceclock-backend-api
           image: ${DOCKER_USERNAME}/serviceclock_backend_api:latest
           ports:
-            - containerPort: 8000
+            - containerPort: 8080
           envFrom:
             - secretRef:
                 name: serviceclock-secrets

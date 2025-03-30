@@ -4,8 +4,12 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
-        
+        {
+            "name": "C#: ServiceClock_BackEnd_Api Debug",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/src/ServiceClock_BackEnd_Api/ServiceClock_BackEnd_Api.csproj"
+        },
         {
             "name": ".NET Core Attach",
             "type": "coreclr",
