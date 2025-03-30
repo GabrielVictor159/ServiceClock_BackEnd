@@ -1,6 +1,6 @@
 services:
   serviceclock_backend_api:
-    image: $DOCKER_USERNAME/serviceclock_backend_api:latest
+    image: gabriel159487/serviceclock_backend_api:latest
     build:
       context: .
       dockerfile: ServiceClock_BackEnd_Api/Dockerfile

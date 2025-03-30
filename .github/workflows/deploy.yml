@@ -30,12 +30,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y docker-compose
-      
-      - name: Imprimir variáveis de ambiente
-        run: |
-          echo "DOCKER_USERNAME: $DOCKER_USERNAME"
-          echo "DOCKER_PASSWORD: $DOCKER_PASSWORD"
-          env
 
       - name: Docker Login
         run: |
