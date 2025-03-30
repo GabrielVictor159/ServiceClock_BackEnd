@@ -26,7 +26,7 @@ jobs:
           echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> $GITHUB_ENV
           echo "DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}" >> $GITHUB_ENV
 
-      - name: Set environment variables
+      - name: Set environment variables files
         run: |
           envsubst < src/Kube/service-clock.service.yml > src/Kube/service-clock.service.yml
           envsubst < src/Kube/service-clock.ingress.yml > src/Kube/service-clock.ingress.yml
@@ -47,7 +47,6 @@ jobs:
 
       - name: Push Docker image
         run: |
-          # Defina o nome completo do repositório no Docker Hub
           docker tag serviceclock_backend_api:latest $DOCKER_USERNAME/serviceclock_backend_api:latest
           docker push $DOCKER_USERNAME/serviceclock_backend_api:latest
 
@@ -74,7 +73,6 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply -f src/Kube/service-clock.secrets.yml
           kubectl apply -f src/Kube/service-clock.deployment.yml
           kubectl apply -f src/Kube/service-clock.service.yml
           kubectl apply -f src/Kube/service-clock.ingress.yml
