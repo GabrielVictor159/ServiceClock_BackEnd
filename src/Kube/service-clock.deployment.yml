@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serviceclock-backend-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: serviceclock-backend-api
+  template:
+    metadata:
+      labels:
+        app: serviceclock-backend-api
+    spec:
+      containers:
+        - name: serviceclock-backend-api
+          image: ${{ secrets.DOCKER_USERNAME }}/serviceclock_backend_api:${{ env.IMAGE_TAG }}
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: serviceclock-secrets

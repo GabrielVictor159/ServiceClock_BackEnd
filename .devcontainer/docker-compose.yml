@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+    extends:
+      file: ../src/docker-compose.override.yml
+      service: serviceclock_backend_api
+    
+  serviceclock_db:
+    extends:
+      file: ../src/docker-compose.override.yml
+      service: serviceclock_db
+  
+  prometheus:
+    extends:
+      file: ../src/docker-compose.override.yml
+      service: serviceclock_prometheus
+
+networks:
+  serviceclock:
+
+volumes:
+  postgres-data:

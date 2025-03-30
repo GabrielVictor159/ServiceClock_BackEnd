@@ -7,14 +7,17 @@ using Microsoft.AspNetCore.WebSockets;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Prometheus;
 using ServiceClock_BackEnd.Filters;
 using ServiceClock_BackEnd.UseCases.Appointment.DateAnalysisJob;
 using ServiceClock_BackEnd_Api.Factory;
 using ServiceClock_BackEnd_Api.Filters;
 using ServiceClock_BackEnd_Api.Helpers;
+using ServiceClock_BackEnd_Api.Middlewares;
 using ServiceClock_BackEnd_Api.Modules.DependencyInjection;
 using ServiceClock_BackEnd_Api.UseCases.Messages.ListMessage;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Diagnostics;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -56,6 +59,8 @@ builder.Services.AddAuthorization(options =>
     options.FallbackPolicy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
         .Build();
+
+    options.AddPolicy("NoAuthPolicy", policy => policy.RequireAssertion(_ => true));
 });
 
 builder.Services.AddControllers(options =>
@@ -150,9 +155,34 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 
-app.UseHttpsRedirection();
-
 app.MapControllers();
 
+app.UseMiddleware<CustomMetricAuthMiddleware>();
+
+app.MapMetrics().RequireAuthorization("NoAuthPolicy");
+
+app.UseMetricServer();
+app.UseHttpMetrics();
+
+var cpuMetric = Metrics.CreateGauge("api_cpu_usage", "Uso da CPU em %");
+var memoryMetric = Metrics.CreateGauge("api_memory_usage", "Uso da memória em MB");
+
+async Task ColetarMetricas()
+{
+    while (true)
+    {
+        var process = Process.GetCurrentProcess();
+
+        cpuMetric.Set(process.TotalProcessorTime.TotalMilliseconds / 1000.0);
+
+        memoryMetric.Set(process.WorkingSet64 / (1024.0 * 1024.0));
+
+        await Task.Delay(5000); 
+    }
+}
+
+_ = Task.Run(ColetarMetricas);
+
+app.MapGet("/", () => "API rodando com métricas de CPU e Memória!");
 
 app.Run();

@@ -1,0 +1,64 @@
+name: CI/CD Pipeline for ServiceClock Backend API
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set environment variables
+        run: |
+          echo "METRICS_PASSWORD=${{ secrets.METRICS_PASSWORD }}" >> $GITHUB_ENV
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
+          echo "STORAGE_CONNECTION_STRING=${{ secrets.STORAGE_CONNECTION_STRING }}" >> $GITHUB_ENV
+          echo "DBCONN=${{ secrets.DBCONN }}" >> $GITHUB_ENV
+          echo "BLOB_CONTAINER=${{ secrets.BLOB_CONTAINER }}" >> $GITHUB_ENV
+          echo "PRIVATE_BLOB_CONTAINER=${{ secrets.PRIVATE_BLOB_CONTAINER }}" >> $GITHUB_ENV
+          echo "TOKEN_EXPIRES=${{ secrets.TOKEN_EXPIRES }}" >> $GITHUB_ENV
+          echo "BASE_URL=${{ secrets.BASE_URL }}" >> $GITHUB_ENV
+          echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> $GITHUB_ENV
+          echo "DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}" >> $GITHUB_ENV
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        run: |
+          docker-compose -f docker-compose.yml build
+          docker-compose -f docker-compose.yml push
+
+      - name: Tag Docker image
+        run: |
+          IMAGE_TAG=$(echo $GITHUB_SHA | cut -c1-7)
+          docker tag serviceclock_backend_api:latest ${{ secrets.DOCKER_USERNAME }}/serviceclock_backend_api:$IMAGE_TAG
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV 
+
+      - name: Replace BASE_URL in ingress.yml
+        run: |
+          sed -i 's|${BASE_URL}|'"${{ secrets.BASE_URL }}"'|g' kubernetes/ingress.yml
+
+
+      - name: Deploy to Kubernetes
+        uses: appleboy/kubernetes-action@v1.2.0
+        with:
+          kubeconfig: ${{ secrets.KUBE_CONFIG }} 
+          command: |
+            kubectl apply -f src/Kube/service-clock.secrets.yml
+            kubectl apply -f src/Kube/service-clock.deployment.yml
+            kubectl apply -f src/Kube/service-clock.service.yml
+            kubectl apply -f src/Kube/service-clock.ingress.yml
+            kubectl rollout status deployment/serviceclock-backend-api 
+
+      - name: Verify Kubernetes deployment
+        run: |
+          kubectl get pods -l app=serviceclock-backend-api

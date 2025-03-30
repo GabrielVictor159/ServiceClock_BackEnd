@@ -1,8 +1,6 @@
-version: '3.4'
-
 services:
   serviceclock_backend_api:
-    image: ${DOCKER_REGISTRY-}serviceclockbackendapi
+    image: serviceclock_backend_api
     build:
       context: .
       dockerfile: ServiceClock_BackEnd_Api/Dockerfile

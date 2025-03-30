@@ -1,19 +1,16 @@
-version: '3.4'
-
 services:
   serviceclock_backend_api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
     ports:
-      - "7054:8080"
-      - "7055:8081"
+      - "7267:8080"
     env_file:
       - Envs/dev.env
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - .:/app
     networks:
       - serviceclock
     depends_on:
@@ -32,6 +29,19 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
+  
+  serviceclock_prometheus:
+    image: prom/prometheus
+    restart: always
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./Envs/metrics_token:/etc/prometheus/secrets/metrics_token
+    ports:
+      - "9090:9090" 
+    networks:
+      - serviceclock
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 networks:
   serviceclock:
