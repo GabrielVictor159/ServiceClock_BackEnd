@@ -18,7 +18,7 @@ spec:
             name: serviceclock-backend-api
             port: 
               number: 7267 
-        path: /serviceclock 
+        path: ${PATCH_PREFIX} 
         pathType: Prefix  
   tls:
   - hosts:

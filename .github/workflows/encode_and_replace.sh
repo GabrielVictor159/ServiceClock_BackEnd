@@ -6,6 +6,7 @@ export BLOB_CONTAINER_BASE64=$(echo -n "$BLOB_CONTAINER" | base64 -w 0)
 export PRIVATE_BLOB_CONTAINER_BASE64=$(echo -n "$PRIVATE_BLOB_CONTAINER" | base64 -w 0)
 export TOKEN_EXPIRES_BASE64=$(echo -n "$TOKEN_EXPIRES" | base64 -w 0)
 export BASE_URL_BASE64=$(echo -n "$BASE_URL" | base64 -w 0)
+export PATCH_PREFIX_BASE64=$(echo -n "$PATCH_PREFIX" | base64 -w 0)
 
 
 envsubst < src/Kube/service-clock.secrets.yml > src/Kube/service-clock.secrets.tmp.yml

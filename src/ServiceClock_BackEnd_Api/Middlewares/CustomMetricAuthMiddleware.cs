@@ -14,7 +14,7 @@ public class CustomMetricAuthMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        if (context.Request.Path.StartsWithSegments("/metrics"))
+        if (context.Request.Path.StartsWithSegments($"{Environment.GetEnvironmentVariable("PATCH_PREFIX")}/metrics"))
         {
             var authorizationHeader = context.Request.Headers["Authorization"].ToString();
             if (string.IsNullOrEmpty(authorizationHeader))

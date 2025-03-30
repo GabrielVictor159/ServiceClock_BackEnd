@@ -97,7 +97,7 @@ builder.Services.AddSwaggerGen(c =>
     };
     c.AddSecurityRequirement(securityRequirement);
 
-    c.DocumentFilter<PrefixDocumentFilter>($"{Environment.GetEnvironmentVariable("PREFIX_PATH") ?? "" }");
+    c.DocumentFilter<PrefixDocumentFilter>($"{Environment.GetEnvironmentVariable("PATCH_PREFIX") ?? "" }");
 
     c.AddSignalRDocumentation();
 });
@@ -125,7 +125,7 @@ var webSocketOptions = new WebSocketOptions
 
 app.UseWebSockets(webSocketOptions);
 
-app.Map("/ws", wsApp =>
+app.Map($"{Environment.GetEnvironmentVariable("PATCH_PREFIX")}/ws", wsApp =>
 {
     wsApp.Run(async context =>
     {
