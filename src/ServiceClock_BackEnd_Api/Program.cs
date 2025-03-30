@@ -120,6 +120,8 @@ var app = builder.Build();
 
 app.UseHttpMetrics();
 
+ app.UseMiddleware<RequestMetricsMiddleware>();
+
 app.UseMiddleware<RequestLoggingMiddleware>();
 
 var webSocketOptions = new WebSocketOptions
@@ -164,8 +166,8 @@ app.MapMetrics().RequireAuthorization("NoAuthPolicy");
 
 app.UseMetricServer();
 
-var cpuMetric = Metrics.CreateGauge("api_cpu_usage", "Uso da CPU em %");
-var memoryMetric = Metrics.CreateGauge("api_memory_usage", "Uso da memória em MB");
+var cpuMetric = Metrics.CreateGauge("serviceclock_api_cpu_usage", "Uso da CPU em %");
+var memoryMetric = Metrics.CreateGauge("serviceclock_api_memory_usage", "Uso da memória em MB");
 
 async Task ColetarMetricas()
 {
