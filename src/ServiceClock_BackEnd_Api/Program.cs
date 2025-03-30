@@ -40,6 +40,8 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     containerBuilder.AddAutofacRegistration();
 });
 
+builder.Services.AddHealthChecks();
+
 builder.Services.AddLogging();
 builder.Services.AddHttpContextAccessor();
 
@@ -117,6 +119,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddHostedService<DateAnalysisJob>();
 
 var app = builder.Build();
+
+app.MapHealthChecks("/healthz");
 
 app.UseHttpMetrics();
 
