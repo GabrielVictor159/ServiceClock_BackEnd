@@ -26,10 +26,11 @@ jobs:
           echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> $GITHUB_ENV
           echo "DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}" >> $GITHUB_ENV
 
-      - name: Set environment variables and encode secrets to base64
+      - name: Set environment variables
         run: |
-          chmod +x .github/workflows/encode_and_replace.sh
-          .github/workflows/encode_and_replace.sh
+          envsubst < src/Kube/service-clock.service.yml > src/Kube/service-clock.service.yml
+          envsubst < src/Kube/service-clock.ingress.yml > src/Kube/service-clock.ingress.yml
+          envsubst < src/Kube/service-clock.deployment.yml > src/Kube/service-clock.deployment.yml
 
       - name: Install docker-compose
         run: |
