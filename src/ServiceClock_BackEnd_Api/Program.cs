@@ -118,6 +118,8 @@ builder.Services.AddHostedService<DateAnalysisJob>();
 
 var app = builder.Build();
 
+app.UseHttpMetrics();
+
 app.UseMiddleware<RequestLoggingMiddleware>();
 
 var webSocketOptions = new WebSocketOptions
@@ -161,7 +163,6 @@ app.UseMiddleware<CustomMetricAuthMiddleware>();
 app.MapMetrics().RequireAuthorization("NoAuthPolicy");
 
 app.UseMetricServer();
-app.UseHttpMetrics();
 
 var cpuMetric = Metrics.CreateGauge("api_cpu_usage", "Uso da CPU em %");
 var memoryMetric = Metrics.CreateGauge("api_memory_usage", "Uso da memória em MB");
