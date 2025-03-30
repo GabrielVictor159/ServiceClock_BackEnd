@@ -10,7 +10,7 @@ metadata:
   namespace: default
 spec:
   rules:
-  - host: ${BASE_PATH} 
+  - host: ${BASE_URL} 
     http:
       paths:
       - backend:
@@ -22,5 +22,5 @@ spec:
         pathType: Prefix  
   tls:
   - hosts:
-    - ${BASE_PATH}
+    - ${BASE_URL}
     secretName: serviceclock-com-tls

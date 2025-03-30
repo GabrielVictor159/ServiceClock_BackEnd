@@ -26,11 +26,10 @@ jobs:
           echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> $GITHUB_ENV
           echo "DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}" >> $GITHUB_ENV
 
-      - name: Set environment variables files
+      - name: Set environment variables and encode secrets to base64
         run: |
-          envsubst < src/Kube/service-clock.service.yml > src/Kube/service-clock.service.tmp.yml
-          envsubst < src/Kube/service-clock.ingress.yml > src/Kube/service-clock.ingress.tmp.yml
-          envsubst < src/Kube/service-clock.deployment.yml > src/Kube/service-clock.deployment.tmp.yml
+          chmod +x .github/workflows/encode_and_replace.sh
+          .github/workflows/encode_and_replace.sh
 
       - name: Install docker-compose
         run: |
@@ -69,9 +68,10 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply -f src/Kube/service-clock.deployment.tmp.yml
-          kubectl apply -f src/Kube/service-clock.service.tmp.yml
-          kubectl apply -f src/Kube/service-clock.ingress.tmp.yml
+          kubectl apply -f ./src/Kube/service-clock.secrets.tmp.yml
+          kubectl apply -f ./src/Kube/service-clock.deployment.tmp.yml
+          kubectl apply -f ./src/Kube/service-clock.service.tmp.yml
+          kubectl apply -f ./src/Kube/service-clock.ingress.tmp.yml
           kubectl rollout status deployment/serviceclock-backend-api 
 
       - name: Verify Kubernetes deployment

@@ -15,20 +15,8 @@ spec:
       containers:
         - name: serviceclock-backend-api
           image: ${DOCKER_USERNAME}/serviceclock_backend_api:latest
-          env:
-            - name: JWT_SECRET
-              value: "${JWT_SECRET}"
-            - name: STORAGE_CONNECTION_STRING
-              value: "${STORAGE_CONNECTION_STRING}"
-            - name: DBCONN
-              value: "${DBCONN}"
-            - name: METRICS_PASSWORD
-              value: "${METRICS_PASSWORD}"
-            - name: BLOB_CONTAINER
-              value: "${BLOB_CONTAINER}"
-            - name: PRIVATE_BLOB_CONTAINER
-              value: "${PRIVATE_BLOB_CONTAINER}"
-            - name: TOKEN_EXPIRES
-              value: "${TOKEN_EXPIRES}"
-            - name: BASE_URL
-              value: "${BASE_URL}"
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: serviceclock-secrets
