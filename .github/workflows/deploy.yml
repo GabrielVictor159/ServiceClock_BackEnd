@@ -41,7 +41,9 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker-compose -f src/docker-compose.yml push
+          # Defina o nome completo do repositório no Docker Hub
+          docker tag serviceclock_backend_api:latest $DOCKER_USERNAME/serviceclock_backend_api:latest
+          docker push $DOCKER_USERNAME/serviceclock_backend_api:latest
 
 
       - name: Tag Docker image
