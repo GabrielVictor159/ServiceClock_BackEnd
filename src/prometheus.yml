@@ -4,5 +4,5 @@ global:
 scrape_configs:
   - job_name: 'serviceclock_backend_api'
     static_configs:
-      - targets: ['host.docker.internal:7267']
+      - targets: ['https://serviceclock.gabrielvpb.com.br/metrics']
     bearer_token_file: /etc/prometheus/secrets/metrics_token  

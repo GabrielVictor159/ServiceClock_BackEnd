@@ -26,6 +26,7 @@ jobs:
           echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> $GITHUB_ENV
           echo "DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}" >> $GITHUB_ENV
           echo "PATCH_PREFIX=${{ secrets.PATCH_PREFIX }}" >> $GITHUB_ENV
+          echo "REPLICAS=${{ secrets.REPLICAS }}" >> $GITHUB_ENV
 
       - name: Set environment variables and encode secrets to base64
         run: |
