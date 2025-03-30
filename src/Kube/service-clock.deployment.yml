@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: serviceclock-backend-api
-          image: ${{ secrets.DOCKER_USERNAME }}/serviceclock_backend_api:${{ env.IMAGE_TAG }}
+          image: ${DOCKER_USERNAME}/serviceclock_backend_api:${{ env.IMAGE_TAG }}
           ports:
             - containerPort: 8000
           envFrom:

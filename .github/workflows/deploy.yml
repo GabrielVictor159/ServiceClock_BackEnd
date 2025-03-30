@@ -13,18 +13,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Set environment variables
+      - name: Set environment variables and encode secrets to base64
         run: |
-          echo "METRICS_PASSWORD=${{ secrets.METRICS_PASSWORD }}" >> $GITHUB_ENV
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
-          echo "STORAGE_CONNECTION_STRING=${{ secrets.STORAGE_CONNECTION_STRING }}" >> $GITHUB_ENV
-          echo "DBCONN=${{ secrets.DBCONN }}" >> $GITHUB_ENV
-          echo "BLOB_CONTAINER=${{ secrets.BLOB_CONTAINER }}" >> $GITHUB_ENV
-          echo "PRIVATE_BLOB_CONTAINER=${{ secrets.PRIVATE_BLOB_CONTAINER }}" >> $GITHUB_ENV
-          echo "TOKEN_EXPIRES=${{ secrets.TOKEN_EXPIRES }}" >> $GITHUB_ENV
-          echo "BASE_URL=${{ secrets.BASE_URL }}" >> $GITHUB_ENV
-          echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> $GITHUB_ENV
-          echo "DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}" >> $GITHUB_ENV
+          chmod +x .github/workflows/encode_and_replace.sh
+          .github/workflows/encode_and_replace.sh
 
       - name: Install docker-compose
         run: |
@@ -65,30 +57,6 @@ jobs:
         run: |
           mkdir -p ~/.kube
           echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
-      
-      - name: Encode secrets to base64 and replace in yaml
-        run: |
-          export JWT_SECRET_BASE64=$(echo -n $JWT_SECRET | base64)
-          export STORAGE_CONNECTION_STRING_BASE64=$(echo -n $STORAGE_CONNECTION_STRING | base64)
-          export DBCONN_BASE64=$(echo -n $DBCONN | base64)
-          export METRICS_PASSWORD_BASE64=$(echo -n $METRICS_PASSWORD | base64)
-          export BLOB_CONTAINER_BASE64=$(echo -n $BLOB_CONTAINER | base64)
-          export PRIVATE_BLOB_CONTAINER_BASE64=$(echo -n $PRIVATE_BLOB_CONTAINER | base64)
-          export TOKEN_EXPIRES_BASE64=$(echo -n $TOKEN_EXPIRES | base64)
-          export BASE_URL_BASE64=$(echo -n $BASE_URL | base64)
-
-          # Substituindo as variáveis no arquivo YAML com escape para caracteres especiais
-          sed -i "s|\${JWT_SECRET}|$(printf '%s' "$JWT_SECRET_BASE64" | sed 's/[&/\]/\\&/g')|g" src/Kube/service-clock.secrets.yml
-          sed -i "s|\${STORAGE_CONNECTION_STRING}|$(printf '%s' "$STORAGE_CONNECTION_STRING_BASE64" | sed 's/[&/\]/\\&/g')|g" src/Kube/service-clock.secrets.yml
-          sed -i "s|\${DBCONN}|$(printf '%s' "$DBCONN_BASE64" | sed 's/[&/\]/\\&/g')|g" src/Kube/service-clock.secrets.yml
-          sed -i "s|\${METRICS_PASSWORD}|$(printf '%s' "$METRICS_PASSWORD_BASE64" | sed 's/[&/\]/\\&/g')|g" src/Kube/service-clock.secrets.yml
-          sed -i "s|\${BLOB_CONTAINER}|$(printf '%s' "$BLOB_CONTAINER_BASE64" | sed 's/[&/\]/\\&/g')|g" src/Kube/service-clock.secrets.yml
-          sed -i "s|\${PRIVATE_BLOB_CONTAINER}|$(printf '%s' "$PRIVATE_BLOB_CONTAINER_BASE64" | sed 's/[&/\]/\\&/g')|g" src/Kube/service-clock.secrets.yml
-          sed -i "s|\${TOKEN_EXPIRES}|$(printf '%s' "$TOKEN_EXPIRES_BASE64" | sed 's/[&/\]/\\&/g')|g" src/Kube/service-clock.secrets.yml
-          sed -i "s|\${BASE_URL}|$(printf '%s' "$BASE_URL_BASE64" | sed 's/[&/\]/\\&/g')|g" src/Kube/service-clock.secrets.yml
-
-
-
 
       - name: Deploy to Kubernetes
         run: |
