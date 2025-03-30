@@ -20,3 +20,17 @@ spec:
           envFrom:
             - secretRef:
                 name: serviceclock-secrets
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5 
+            periodSeconds: 10  
+            failureThreshold: 3  
+          livenessProbe: 
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5 
+            periodSeconds: 20 
+            failureThreshold: 3  
