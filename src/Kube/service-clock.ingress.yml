@@ -10,7 +10,7 @@ metadata:
   namespace: default
 spec:
   rules:
-  - host: serviceclock.${BASE_PATH}
+  - host: ${BASE_PATH} 
     http:
       paths:
       - backend:
@@ -18,9 +18,9 @@ spec:
             name: serviceclock-backend-api
             port: 
               number: 7267 
-        path: /
+        path: /serviceclock 
         pathType: Prefix  
   tls:
   - hosts:
-    - serviceclock.${BASE_PATH}
+    - ${BASE_PATH}
     secretName: serviceclock-com-tls

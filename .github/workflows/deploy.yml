@@ -28,9 +28,9 @@ jobs:
 
       - name: Set environment variables files
         run: |
-          envsubst < src/Kube/service-clock.service.yml > src/Kube/service-clock.service.yml
-          envsubst < src/Kube/service-clock.ingress.yml > src/Kube/service-clock.ingress.yml
-          envsubst < src/Kube/service-clock.deployment.yml > src/Kube/service-clock.deployment.yml
+          envsubst < src/Kube/service-clock.service.yml > src/Kube/service-clock.service.tmp.yml
+          envsubst < src/Kube/service-clock.ingress.yml > src/Kube/service-clock.ingress.tmp.yml
+          envsubst < src/Kube/service-clock.deployment.yml > src/Kube/service-clock.deployment.tmp.yml
 
       - name: Install docker-compose
         run: |
@@ -73,9 +73,9 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply -f src/Kube/service-clock.deployment.yml
-          kubectl apply -f src/Kube/service-clock.service.yml
-          kubectl apply -f src/Kube/service-clock.ingress.yml
+          kubectl apply -f src/Kube/service-clock.deployment.tmp.yml
+          kubectl apply -f src/Kube/service-clock.service.tmp.yml
+          kubectl apply -f src/Kube/service-clock.ingress.tmp.yml
           kubectl rollout status deployment/serviceclock-backend-api 
 
       - name: Verify Kubernetes deployment
