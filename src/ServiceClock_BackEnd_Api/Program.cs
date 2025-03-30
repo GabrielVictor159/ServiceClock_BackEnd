@@ -147,11 +147,8 @@ app.Map($"{Environment.GetEnvironmentVariable("PATCH_PREFIX")}/ws", wsApp =>
 
 app.UseCors(corsPolicyAllOrigins);
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseAuthentication();
 app.UseAuthorization();
