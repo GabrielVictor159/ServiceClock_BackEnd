@@ -65,6 +65,26 @@ jobs:
         run: |
           mkdir -p ~/.kube
           echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
+      
+      - name: Encode secrets to base64 and replace in yaml
+        run: |
+          export JWT_SECRET_BASE64=$(echo -n $JWT_SECRET | base64)
+          export STORAGE_CONNECTION_STRING_BASE64=$(echo -n $STORAGE_CONNECTION_STRING | base64)
+          export DBCONN_BASE64=$(echo -n $DBCONN | base64)
+          export METRICS_PASSWORD_BASE64=$(echo -n $METRICS_PASSWORD | base64)
+          export BLOB_CONTAINER_BASE64=$(echo -n $BLOB_CONTAINER | base64)
+          export PRIVATE_BLOB_CONTAINER_BASE64=$(echo -n $PRIVATE_BLOB_CONTAINER | base64)
+          export TOKEN_EXPIRES_BASE64=$(echo -n $TOKEN_EXPIRES | base64)
+          export BASE_URL_BASE64=$(echo -n $BASE_URL | base64)
+          
+          sed -i "s|\${JWT_SECRET}|$JWT_SECRET_BASE64|g" src/Kube/service-clock.secrets.yml
+          sed -i "s|\${STORAGE_CONNECTION_STRING}|$STORAGE_CONNECTION_STRING_BASE64|g" src/Kube/service-clock.secrets.yml
+          sed -i "s|\${DBCONN}|$DBCONN_BASE64|g" src/Kube/service-clock.secrets.yml
+          sed -i "s|\${METRICS_PASSWORD}|$METRICS_PASSWORD_BASE64|g" src/Kube/service-clock.secrets.yml
+          sed -i "s|\${BLOB_CONTAINER}|$BLOB_CONTAINER_BASE64|g" src/Kube/service-clock.secrets.yml
+          sed -i "s|\${PRIVATE_BLOB_CONTAINER}|$PRIVATE_BLOB_CONTAINER_BASE64|g" src/Kube/service-clock.secrets.yml
+          sed -i "s|\${TOKEN_EXPIRES}|$TOKEN_EXPIRES_BASE64|g" src/Kube/service-clock.secrets.yml
+          sed -i "s|\${BASE_URL}|$BASE_URL_BASE64|g" src/Kube/service-clock.secrets.yml
 
       - name: Deploy to Kubernetes
         run: |
