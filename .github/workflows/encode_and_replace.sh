@@ -1,13 +1,4 @@
 
-export JWT_SECRET="${{ secrets.JWT_SECRET }}"
-export STORAGE_CONNECTION_STRING="${{ secrets.STORAGE_CONNECTION_STRING }}"
-export DBCONN="${{ secrets.DBCONN }}"
-export METRICS_PASSWORD="${{ secrets.METRICS_PASSWORD }}"
-export BLOB_CONTAINER="${{ secrets.BLOB_CONTAINER }}"
-export PRIVATE_BLOB_CONTAINER="${{ secrets.PRIVATE_BLOB_CONTAINER }}"
-export TOKEN_EXPIRES="${{ secrets.TOKEN_EXPIRES }}"
-export BASE_URL="${{ secrets.BASE_URL }}"
-
 export JWT_SECRET_BASE64=$(echo -n "$JWT_SECRET" | base64)
 export STORAGE_CONNECTION_STRING_BASE64=$(echo -n "$STORAGE_CONNECTION_STRING" | base64)
 export DBCONN_BASE64=$(echo -n "$DBCONN" | base64)

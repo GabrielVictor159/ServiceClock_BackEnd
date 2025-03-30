@@ -13,10 +13,18 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Set environment variables and encode secrets to base64
+      - name: Set environment variables
         run: |
-          chmod +x .github/workflows/encode_and_replace.sh
-          .github/workflows/encode_and_replace.sh
+          echo "METRICS_PASSWORD=${{ secrets.METRICS_PASSWORD }}" >> $GITHUB_ENV
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
+          echo "STORAGE_CONNECTION_STRING=${{ secrets.STORAGE_CONNECTION_STRING }}" >> $GITHUB_ENV
+          echo "DBCONN=${{ secrets.DBCONN }}" >> $GITHUB_ENV
+          echo "BLOB_CONTAINER=${{ secrets.BLOB_CONTAINER }}" >> $GITHUB_ENV
+          echo "PRIVATE_BLOB_CONTAINER=${{ secrets.PRIVATE_BLOB_CONTAINER }}" >> $GITHUB_ENV
+          echo "TOKEN_EXPIRES=${{ secrets.TOKEN_EXPIRES }}" >> $GITHUB_ENV
+          echo "BASE_URL=${{ secrets.BASE_URL }}" >> $GITHUB_ENV
+          echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> $GITHUB_ENV
+          echo "DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}" >> $GITHUB_ENV
 
       - name: Install docker-compose
         run: |
