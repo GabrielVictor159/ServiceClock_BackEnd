@@ -49,16 +49,21 @@ jobs:
 
       - name: Set up kubectl
         uses: azure/setup-kubectl@v1
+        with:
+          kubectl-version: 'latest'
+
+      - name: Configure Kubeconfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
 
       - name: Deploy to Kubernetes
-        with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG }} 
-          command: |
-            kubectl apply -f src/Kube/service-clock.secrets.yml
-            kubectl apply -f src/Kube/service-clock.deployment.yml
-            kubectl apply -f src/Kube/service-clock.service.yml
-            kubectl apply -f src/Kube/service-clock.ingress.yml
-            kubectl rollout status deployment/serviceclock-backend-api 
+        run: |
+          kubectl apply -f src/Kube/service-clock.secrets.yml
+          kubectl apply -f src/Kube/service-clock.deployment.yml
+          kubectl apply -f src/Kube/service-clock.service.yml
+          kubectl apply -f src/Kube/service-clock.ingress.yml
+          kubectl rollout status deployment/serviceclock-backend-api 
 
       - name: Verify Kubernetes deployment
         run: |
