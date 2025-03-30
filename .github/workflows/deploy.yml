@@ -76,15 +76,19 @@ jobs:
           export PRIVATE_BLOB_CONTAINER_BASE64=$(echo -n $PRIVATE_BLOB_CONTAINER | base64)
           export TOKEN_EXPIRES_BASE64=$(echo -n $TOKEN_EXPIRES | base64)
           export BASE_URL_BASE64=$(echo -n $BASE_URL | base64)
-          
-          sed -i "s|\${JWT_SECRET}|$JWT_SECRET_BASE64|g" src/Kube/service-clock.secrets.yml
-          sed -i "s|\${STORAGE_CONNECTION_STRING}|$STORAGE_CONNECTION_STRING_BASE64|g" src/Kube/service-clock.secrets.yml
-          sed -i "s|\${DBCONN}|$DBCONN_BASE64|g" src/Kube/service-clock.secrets.yml
-          sed -i "s|\${METRICS_PASSWORD}|$METRICS_PASSWORD_BASE64|g" src/Kube/service-clock.secrets.yml
-          sed -i "s|\${BLOB_CONTAINER}|$BLOB_CONTAINER_BASE64|g" src/Kube/service-clock.secrets.yml
-          sed -i "s|\${PRIVATE_BLOB_CONTAINER}|$PRIVATE_BLOB_CONTAINER_BASE64|g" src/Kube/service-clock.secrets.yml
-          sed -i "s|\${TOKEN_EXPIRES}|$TOKEN_EXPIRES_BASE64|g" src/Kube/service-clock.secrets.yml
-          sed -i "s|\${BASE_URL}|$BASE_URL_BASE64|g" src/Kube/service-clock.secrets.yml
+
+          # Substituindo as variáveis no arquivo YAML com escape para caracteres especiais
+          sed -i "s|\${JWT_SECRET}|$(printf '%s' "$JWT_SECRET_BASE64" | sed 's/[&/\]/\\&/g')|g" src/Kube/service-clock.secrets.yml
+          sed -i "s|\${STORAGE_CONNECTION_STRING}|$(printf '%s' "$STORAGE_CONNECTION_STRING_BASE64" | sed 's/[&/\]/\\&/g')|g" src/Kube/service-clock.secrets.yml
+          sed -i "s|\${DBCONN}|$(printf '%s' "$DBCONN_BASE64" | sed 's/[&/\]/\\&/g')|g" src/Kube/service-clock.secrets.yml
+          sed -i "s|\${METRICS_PASSWORD}|$(printf '%s' "$METRICS_PASSWORD_BASE64" | sed 's/[&/\]/\\&/g')|g" src/Kube/service-clock.secrets.yml
+          sed -i "s|\${BLOB_CONTAINER}|$(printf '%s' "$BLOB_CONTAINER_BASE64" | sed 's/[&/\]/\\&/g')|g" src/Kube/service-clock.secrets.yml
+          sed -i "s|\${PRIVATE_BLOB_CONTAINER}|$(printf '%s' "$PRIVATE_BLOB_CONTAINER_BASE64" | sed 's/[&/\]/\\&/g')|g" src/Kube/service-clock.secrets.yml
+          sed -i "s|\${TOKEN_EXPIRES}|$(printf '%s' "$TOKEN_EXPIRES_BASE64" | sed 's/[&/\]/\\&/g')|g" src/Kube/service-clock.secrets.yml
+          sed -i "s|\${BASE_URL}|$(printf '%s' "$BASE_URL_BASE64" | sed 's/[&/\]/\\&/g')|g" src/Kube/service-clock.secrets.yml
+
+
+
 
       - name: Deploy to Kubernetes
         run: |
