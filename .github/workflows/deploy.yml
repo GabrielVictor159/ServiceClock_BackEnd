@@ -73,6 +73,7 @@ jobs:
           kubectl apply -f ./src/Kube/service-clock.deployment.tmp.yml
           kubectl apply -f ./src/Kube/service-clock.service.tmp.yml
           kubectl apply -f ./src/Kube/service-clock.ingress.tmp.yml
+          kubectl rollout restart deployment/serviceclock-backend-api 
           kubectl rollout status deployment/serviceclock-backend-api 
 
       - name: Verify Kubernetes deployment
