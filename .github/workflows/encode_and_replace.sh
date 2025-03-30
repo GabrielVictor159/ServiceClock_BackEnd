@@ -9,6 +9,9 @@ export TOKEN_EXPIRES_BASE64=$(echo -n "$TOKEN_EXPIRES" | base64)
 export BASE_URL_BASE64=$(echo -n "$BASE_URL" | base64)
 
 envsubst < src/Kube/service-clock.secrets.yml > src/Kube/service-clock.secrets.yml
+
+cat src/Kube/service-clock.secrets.yml
+
 envsubst < src/Kube/service-clock.deployment.yml > src/Kube/service-clock.deployment.yml
 envsubst < src/Kube/service-clock.ingress.yml > src/Kube/service-clock.ingress.yml
 envsubst < src/Kube/service-clock.service.yml > src/Kube/service-clock.service.yml
