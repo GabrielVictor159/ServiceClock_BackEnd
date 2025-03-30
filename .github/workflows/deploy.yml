@@ -54,7 +54,7 @@ jobs:
 
       - name: Replace BASE_URL in ingress.yml
         run: |
-          sed -i 's|${BASE_URL}|'"${{ secrets.BASE_URL }}"'|g' kubernetes/ingress.yml
+          sed -i 's|${BASE_URL}|'"${{ secrets.BASE_URL }}"'|g' src/Kube/service-clock.ingress.yml
 
       - name: Set up kubectl
         uses: azure/setup-kubectl@v1
