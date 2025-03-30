@@ -120,7 +120,7 @@ builder.Services.AddHostedService<DateAnalysisJob>();
 
 var app = builder.Build();
 
-app.MapHealthChecks("/healthz");
+app.MapHealthChecks("/healthz").RequireAuthorization("NoAuthPolicy");
 
 app.UseHttpMetrics();
 
